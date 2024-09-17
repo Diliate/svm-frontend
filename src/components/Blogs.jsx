@@ -23,7 +23,7 @@ const Blogs = () => {
     },
   ];
   return (
-    <section className="px-5 pt-5 pb-10">
+    <section className="px-5 py-10">
       <h1 className="mb-10 text-5xl font-semibold text-center">
         From Our Blogs
       </h1>
@@ -54,6 +54,11 @@ const Blogs = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center mt-5">
+        <button className="px-14 py-2 uppercase border-[1px] border-black rounded-full mt-5 hover:bg-black hover:text-white duration-200">
+          view all post
+        </button>
       </div>
     </section>
   );

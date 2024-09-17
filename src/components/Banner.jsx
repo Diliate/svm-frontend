@@ -27,7 +27,7 @@ const Banner = () => {
             life that emphasizes balance, harmony, and connection with nature.
           </p>
           <div>
-            <button className="px-4 py-2 text-xl text-white duration-200 bg-black rounded-md shadow-lg hover:opacity-90">
+            <button className="px-4 py-2 text-xl text-white duration-200 bg-black rounded-md shadow-lg hover:opacity-85">
               Know More
             </button>
           </div>
