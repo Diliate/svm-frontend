@@ -3,7 +3,7 @@ import React from "react";
 const Featured = () => {
   return (
     <section>
-      <div className="flex justify-center gap-10 py-10">
+      <div className="flex justify-center gap-10 px-10 py-10">
         <video className="w-[340px]" preload="none" autoPlay loop muted>
           <source src="/featured1.mp4" type="video/mp4" />
         </video>

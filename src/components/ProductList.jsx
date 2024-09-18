@@ -105,7 +105,7 @@ const ProductList = () => {
   };
 
   return (
-    <div className="px-5 py-10">
+    <div className="px-10 py-10">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-lg font-light uppercase">our popular products</h3>
