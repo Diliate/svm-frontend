@@ -5,56 +5,31 @@ import Slider from "react-slick";
 import ProductCard from "./ProductCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaAngleRight } from "react-icons/fa6";
-
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 function SampleNextArrow(props) {
-  const { className, style, onClick, isVisible } = props;
+  const { onClick, isVisible } = props;
   return (
     isVisible && (
-      <div
-        className={`${className} custom-arrow next-arrow`}
-        style={{
-          ...style,
-          display: "block",
-          background: "#CCCCCC",
-          borderRadius: "50%",
-          width: "50px",
-          height: "50px",
-          right: "20px",
-          zIndex: 25,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "50px",
-        }}
+      <button
+        className="absolute z-20 flex items-center justify-center w-16 h-16 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full -right-4 top-1/2 hover:bg-opacity-75"
         onClick={onClick}
-      />
+      >
+        <FaChevronRight size={40} />
+      </button>
     )
   );
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick, isVisible } = props;
+  const { onClick, isVisible } = props;
   return (
     isVisible && (
-      <div
-        className={`${className} custom-arrow prev-arrow`}
-        style={{
-          ...style,
-          display: "block",
-          background: "#CCCCCC",
-          borderRadius: "50%",
-          width: "50px",
-          height: "50px",
-          left: "20px",
-          zIndex: 25,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "50px",
-        }}
+      <button
+        className="absolute z-20 flex items-center justify-center w-16 h-16 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full -left-4 top-1/2 hover:bg-opacity-75"
         onClick={onClick}
-      />
+      >
+        <FaChevronLeft size={40} />
+      </button>
     )
   );
 }
@@ -113,17 +88,15 @@ const ProductList = () => {
         </div>
         <div>
           <button className="flex items-center gap-2 py-3 px-10 uppercase border-[1px] border-black rounded-full hover:bg-black hover:text-white duration-200">
-            view all product <FaAngleRight />
+            view all products <FaChevronRight />
           </button>
         </div>
       </div>
-      <div>
-        <Slider {...settings}>
-          {products.map((_, index) => (
-            <ProductCard key={index} />
-          ))}
-        </Slider>
-      </div>
+      <Slider {...settings}>
+        {products.map((_, index) => (
+          <ProductCard key={index} />
+        ))}
+      </Slider>
     </div>
   );
 };
