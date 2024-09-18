@@ -6,7 +6,7 @@ import { IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between px-5 py-2">
+    <nav className="flex justify-between px-10 py-2">
       <div className="flex items-center gap-3">
         <Image
           src="/svm-logo.png"
@@ -40,7 +40,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-1">
           <IoLocationOutline size={22} />
-          <h1 className="cursor-pointer flex items-center gap-1 text-lg font-medium">
+          <h1 className="flex items-center gap-1 text-lg font-medium cursor-pointer">
             Update Location
             <FaSortDown />
           </h1>

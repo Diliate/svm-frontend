@@ -8,7 +8,7 @@ import { IoMail } from "react-icons/io5";
 const Footer = () => {
   return (
     <footer>
-      <div className="flex justify-between px-5 pt-10 pb-3 bg-[#F9F9EB]">
+      <div className="flex justify-between px-10 pt-10 pb-3 bg-[#F9F9EB]">
         <div className="w-[450px] flex flex-col gap-4">
           <Image src="/svm-logo.png" alt="logo" height={100} width={100} />
 

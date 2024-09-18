@@ -23,7 +23,7 @@ const Blogs = () => {
     },
   ];
   return (
-    <section className="px-5 py-10">
+    <section className="px-10 py-10">
       <h1 className="mb-10 text-5xl font-semibold text-center">
         From Our Blogs
       </h1>

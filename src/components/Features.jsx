@@ -25,7 +25,7 @@ const Features = () => {
     },
   ];
   return (
-    <section className="px-5 py-10">
+    <section className="px-10 py-10">
       <div className="flex justify-between">
         {featureData.map((feature, index) => (
           <div
