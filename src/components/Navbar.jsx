@@ -6,7 +6,7 @@ import { IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between px-10 py-2">
+    <nav className="flex justify-between px-10 py-2 shadow-md">
       <div className="flex items-center gap-3">
         <Image
           src="/svm-logo.png"

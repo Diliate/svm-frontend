@@ -6,6 +6,7 @@ import ProductCard from "./ProductCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
   return (
