@@ -8,17 +8,23 @@ import { IoMail } from "react-icons/io5";
 const Footer = () => {
   return (
     <footer>
-      <div className="flex justify-between px-10 pt-10 pb-3 bg-[#F9F9EB]">
-        <div className="w-[450px] flex flex-col gap-4">
-          <Image src="/svm-logo.png" alt="logo" height={100} width={100} />
+      {/* Main Footer Container */}
+      <div className="flex flex-col lg:flex-row justify-between px-5 lg:px-10 pt-10 pb-3 bg-[#F9F9EB]">
+        
+        {/* Logo and Contact Information */}
+        <div className="flex-1 flex flex-col gap-4 mb-8 lg:mb-0">
+          <div className="flex items-center">
+            <Image src="/svm-logo.png" alt="logo" height={100} width={100} />
+          </div>
 
-          <p className="text-lg text-justify">
-            We're currently crafting the website now it appears spectacular,
-            hip, and commendable. We're currently crafting the website now it
-            appears spectacular, hip, and commendable.
-          </p>
+          {/* Text Container with Limited Width */}
+          <div className="max-w-md">
+            <p className="text-base sm:text-lg text-justify">
+              We're currently crafting the website; it appears spectacular, hip, and commendable. We're currently crafting the website; it appears spectacular, hip, and commendable.
+            </p>
+          </div>
 
-          <div className="flex flex-col gap-2 text-lg font-medium">
+          <div className="flex flex-col gap-2 text-base sm:text-lg font-medium">
             <span className="flex items-center gap-1">
               <FaPhone /> +91 987654321
             </span>
@@ -31,65 +37,72 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* LINKS */}
-        <div className="flex gap-14">
+        {/* Links Sections */}
+        <div className="flex flex-col sm:flex-row gap-8 lg:gap-14 flex-1 mb-8 lg:mb-0">
+          {/* Menu */}
           <div>
             <h2 className="mb-3 text-xl font-bold">Menu</h2>
-            <ul className="flex flex-col gap-3 text-lg">
-              <li className="inline cursor-pointer">Home</li>
-              <li className="inline cursor-pointer">About</li>
-              <li className="inline cursor-pointer">Shop</li>
-              <li className="inline cursor-pointer">Blog</li>
-              <li className="inline cursor-pointer">Contact</li>
+            <ul className="flex flex-col gap-3 text-base sm:text-lg">
+              <li className="cursor-pointer hover:text-[#004A06]">Home</li>
+              <li className="cursor-pointer hover:text-[#004A06]">About</li>
+              <li className="cursor-pointer hover:text-[#004A06]">Shop</li>
+              <li className="cursor-pointer hover:text-[#004A06]">Blog</li>
+              <li className="cursor-pointer hover:text-[#004A06]">Contact</li>
             </ul>
           </div>
+
+          {/* Shop */}
           <div>
             <h2 className="mb-3 text-xl font-bold">Shop</h2>
-            <ul className="flex flex-col gap-3 text-lg">
-              <li className="inline cursor-pointer">Whislist</li>
-              <li className="inline cursor-pointer">Add to Cart</li>
-              <li className="inline cursor-pointer">Track Order</li>
-              <li className="inline cursor-pointer">Privacy Policy</li>
-              <li className="inline cursor-pointer">Returen &amp; Refund</li>
+            <ul className="flex flex-col gap-3 text-base sm:text-lg">
+              <li className="cursor-pointer hover:text-[#004A06]">Wishlist</li>
+              <li className="cursor-pointer hover:text-[#004A06]">Add to Cart</li>
+              <li className="cursor-pointer hover:text-[#004A06]">Track Order</li>
+              <li className="cursor-pointer hover:text-[#004A06]">Privacy Policy</li>
+              <li className="cursor-pointer hover:text-[#004A06]">Return &amp; Refund</li>
             </ul>
           </div>
+
+          {/* Offers */}
           <div>
             <h2 className="mb-3 text-xl font-bold">Offers</h2>
-            <ul className="flex flex-col gap-3 text-lg">
-              <li className="inline cursor-pointer">Discount</li>
-              <li className="inline cursor-pointer">New</li>
-              <li className="inline cursor-pointer">Hurry Up</li>
+            <ul className="flex flex-col gap-3 text-base sm:text-lg">
+              <li className="cursor-pointer hover:text-[#004A06]">Discount</li>
+              <li className="cursor-pointer hover:text-[#004A06]">New</li>
+              <li className="cursor-pointer hover:text-[#004A06]">Hurry Up</li>
             </ul>
           </div>
         </div>
 
-        {/* NEWSLETTER */}
-        <div className="w-[300px] flex flex-col gap-4">
+        {/* Newsletter and Social Media */}
+        <div className="flex-1 flex flex-col gap-4">
           <h2 className="text-2xl font-bold">Get Active Updates</h2>
-          <p>
-            The ideal way to stay in contact and learn about our exclusive
-            offers.
+          <p className="text-base sm:text-lg">
+            The ideal way to stay in contact and learn about our exclusive offers.
           </p>
-          <div className="flex px-5 py-1 border-2 border-black rounded-full">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-0 px-5 py-1 border-2 border-black rounded-full">
             <input
+              type="email"
               placeholder="Enter your Email"
-              className="border-none outline-none"
+              className="w-full sm:w-auto flex-1 border-none outline-none px-3"
             />
-            <button className="rounded-full bg-[#004A06] text-white px-5 py-2">
+            <button className="rounded-full bg-[#004A06] text-white px-5 py-2 mt-2 sm:mt-0 sm:ml-2">
               Submit
             </button>
           </div>
-          <p>Our Social Media handles</p>
+          <p className="mt-4 text-base sm:text-lg">Our Social Media handles</p>
           <div className="flex gap-5">
-            <FaSquareInstagram size={28} className="cursor-pointer" />
-            <FaFacebookSquare size={28} className="cursor-pointer" />
-            <FaSquareXTwitter size={28} className="cursor-pointer" />
-            <FaPinterestSquare size={28} className="cursor-pointer" />
+            <FaSquareInstagram size={28} className="cursor-pointer hover:text-[#004A06]" />
+            <FaFacebookSquare size={28} className="cursor-pointer hover:text-[#004A06]" />
+            <FaSquareXTwitter size={28} className="cursor-pointer hover:text-[#004A06]" />
+            <FaPinterestSquare size={28} className="cursor-pointer hover:text-[#004A06]" />
           </div>
         </div>
       </div>
-      <div className="bg-[#004A06] text-center py-2 text-white font-medium text-lg">
-        <h1>&copy;Copyright, SVM, 2024</h1>
+
+      {/* Copyright Section */}
+      <div className="bg-[#004A06] text-center py-2 text-white font-medium text-base sm:text-lg">
+        <h1>&copy; Copyright, SVM, 2024</h1>
       </div>
     </footer>
   );
