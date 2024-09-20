@@ -40,6 +40,7 @@ function page() {
                   <input
                     placeholder="Jane Smith"
                     className="bg-[#F2F2F2] p-2 w-[205px] outline-none rounded-md mt-1"
+                    type="text"
                   />
                 </div>
                 <div className="flex flex-col">
@@ -47,6 +48,7 @@ function page() {
                   <input
                     placeholder="svm@gmail.com"
                     className="bg-[#F2F2F2] p-2 w-[205px] outline-none rounded-md mt-1"
+                    type="email"
                   />
                 </div>
               </div>
