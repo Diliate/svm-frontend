@@ -10,7 +10,7 @@ const page = () => {
         <div className="w-[80%]">
           <div>
             <h2 className="text-3xl font-semibold">Returns</h2>
-            <ul className="flex flex-col gap-3 mt-3 text-xl text-justify list-disc">
+            <ul className="flex flex-col gap-3 mt-3 text-xl leading-10 text-justify list-disc">
               <li>
                 <span className="font-medium">Eligibility: </span>You may return
                 most new, unopened items within 30 days of delivery for a full
@@ -38,7 +38,7 @@ const page = () => {
 
           <div className="flex flex-col gap-3 mt-5 text-xl text-justify ">
             <h2 className="text-3xl font-medium">Refunds</h2>
-            <ul className="flex flex-col gap-3 list-disc">
+            <ul className="flex flex-col gap-3 leading-10 list-disc">
               <li>
                 <span className="font-medium">Processing: </span>Once we receive
                 your return, we will inspect the item and notify you of the
@@ -65,7 +65,7 @@ const page = () => {
 
           <div className="flex flex-col gap-3 mt-5 text-xl text-justify">
             <h2 className="text-3xl font-medium">Exchanges</h2>
-            <ul className="mt-3 list-disc">
+            <ul className="mt-3 leading-10 list-disc">
               <li>
                 <span className="font-medium">
                   Defective or Damaged Items:{" "}
