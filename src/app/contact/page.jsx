@@ -5,7 +5,7 @@ import { IoLocationOutline } from "react-icons/io5";
 
 function page() {
   return (
-    <section className="p-10">
+    <section className="px-10 pt-32 pb-10">
       <div className="flex flex-col items-center justify-center">
         <div className="flex gap-10">
           <div className="flex flex-col gap-5 w-[430px] border-2 pl-10 py-5 rounded-2xl">

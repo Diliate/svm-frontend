@@ -82,7 +82,7 @@ const page = () => {
   };
 
   return (
-    <section>
+    <section className="pt-16">
       <div className="h-[430px] w-full relative overflow-hidden">
         <img src="/limited-offer.png" alt="offer" className="w-full" />
       </div>

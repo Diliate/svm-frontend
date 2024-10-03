@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { IoCartOutline, IoLocationOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
-import Link from "next/link"; 
+import Link from "next/link";
 import { navLinks } from "../data/navLinks";
 
 const Navbar = () => {
@@ -36,10 +36,7 @@ const Navbar = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setActiveDropdown(null);
       }
     };
@@ -51,9 +48,9 @@ const Navbar = () => {
   }, [dropdownRef]);
 
   return (
-    <nav className="bg-white shadow-md fixed w-full z-50" ref={dropdownRef}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+    <nav className="fixed z-50 w-full bg-white shadow-md" ref={dropdownRef}>
+      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           {/* Logo and Primary Navigation */}
           <div className="flex items-center">
             <Link href="/" className="cursor-pointer">
@@ -65,11 +62,11 @@ const Navbar = () => {
                 className="object-contain"
               />
             </Link>
-            <ul className="hidden md:flex ml-6 space-x-4">
+            <ul className="hidden ml-6 space-x-4 md:flex">
               {navLinks.map((link) => (
                 <li
                   key={link.name}
-                  className="relative group cursor-pointer transition duration-150 rounded-full px-3 py-2 font-medium text-lg flex items-center"
+                  className="relative flex items-center px-3 py-2 text-lg font-medium transition duration-150 rounded-full cursor-pointer group"
                 >
                   {link.subLinks ? (
                     <>
@@ -95,10 +92,7 @@ const Navbar = () => {
                             key={subLink.name}
                             className="px-4 py-2 hover:bg-gray-100"
                           >
-                            <Link
-                              href={subLink.href}
-                              className="block"
-                            >
+                            <Link href={subLink.href} className="block">
                               {subLink.name}
                             </Link>
                           </li>
@@ -119,16 +113,16 @@ const Navbar = () => {
           </div>
 
           {/* Search and Location */}
-          <div className="hidden md:flex items-center space-x-4">
-            <div className="flex items-center bg-gray-100 rounded-full py-2 px-4">
+          <div className="items-center hidden space-x-4 md:flex">
+            <div className="flex items-center px-4 py-2 bg-gray-100 rounded-full">
               <IoIosSearch size={20} className="text-gray-600" />
               <input
                 type="text"
                 placeholder="Search your medicines..."
-                className="ml-2 bg-transparent border-none focus:outline-none w-64"
+                className="w-64 ml-2 bg-transparent border-none focus:outline-none"
               />
             </div>
-            <div className="flex items-center space-x-1 cursor-pointer hover:bg-gray-100 rounded-full px-3 py-2">
+            <div className="flex items-center px-3 py-2 space-x-1 rounded-full cursor-pointer hover:bg-gray-100">
               <IoLocationOutline size={20} className="text-gray-600" />
               <span className="text-lg font-medium">Update Location</span>
               <FaSortDown size={12} />
@@ -137,20 +131,29 @@ const Navbar = () => {
 
           {/* Icons */}
           <div className="flex items-center space-x-3">
-            <div className="hidden md:flex space-x-3">
-              <button className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150">
+            <div className="hidden space-x-3 md:flex">
+              <Link
+                href={"/wishlist"}
+                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+              >
                 <FaRegHeart size={20} />
-              </button>
-              <button className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150">
+              </Link>
+              <Link
+                href={"/cart"}
+                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+              >
                 <IoCartOutline size={20} />
-              </button>
-              <button className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150">
+              </Link>
+              <Link
+                href={"/profile"}
+                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+              >
                 <FaRegUser size={20} />
-              </button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center">
+            <div className="flex items-center md:hidden">
               <button
                 onClick={toggleMobileMenu}
                 className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#004A06]"
@@ -165,8 +168,8 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white shadow-md">
-          <ul className="flex flex-col space-y-2 px-4 py-2">
+        <div className="bg-white shadow-md md:hidden">
+          <ul className="flex flex-col px-4 py-2 space-y-2">
             {navLinks.map((link) => (
               <li key={link.name} className="cursor-pointer">
                 {link.subLinks ? (
@@ -180,7 +183,9 @@ const Navbar = () => {
                       {link.name}
                       <FaSortDown
                         className={`transform transition-transform duration-150 ${
-                          activeDropdown === link.name ? "rotate-180" : "rotate-0"
+                          activeDropdown === link.name
+                            ? "rotate-180"
+                            : "rotate-0"
                         }`}
                       />
                     </button>
@@ -192,10 +197,7 @@ const Navbar = () => {
                             key={subLink.name}
                             className="hover:bg-[#004A06] hover:text-white rounded-full px-3 py-2"
                           >
-                            <Link
-                              href={subLink.href}
-                              className="block"
-                            >
+                            <Link href={subLink.href} className="block">
                               {subLink.name}
                             </Link>
                           </li>
@@ -214,21 +216,30 @@ const Navbar = () => {
               </li>
             ))}
             {/* Additional Mobile Menu Items (e.g., Location, Icons) */}
-            <li className="flex items-center space-x-1 cursor-pointer hover:bg-gray-100 rounded-full px-3 py-2">
+            <li className="flex items-center px-3 py-2 space-x-1 rounded-full cursor-pointer hover:bg-gray-100">
               <IoLocationOutline size={20} className="text-gray-600" />
               <span className="text-lg font-medium">Update Location</span>
               <FaSortDown size={12} />
             </li>
             <li className="flex space-x-3">
-              <button className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150">
+              <Link
+                href={"/wishlist"}
+                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+              >
                 <FaRegHeart size={20} />
-              </button>
-              <button className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150">
+              </Link>
+              <Link
+                href={"/cart"}
+                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+              >
                 <IoCartOutline size={20} />
-              </button>
-              <button className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150">
+              </Link>
+              <Link
+                href={"/profile"}
+                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+              >
                 <FaRegUser size={20} />
-              </button>
+              </Link>
             </li>
           </ul>
         </div>

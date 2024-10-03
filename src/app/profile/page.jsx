@@ -52,7 +52,7 @@ const page = () => {
   ];
 
   return (
-    <section className="bg-[#F7F7F7] p-10">
+    <section className="bg-[#F7F7F7] p-10 pt-20">
       <h1 className="mb-10 text-5xl font-semibold">Profile</h1>
       <div className="grid grid-cols-3 gap-10">
         {profileData.map((data, index) => (

@@ -7,7 +7,7 @@ function Page() {
   return (
     <section className="px-20 pt-24 pb-10">
       <div className="flex items-center justify-center gap-10">
-        <div className="w-1/2">
+        <div className="w-1/2 h-screen">
           <div className="flex justify-between px-2 mb-5">
             <h1 className="text-2xl font-medium">Shopping Cart (2 items)</h1>
             <button className="flex items-center gap-1 text-[#6BA2C2] text-xl">
@@ -62,32 +62,48 @@ function Page() {
             </div>
           </div>
         </div>
-        <div className="w-[40%] bg-[#F7F7F7] p-5 mt-10">
-          <div className="flex flex-col gap-5">
-            <h2 className="text-3xl font-medium">Order Details</h2>
-            <div className="flex justify-between text-xl">
-              <span>Bag Total</span>
-              <span>Rs. 2380.00</span>
+
+        <div className="w-[40%] h-screen">
+          <div className="bg-[#F7F7F7] p-5 mt-10">
+            <div className="flex flex-col gap-5">
+              <h2 className="text-3xl font-medium">Order Details</h2>
+              <div className="flex justify-between text-xl">
+                <span>Bag Total</span>
+                <span>Rs. 2380.00</span>
+              </div>
+              <div className="flex justify-between text-xl">
+                <span>Bag Discount</span>
+                <span className="text-[#866528]">Rs. 1639.00</span>
+              </div>
+              <div className="flex justify-between text-xl">
+                <span className="text-gray-500">Delivery Fee</span>
+                <span>Rs. 99.00</span>
+              </div>
+              <div className="flex justify-between text-xl">
+                <span className="text-gray-500">Platform Fee</span>
+                <span>Rs. 28.00</span>
+              </div>
+              <div className="flex justify-between pt-2 text-xl font-bold border-t-2 border-black border-dashed">
+                <span>Order Total</span>
+                <span>Rs. 886.00</span>
+              </div>
+              <button className="py-2 mt-5 text-xl font-medium text-white duration-200 bg-black hover:opacity-85">
+                Proceed To Shipping
+              </button>
             </div>
-            <div className="flex justify-between text-xl">
-              <span>Bag Discount</span>
-              <span className="text-[#866528]">Rs. 1639.00</span>
+          </div>
+
+          <div className="bg-[#F7F7F7] p-5 mt-10 flex flex-col gap-4">
+            <h2 className="text-3xl font-medium">Return/Refund Policy</h2>
+            <p>
+              In case of return, we ensure quick refunds. Full amount will be
+              refunded excluding Convenience Fee
+            </p>
+            <div className="flex justify-start">
+              <button className="text-[#6BA2C2] text-2xl font-medium">
+                Read Policy
+              </button>
             </div>
-            <div className="flex justify-between text-xl">
-              <span className="text-gray-500">Delivery Fee</span>
-              <span>Rs. 99.00</span>
-            </div>
-            <div className="flex justify-between text-xl">
-              <span className="text-gray-500">Platform Fee</span>
-              <span>Rs. 28.00</span>
-            </div>
-            <div className="flex justify-between pt-2 text-xl font-bold border-t-2 border-black border-dashed">
-              <span>Order Total</span>
-              <span>Rs. 886.00</span>
-            </div>
-            <button className="py-2 mt-5 text-xl font-medium text-white duration-200 bg-black hover:opacity-85">
-              Proceed To Shipping
-            </button>
           </div>
         </div>
       </div>

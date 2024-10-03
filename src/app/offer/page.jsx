@@ -81,7 +81,7 @@ const page = () => {
   };
 
   return (
-    <section>
+    <section className="pt-16">
       <div className="h-[320px] w-full relative overflow-hidden">
         <video
           preload="none"
