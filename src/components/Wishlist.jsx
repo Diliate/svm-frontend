@@ -35,7 +35,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-const ProductList = () => {
+const WishtList = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const products = Array.from({ length: 12 });
   const totalSlides = products.length;
@@ -84,10 +84,8 @@ const ProductList = () => {
     <div className="px-10 py-10">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-lg font-light uppercase">our popular products</h3>
-          <h1 className="text-4xl font-medium">
-            Latest Herbal <br /> Collections
-          </h1>
+          <h3 className="text-lg font-light uppercase">Product Wishlist</h3>
+          
         </div>
         <div>
           <button className="flex items-center gap-2 py-3 px-10 uppercase border-[1px] border-black rounded-full hover:bg-black hover:text-white duration-200">
@@ -105,4 +103,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default WishtList;
