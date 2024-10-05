@@ -2,7 +2,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <section className="p-10 pt-20">
+    <section className="p-5">
       <h1 className="text-4xl font-semibold text-center">
         Terms and Conditions
       </h1>

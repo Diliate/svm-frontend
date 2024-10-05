@@ -48,7 +48,7 @@ const page = () => {
     },
   ];
   return (
-    <section className="p-10 pt-20">
+    <section className="p-5">
       <div className="flex flex-col items-center justify-center">
         <div className="w-[80%]">
           <h1 className="text-5xl font-semibold">Need Help with Orders?</h1>
