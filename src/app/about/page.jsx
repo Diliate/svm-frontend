@@ -20,11 +20,11 @@ const page = () => {
     },
   ];
   return (
-    <section className="pt-20 pb-10 px-4 md:px-10">
+    <section className="px-4 pt-20 pb-10 md:px-10">
       <div className="flex flex-col items-center justify-center gap-10 md:gap-20">
         {/* First Section */}
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
-          <div className="relative w-full md:w-1/2 h-64 md:h-auto">
+        <div className="flex flex-col items-center gap-10 md:flex-row md:items-start">
+          <div className="relative w-full h-64 md:w-1/2 md:h-auto">
             <video
               preload="none"
               autoPlay
@@ -36,48 +36,49 @@ const page = () => {
             </video>
           </div>
 
-          <div className="w-full md:w-1/2 flex flex-col gap-5">
-            <h1 className="text-3xl md:text-5xl font-semibold">About SVM</h1>
+          <div className="flex flex-col w-full gap-5 md:w-1/2">
+            <h1 className="text-3xl font-semibold md:text-5xl">About SVM</h1>
             <p className="text-base md:text-[21px] text-justify text-gray-600">
-              At SVM, we believe in nature's power to heal, nurture, and restore.
-              Our journey began with a simple idea: to bring the purest and most
-              effective herbal products to everyone. We are passionate about
-              harnessing the natural goodness of herbs, plants, and botanicals to
-              create products that support your well-being and connect you with the
-              ancient wisdom of nature.
+              At SVM, we believe in nature's power to heal, nurture, and
+              restore. Our journey began with a simple idea: to bring the purest
+              and most effective herbal products to everyone. We are passionate
+              about harnessing the natural goodness of herbs, plants, and
+              botanicals to create products that support your well-being and
+              connect you with the ancient wisdom of nature.
             </p>
             <p className="text-base md:text-[21px] text-justify text-gray-600">
               Our mission is to provide high-quality, natural, and sustainable
-              herbal products that enhance lives. Each product is carefully crafted
-              using the finest herbs, sourced from trusted suppliers who share our
-              commitment to quality and sustainability.
+              herbal products that enhance lives. Each product is carefully
+              crafted using the finest herbs, sourced from trusted suppliers who
+              share our commitment to quality and sustainability.
             </p>
           </div>
         </div>
 
         {/* Second Section */}
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
-          <div className="w-full md:w-1/2 flex flex-col gap-5">
-            <h2 className="text-3xl md:text-5xl font-semibold">Our History</h2>
+        <div className="flex flex-col items-center gap-10 md:flex-row md:items-start">
+          <div className="flex flex-col w-full gap-5 md:w-1/2">
+            <h2 className="text-3xl font-semibold md:text-5xl">Our History</h2>
             <p className="text-base md:text-[21px] text-justify text-gray-600">
               SVM was founded in 2000 with a simple vision: to bring the healing
               power of nature to everyone. Our journey began when our founder,
               David, discovered the incredible benefits of herbs and natural
-              remedies while growing up surrounded by nature. With a deep respect
-              for the environment and a passion for holistic wellness, he set out to
-              create a brand that offers pure, natural, and effective products.
+              remedies while growing up surrounded by nature. With a deep
+              respect for the environment and a passion for holistic wellness,
+              he set out to create a brand that offers pure, natural, and
+              effective products.
             </p>
             <p className="text-base md:text-[21px] text-justify text-gray-600">
-              At SVM, we believe in the wisdom of nature and strive to honor it by
-              crafting products that are free from synthetic chemicals and harmful
-              additives. Each product is carefully formulated using the finest herbs
-              and botanicals, ensuring that our customers receive only the best. We
-              are dedicated to promoting a healthier, more sustainable way of
-              living, and we invite you to join us on this journey toward natural
-              wellness.
+              At SVM, we believe in the wisdom of nature and strive to honor it
+              by crafting products that are free from synthetic chemicals and
+              harmful additives. Each product is carefully formulated using the
+              finest herbs and botanicals, ensuring that our customers receive
+              only the best. We are dedicated to promoting a healthier, more
+              sustainable way of living, and we invite you to join us on this
+              journey toward natural wellness.
             </p>
           </div>
-          <div className="relative w-full md:w-1/2 h-64 md:h-auto">
+          <div className="relative w-full h-64 md:w-1/2 md:h-auto">
             <Image
               src="/banner.png"
               alt="about-banner"
@@ -89,11 +90,11 @@ const page = () => {
 
         {/* Third Section */}
         <div>
-          <h2 className="mb-10 text-3xl md:text-5xl font-semibold text-center">
+          <h2 className="mb-10 text-3xl font-semibold text-center md:text-5xl">
             Why Choose Us
           </h2>
 
-          <div className="flex flex-col md:flex-row flex-wrap justify-center gap-6 md:gap-12">
+          <div className="flex flex-col flex-wrap justify-center gap-6 md:flex-row md:gap-12">
             {aboutData.map((data, index) => (
               <div
                 key={index}
@@ -105,10 +106,10 @@ const page = () => {
                   height={90}
                   width={90}
                 />
-                <h2 className="text-xl md:text-2xl font-semibold">
+                <h2 className="text-xl font-semibold md:text-2xl">
                   {data.heading}
                 </h2>
-                <p className="text-base md:text-xl text-center">{data.desc}</p>
+                <p className="text-base text-center md:text-xl">{data.desc}</p>
               </div>
             ))}
           </div>
