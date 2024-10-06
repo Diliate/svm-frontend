@@ -98,7 +98,7 @@ const ProductList = () => {
           </button>
         </Link>
       </div>
-      <Slider {...settings}>
+      <Slider {...settings} className="border-2">
         {products.map((_, index) => (
           <ProductCard key={index} />
         ))}
