@@ -20,7 +20,7 @@ const page = () => {
     },
   ];
   return (
-    <section className="px-4 pt-20 pb-10 md:px-10">
+    <section className="px-5 pt-20 pb-10 md:px-10">
       <div className="flex flex-col items-center justify-center gap-10 md:gap-20">
         {/* First Section */}
         <div className="flex flex-col items-center gap-10 md:flex-row md:items-start">
@@ -78,7 +78,7 @@ const page = () => {
               journey toward natural wellness.
             </p>
           </div>
-          <div className="relative w-full h-64 md:w-1/2 md:h-auto">
+          <div className="relative md:w-1/2 w-full h-[400px]">
             <Image
               src="/banner.png"
               alt="about-banner"
