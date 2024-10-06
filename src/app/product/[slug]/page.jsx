@@ -240,7 +240,7 @@ const Page = () => {
             <div className="mt-5">
               <Slider {...settings}>
                 {products.map((_, index) => (
-                  <div key={index} className="p-2">
+                  <div className="p-5" key={index}>
                     <ProductCard />
                   </div>
                 ))}

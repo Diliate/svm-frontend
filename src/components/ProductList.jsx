@@ -98,9 +98,11 @@ const ProductList = () => {
           </button>
         </Link>
       </div>
-      <Slider {...settings} className="border-2">
+      <Slider {...settings}>
         {products.map((_, index) => (
-          <ProductCard key={index} />
+          <div className="p-5 ">
+            <ProductCard key={index} />
+          </div>
         ))}
       </Slider>
     </div>

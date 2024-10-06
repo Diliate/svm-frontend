@@ -98,7 +98,9 @@ const ProductList = () => {
       </div>
       <Slider {...settings}>
         {products.map((_, index) => (
-          <ProductCard key={index} />
+          <div className="p-5">
+            <ProductCard key={index} />
+          </div>
         ))}
       </Slider>
     </div>
