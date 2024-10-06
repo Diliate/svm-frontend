@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Blogs = () => {
@@ -23,11 +24,11 @@ const Blogs = () => {
     },
   ];
   return (
-    <section className="px-10 py-10">
-      <h1 className="mb-10 text-5xl font-semibold text-center">
+    <section className="px-5 py-10 md:px-10">
+      <h1 className="mb-10 text-4xl font-semibold text-center md:text-5xl">
         From Our Blogs
       </h1>
-      <div className="flex justify-center gap-20">
+      <div className="flex flex-col items-center justify-center gap-10 md:gap-20 md:flex-row">
         {blogData.map((blog, index) => (
           <div
             key={index}
@@ -48,17 +49,23 @@ const Blogs = () => {
               <p className="my-5">
                 {blog.name} | {blog.date}
               </p>
-              <button className="px-4 py-2 text-white duration-200 bg-black rounded-md shadow-lg text-md hover:opacity-85">
+              <Link
+                href={"/blog"}
+                className="px-4 py-2 text-white duration-200 bg-black rounded-md shadow-lg text-md hover:opacity-85"
+              >
                 Read More
-              </button>
+              </Link>
             </div>
           </div>
         ))}
       </div>
       <div className="flex justify-center mt-5">
-        <button className="px-14 py-2 uppercase border-[1px] border-black rounded-full mt-5 hover:bg-black hover:text-white duration-200">
+        <Link
+          href={"/blog"}
+          className="px-14 py-2 uppercase border-[1px] border-black rounded-full mt-5 hover:bg-black hover:text-white duration-200"
+        >
           view all post
-        </button>
+        </Link>
       </div>
     </section>
   );

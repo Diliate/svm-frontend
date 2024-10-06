@@ -25,8 +25,8 @@ const Features = () => {
     },
   ];
   return (
-    <section className="px-10 py-10">
-      <div className="flex justify-between">
+    <section className="px-5 py-10 md:px-10">
+      <div className="flex flex-col items-center justify-center gap-5 md:items-start md:justify-between md:gap-0 md:flex-row ">
         {featureData.map((feature, index) => (
           <div
             key={index}

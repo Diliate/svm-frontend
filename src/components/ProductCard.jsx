@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaStar } from "react-icons/fa6";
 
@@ -21,12 +22,16 @@ const ProductCard = () => {
         <p className="text-lg">Rs 1200</p>
       </div>
       <div className="">
-        <button className="text-white bg-[#004A06] rounded-bl-3xl w-1/2 py-2 hover:opacity-85 duration-200">
-          Add to Cart
-        </button>
-        <button className="w-1/2 py-2 text-white duration-200 bg-black rounded-br-3xl hover:opacity-85">
-          Buy Now
-        </button>
+        <Link href={"/cart"}>
+          <button className="text-white bg-[#004A06] rounded-bl-3xl w-1/2 py-2 hover:opacity-85 duration-200">
+            Add to Cart
+          </button>
+        </Link>
+        <Link href={"/payment"}>
+          <button className="w-1/2 py-2 text-white duration-200 bg-black rounded-br-3xl hover:opacity-85">
+            Buy Now
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer>
       {/* Main Footer Container */}
-      <div className="flex flex-col lg:flex-row justify-between px-5 lg:px-10 pt-10 pb-3 bg-[#F9F9EB]">
+      <div className="flex flex-col lg:flex-row justify-between px-5 md:px-10 pt-10 pb-3 bg-[#F9F9EB]">
         {/* Logo and Contact Information */}
         <div className="flex flex-col flex-1 gap-4 mb-8 lg:mb-0">
           <div className="flex items-center">
@@ -40,7 +40,7 @@ const Footer = () => {
         </div>
 
         {/* Links Sections */}
-        <div className="flex flex-col flex-1 gap-8 mb-8 sm:flex-row lg:gap-14 lg:mb-0">
+        <div className="flex flex-col flex-1 gap-8 mb-8 ml-0 md:ml-20 sm:flex-row lg:gap-14 lg:mb-0">
           {/* Menu */}
           <div>
             <h2 className="mb-3 text-xl font-bold">Menu</h2>
@@ -117,19 +117,19 @@ const Footer = () => {
         </div>
 
         {/* Newsletter and Social Media */}
-        <div className="flex flex-col flex-1 gap-4">
+        <div className="flex flex-col flex-1 gap-4 md:ml-20 ml-">
           <h2 className="text-2xl font-bold">Get Active Updates</h2>
           <p className="text-base sm:text-lg">
             The ideal way to stay in contact and learn about our exclusive
             offers.
           </p>
-          <div className="flex items-center justify-center gap-2 px-3 py-1 border-2 border-black rounded-full sm:flex-row sm:items-start sm:gap-0">
+          <div className="flex items-center justify-center py-1 pl-3 pr-2 border-2 border-black rounded-full md:w-[350px]">
             <input
               type="email"
               placeholder="Enter your Email"
-              className="flex-1 w-full px-3 mt-[6px] bg-transparent border-none outline-none sm:w-auto"
+              className="w-full px-3 bg-transparent border-none outline-none"
             />
-            <button className="rounded-full bg-[#004A06] text-white px-5 py-2 mt-2 sm:mt-0 sm:ml-2 hover:opacity-85 duration-200">
+            <button className="rounded-full bg-[#004A06] text-white px-5 py-2 hover:opacity-85 duration-200">
               Submit
             </button>
           </div>

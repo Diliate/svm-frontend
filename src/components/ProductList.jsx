@@ -6,6 +6,7 @@ import ProductCard from "./ProductCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import Link from "next/link";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
@@ -13,9 +14,9 @@ function SampleNextArrow(props) {
     isVisible && (
       <button
         onClick={onClick}
-        className="absolute z-20 flex items-center justify-center w-16 h-16 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full -right-4 top-1/2 hover:bg-opacity-75"
+        className="absolute z-20 flex items-center justify-center w-10 h-10 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full md:w-16 md:h-16 -right-4 top-1/2 hover:bg-opacity-75"
       >
-        <FaChevronRight size={40} />
+        <FaChevronRight className="w-5 h-5 md:w-10 md:h-10" />
       </button>
     )
   );
@@ -27,9 +28,9 @@ function SamplePrevArrow(props) {
     isVisible && (
       <button
         onClick={onClick}
-        className="absolute z-20 flex items-center justify-center w-16 h-16 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full -left-4 top-1/2 hover:bg-opacity-75"
+        className="absolute z-20 flex items-center justify-center w-10 h-10 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full md:w-16 md:h-16 -left-4 top-1/2 hover:bg-opacity-75"
       >
-        <FaChevronLeft size={40} />
+        <FaChevronLeft className="w-5 h-5 md:w-10 md:h-10" />
       </button>
     )
   );
@@ -73,7 +74,7 @@ const ProductList = () => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 1.1,
           slidesToScroll: 1,
         },
       },
@@ -81,19 +82,21 @@ const ProductList = () => {
   };
 
   return (
-    <div className="px-10 py-10">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-5 py-10 md:px-10">
+      <div className="flex flex-col items-start justify-between gap-5 mb-6 md:gap-0 md:items-center md:flex-row">
         <div>
-          <h3 className="text-lg font-light uppercase">our popular products</h3>
-          <h1 className="text-4xl font-medium">
+          <h3 className="font-light uppercase md:text-lg">
+            our popular products
+          </h3>
+          <h1 className="text-3xl font-medium md:text-4xl">
             Latest Herbal <br /> Collections
           </h1>
         </div>
-        <div>
-          <button className="flex items-center gap-2 py-3 px-10 uppercase border-[1px] border-black rounded-full hover:bg-black hover:text-white duration-200">
+        <Link href={"/shop"}>
+          <button className="flex items-center gap-2 md:py-3 py-2 md:px-10 px-5 uppercase border-[1px] border-black rounded-full hover:bg-black hover:text-white duration-200">
             view all products <FaChevronRight />
           </button>
-        </div>
+        </Link>
       </div>
       <Slider {...settings}>
         {products.map((_, index) => (
