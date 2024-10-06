@@ -1,10 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaStar } from "react-icons/fa6";
 
 const ProductCard = () => {
   return (
-    <div className="border-2 rounded-3xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] w-[275px] bg-[#F9F9EB]">
+    <div className="border-2 rounded-3xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] w-[275px] bg-[#F9F9EB] duration-300 hover:scale-105">
       <div className="flex items-center justify-center gap-3 mt-2">
         <div className="flex items-center justify-center text-xl font-medium text-white bg-black shadow-xl w-9 h-9">
           04
@@ -16,9 +17,9 @@ const ProductCard = () => {
           04
         </div>
       </div>
-      <div>
+      <Link href={"/product/1"}>
         <Image src="/product.png" alt="product" height={290} width={290} />
-      </div>
+      </Link>
       <div className="px-4 pb-5">
         <p className="text-lg">Syrup</p>
         <div className="flex justify-between my-2">

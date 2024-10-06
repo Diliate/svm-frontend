@@ -19,10 +19,10 @@ const page = () => {
     return (
       isVisible && (
         <button
-          className="absolute z-20 flex items-center justify-center w-16 h-16 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full -right-4 top-1/2 hover:bg-opacity-75"
           onClick={onClick}
+          className="absolute z-20 flex items-center justify-center w-10 h-10 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full md:w-16 md:h-16 -right-4 top-1/2 hover:bg-opacity-75"
         >
-          <FaChevronRight size={40} />
+          <FaChevronRight className="w-5 h-5 md:w-10 md:h-10" />
         </button>
       )
     );
@@ -33,10 +33,10 @@ const page = () => {
     return (
       isVisible && (
         <button
-          className="absolute z-20 flex items-center justify-center w-16 h-16 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full -left-4 top-1/2 hover:bg-opacity-75"
           onClick={onClick}
+          className="absolute z-20 flex items-center justify-center w-10 h-10 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full md:w-16 md:h-16 -left-4 top-1/2 hover:bg-opacity-75"
         >
-          <FaChevronLeft size={40} />
+          <FaChevronLeft className="w-5 h-5 md:w-10 md:h-10" />
         </button>
       )
     );
@@ -74,7 +74,7 @@ const page = () => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 1.1,
           slidesToScroll: 1,
         },
       },
@@ -83,19 +83,19 @@ const page = () => {
 
   return (
     <section className="pt-16">
-      <div className="h-[430px] w-full relative overflow-hidden">
+      <div className="md:h-[430px] h-auto w-full relative overflow-hidden">
         <img src="/limited-offer.png" alt="offer" className="w-full" />
       </div>
 
-      <div className="p-10">
-        <h3 className="mb-2 text-2xl font-light uppercase ">
+      <div className="p-5 md:p-10">
+        <h3 className="mb-2 text-lg font-light uppercase md:text-2xl ">
           our popular products
         </h3>
-        <h1 className="text-5xl font-medium w-[550px]">
+        <h1 className="md:text-5xl text-3xl font-medium md:w-[550px] w-auto">
           Get 50% off on Ayurvedic Product
         </h1>
 
-        <div className="grid grid-cols-4 gap-16 mt-10">
+        <div className="grid grid-cols-1 gap-16 mt-10 md:grid-cols-4 place-items-center">
           {products.map((_, index) => (
             <div key={index} className="mb-10">
               <LimitedOfferProductCard />
