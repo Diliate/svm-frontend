@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import ProductCard from "@/components/ProductCard";
+import Link from "next/link";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
@@ -22,9 +23,9 @@ function SampleNextArrow(props) {
     isVisible && (
       <button
         onClick={onClick}
-        className="absolute z-20 flex items-center justify-center w-16 h-16 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full -right-4 top-1/2 hover:bg-opacity-75"
+        className="absolute z-20 flex items-center justify-center w-10 h-10 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full md:w-16 md:h-16 -right-4 top-1/2 hover:bg-opacity-75"
       >
-        <FaChevronRight size={40} />
+        <FaChevronRight className="w-5 h-5 md:w-10 md:h-10" />
       </button>
     )
   );
@@ -36,9 +37,9 @@ function SamplePrevArrow(props) {
     isVisible && (
       <button
         onClick={onClick}
-        className="absolute z-20 flex items-center justify-center w-16 h-16 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full -left-4 top-1/2 hover:bg-opacity-75"
+        className="absolute z-20 flex items-center justify-center w-10 h-10 text-white duration-200 transform -translate-y-1/2 bg-black bg-opacity-50 rounded-full md:w-16 md:h-16 -left-4 top-1/2 hover:bg-opacity-75"
       >
-        <FaChevronLeft size={40} />
+        <FaChevronLeft className="w-5 h-5 md:w-10 md:h-10" />
       </button>
     )
   );
@@ -86,7 +87,7 @@ const Page = () => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.5,
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
@@ -94,12 +95,12 @@ const Page = () => {
   };
 
   return (
-    <section className="px-10 pt-32 pb-20">
+    <section className="px-5 pt-20 pb-20 md:pt-32 md:px-10">
       <div className="w-full">
-        <div className="flex items-start justify-center">
+        <div className="flex flex-col items-start justify-center gap-5 md:gap-0 md:flex-row">
           {/* IMAGES */}
-          <div className="flex items-center justify-center w-1/2 gap-5">
-            <div className="flex flex-col gap-2 ">
+          <div className="flex flex-col-reverse items-center justify-center w-full gap-5 md:flex-row md:w-1/2">
+            <div className="flex flex-row gap-2 md:flex-col">
               {Array.from({ length: 4 }, (_, index) => (
                 <div
                   key={index}
@@ -114,7 +115,7 @@ const Page = () => {
                 </div>
               ))}
             </div>
-            <div className="border-2 rounded-xl bg-[#F9F9EB] w-[300px] h-[340px] flex items-center justify-center">
+            <div className="border-2 rounded-xl bg-[#F9F9EB] md:w-[300px] w-[345px] md:h-[340px] h-[250px] flex items-center justify-center">
               <Image
                 src="/product.png"
                 alt="product"
@@ -125,7 +126,7 @@ const Page = () => {
           </div>
 
           {/* DESC */}
-          <div className="flex flex-col w-[45%] gap-5">
+          <div className="flex flex-col md:w-[45%] w-full gap-5">
             <h1 className="text-3xl font-medium">
               SKIN : PILE - C - Capsules - for Bleeding and Healing
             </h1>
@@ -153,29 +154,33 @@ const Page = () => {
             </div>
             <h3 className="text-2xl font-medium">Rs 1490</h3>
             <div className="flex gap-3">
-              <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-black rounded-full hover:opacity-85">
-                Add to Cart
-              </button>
-              <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-green-800 rounded-full hover:opacity-85">
-                Buy Now
-              </button>
+              <Link href={"/cart"}>
+                <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-black rounded-full hover:opacity-85">
+                  Add to Cart
+                </button>
+              </Link>
+              <Link href={"/payment"}>
+                <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-green-800 rounded-full hover:opacity-85">
+                  Buy Now
+                </button>
+              </Link>
             </div>
           </div>
         </div>
 
         {/* DESCRIPTION */}
-        <div className="flex flex-col items-center justify-center mt-20 mb-10">
-          <div className="w-[85%]">
-            <h2 className="mb-3 text-4xl font-medium text-center">
+        <div className="flex flex-col items-center justify-center mt-10 mb-10 md:mt-20">
+          <div className="md:w-[85%] w-full">
+            <h2 className="mb-3 text-4xl font-medium text-left md:text-center">
               Description
             </h2>
             <div className="flex flex-col gap-2">
-              <p className="text-2xl">
+              <p className="text-xl md:text-2xl">
                 Each tablet contains a carefully selected combination of
                 echinacea, turmeric, ashwagandha, and elderberry, known for
                 their immune-boosting and anti-inflammatory properties.
               </p>
-              <p className="text-2xl">
+              <p className="text-xl md:text-2xl">
                 This powerful blend has been formulated to support your overall
                 health and well-being, helping you to stay active and energized.
               </p>
@@ -190,9 +195,11 @@ const Page = () => {
 
         {/* REVIEW */}
         <div className="flex flex-col gap-4 my-5">
-          <h2 className="text-2xl font-medium text-center">User Review</h2>
+          <h2 className="text-2xl font-medium text-left md:text-center">
+            User Review
+          </h2>
           <div className="flex items-center justify-center">
-            <div className="w-[85%]">
+            <div className="md:w-[85%] w-full">
               <div className="flex items-end gap-2">
                 <h2 className="text-4xl">{rating}</h2>
                 <span className="flex">
@@ -207,9 +214,11 @@ const Page = () => {
 
           {/* TESTIMONIALS */}
           <div className="flex items-center justify-center">
-            <Slider {...settings} className="w-[90%]">
+            <Slider {...settings} className="md:w-[90%] w-full">
               {testimonials.map((_, index) => (
-                <TestimonialCard key={index} />
+                <div key={index} className="p-2">
+                  <TestimonialCard />
+                </div>
               ))}
             </Slider>
           </div>

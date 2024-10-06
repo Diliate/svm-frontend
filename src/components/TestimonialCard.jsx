@@ -6,7 +6,7 @@ const TestimonialCard = () => {
   const rating = 5;
 
   return (
-    <div className="p-5 rounded-lg shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] w-[350px]">
+    <div className="p-5 rounded-lg shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] md:w-[350px] w-auto">
       <div className="flex gap-5">
         <div className="w-16 h-16 rounded-full border-[1px] relative overflow-hidden">
           <Image src="/testimonialpfp.png" alt="pfp" fill objectFit="cover" />
