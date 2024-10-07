@@ -1,45 +1,83 @@
-import React from 'react';
-import BlogCard from '../../components/BlogCard'; // Adjust the path as per your structure
+// Blog page component
+import React from "react";
+import AnimatedBlogCard from "@/components/AnimatedBlogCard";
 
 const Page = () => {
   const blogs = [
     {
-      title: 'How to Protect Your Skin in Sunlight',
-      image: '/images/blog1.jpg',
-      excerpt: 'Learn the best practices for protecting your skin from harmful UV rays...',
-      slug: 'protect-skin-sunlight',
+      title: "How to Protect Your Skin in Sunlight",
+      image: "/blog/blog7.png",
+      excerpt:
+        "Learn the best practices for protecting your skin from harmful UV rays...",
+      slug: "protect-skin-sunlight",
     },
     {
-      title: 'Method for Dealing with Your Blemish',
-      image: '/images/blog2.jpg',
-      excerpt: 'Dealing with blemishes can be frustrating. Here are some effective methods...',
-      slug: 'dealing-with-blemish',
+      title: "Method for Dealing with Your Blemish",
+      image: "/blog/blog8.png",
+      excerpt:
+        "Dealing with blemishes can be frustrating. Here are some effective methods...",
+      slug: "dealing-with-blemish",
     },
     {
-      title: 'Best Herbal Tea for Weight Loss',
-      image: '/images/blog3.jpg',
-      excerpt: 'Discover the benefits of herbal tea for weight loss and overall health...',
-      slug: 'herbal-tea-weight-loss',
+      title: "Best Herbal Tea for Weight Loss",
+      image: "/blog/blog9.png",
+      excerpt:
+        "Discover the benefits of herbal tea for weight loss and overall health...",
+      slug: "herbal-tea-weight-loss",
+    },
+    {
+      title: "How to Protect Your Skin in Sunlight",
+      image: "/blog/blog4.png",
+      excerpt:
+        "Learn the best practices for protecting your skin from harmful UV rays...",
+      slug: "protect-skin-sunlight",
+    },
+    {
+      title: "Method for Dealing with Your Blemish",
+      image: "/blog/blog5.png",
+      excerpt:
+        "Dealing with blemishes can be frustrating. Here are some effective methods...",
+      slug: "dealing-with-blemish",
+    },
+    {
+      title: "Best Herbal Tea for Weight Loss",
+      image: "/blog/blog6.png",
+      excerpt:
+        "Discover the benefits of herbal tea for weight loss and overall health...",
+      slug: "herbal-tea-weight-loss",
+    },
+    {
+      title: "How to Protect Your Skin in Sunlight",
+      image: "/blog/blog1.png",
+      excerpt:
+        "Learn the best practices for protecting your skin from harmful UV rays...",
+      slug: "protect-skin-sunlight",
+    },
+    {
+      title: "Method for Dealing with Your Blemish",
+      image: "/blog/blog2.png",
+      excerpt:
+        "Dealing with blemishes can be frustrating. Here are some effective methods...",
+      slug: "dealing-with-blemish",
+    },
+    {
+      title: "Best Herbal Tea for Weight Loss",
+      image: "/blog/blog3.png",
+      excerpt:
+        "Discover the benefits of herbal tea for weight loss and overall health...",
+      slug: "herbal-tea-weight-loss",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 pt-24 pb-8">
-      <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center mb-6 text-gray-800">Our Blog</h1>
+    <div className="min-h-screen pt-24 pb-8 bg-gray-100">
+      <div className="container px-4 mx-auto">
+        <h1 className="mb-6 text-4xl font-bold text-center text-gray-800">
+          Our Blog
+        </h1>
         <div className="flex flex-wrap justify-center">
           {blogs.map((blog, index) => (
-            <BlogCard key={index} blog={blog} />
-          ))}
-        </div>
-        <div className="flex flex-wrap justify-center">
-          {blogs.map((blog, index) => (
-            <BlogCard key={index} blog={blog} />
-          ))}
-        </div>
-        <div className="flex flex-wrap justify-center">
-          {blogs.map((blog, index) => (
-            <BlogCard key={index} blog={blog} />
+            <AnimatedBlogCard key={index} blog={blog} index={index} />
           ))}
         </div>
       </div>

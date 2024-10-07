@@ -1,28 +1,242 @@
 import React from "react";
 import { notFound } from "next/navigation"; // Next.js function to handle 404s
+import Image from "next/image";
 
 // Mock data: You would replace this with your actual data fetching logic (e.g., from an API or database)
 const blogs = [
   {
     slug: "protect-skin-sunlight",
     title: "How to Protect Your Skin in Sunlight",
-    image: "/images/blog1.jpg",
+    image: "/blog/blog7.png",
     content:
-      "In this article, we will discuss the best practices for protecting your skin from harmful UV rays...",
+      "In a world where modern medicine often takes the spotlight, the ancient wisdom of Ayurveda continues to thrive, offering a holistic approach to health and well-being. Rooted in India's rich heritage, Ayurveda is more than just a system of medicine—it's a way of life that emphasizes balance, harmony, and connection with nature.Rooted in India's rich heritage, Ayurveda is more than just a system of medicine Ayurveda is more than just a system of medicine",
+    title2: "What is Ayurveda?",
+    content2:
+      "Ayurveda, which translates to the science of life, is one of the world's oldest healing systems, dating back over 5,000 years. Unlike conventional medicine, which often focuses on treating symptoms, Ayurveda seeks to address the root cause of ailments by restoring balance within the body, mind, and spirit. It is based on the belief that each individual is unique, and therefore, treatment should be personalized to meet their specific needs.",
+    title3: "The Three Doshas: Vata, Pitta, and Kapha",
+    para: "Central to Ayurvedic philosophy is the concept of the three doshas—Vata, Pitta, and Kapha. These doshas are energies that govern our physiological and psychological functions.",
+    points: [
+      {
+        title: "Vata:",
+        desc: "Composed of air and space, Vata controls movement in the body, including circulation, breathing, and the flow of thoughts. When balanced, Vata promotes creativity and flexibility. When imbalanced, it can lead to anxiety, dry skin, and digestive issues.",
+      },
+      {
+        title: "Pitta:",
+        desc: "Made up of fire and water, Pitta is responsible for metabolism, digestion, and body temperature regulation. A balanced Pitta leads to a sharp intellect and healthy digestion, while an imbalance can result in irritability, inflammation, and ulcers.",
+      },
+      {
+        title: "Kapah:",
+        desc: "Formed from earth and water, Kapha provides structure and stability. It governs the immune system, lubrication of joints, and emotional resilience. Balanced Kapha is linked to calmness and strength, but an imbalance can cause weight gain, lethargy, and respiratory problems.",
+      },
+    ],
   },
   {
     slug: "dealing-with-blemish",
     title: "Method for Dealing with Your Blemish",
-    image: "/images/blog2.jpg",
+    image: "/blog/blog8.png",
     content:
-      "Dealing with blemishes can be frustrating. Here are some effective methods...",
+      "In a world where modern medicine often takes the spotlight, the ancient wisdom of Ayurveda continues to thrive, offering a holistic approach to health and well-being. Rooted in India's rich heritage, Ayurveda is more than just a system of medicine—it's a way of life that emphasizes balance, harmony, and connection with nature.Rooted in India's rich heritage, Ayurveda is more than just a system of medicine Ayurveda is more than just a system of medicine",
+    title2: "What is Ayurveda?",
+    content2:
+      "Ayurveda, which translates to the science of life, is one of the world's oldest healing systems, dating back over 5,000 years. Unlike conventional medicine, which often focuses on treating symptoms, Ayurveda seeks to address the root cause of ailments by restoring balance within the body, mind, and spirit. It is based on the belief that each individual is unique, and therefore, treatment should be personalized to meet their specific needs.",
+    title3: "The Three Doshas: Vata, Pitta, and Kapha",
+    para: "Central to Ayurvedic philosophy is the concept of the three doshas—Vata, Pitta, and Kapha. These doshas are energies that govern our physiological and psychological functions.",
+    points: [
+      {
+        title: "Vata:",
+        desc: "Composed of air and space, Vata controls movement in the body, including circulation, breathing, and the flow of thoughts. When balanced, Vata promotes creativity and flexibility. When imbalanced, it can lead to anxiety, dry skin, and digestive issues.",
+      },
+      {
+        title: "Pitta:",
+        desc: "Made up of fire and water, Pitta is responsible for metabolism, digestion, and body temperature regulation. A balanced Pitta leads to a sharp intellect and healthy digestion, while an imbalance can result in irritability, inflammation, and ulcers.",
+      },
+      {
+        title: "Kapah:",
+        desc: "Formed from earth and water, Kapha provides structure and stability. It governs the immune system, lubrication of joints, and emotional resilience. Balanced Kapha is linked to calmness and strength, but an imbalance can cause weight gain, lethargy, and respiratory problems.",
+      },
+    ],
   },
   {
     slug: "herbal-tea-weight-loss",
     title: "Best Herbal Tea for Weight Loss",
-    image: "/images/blog3.jpg",
+    image: "/blog/blog9.png",
     content:
-      "Discover the benefits of herbal tea for weight loss and overall health...",
+      "In a world where modern medicine often takes the spotlight, the ancient wisdom of Ayurveda continues to thrive, offering a holistic approach to health and well-being. Rooted in India's rich heritage, Ayurveda is more than just a system of medicine—it's a way of life that emphasizes balance, harmony, and connection with nature.Rooted in India's rich heritage, Ayurveda is more than just a system of medicine Ayurveda is more than just a system of medicine",
+    title2: "What is Ayurveda?",
+    content2:
+      "Ayurveda, which translates to the science of life, is one of the world's oldest healing systems, dating back over 5,000 years. Unlike conventional medicine, which often focuses on treating symptoms, Ayurveda seeks to address the root cause of ailments by restoring balance within the body, mind, and spirit. It is based on the belief that each individual is unique, and therefore, treatment should be personalized to meet their specific needs.",
+    title3: "The Three Doshas: Vata, Pitta, and Kapha",
+    para: "Central to Ayurvedic philosophy is the concept of the three doshas—Vata, Pitta, and Kapha. These doshas are energies that govern our physiological and psychological functions.",
+    points: [
+      {
+        title: "Vata:",
+        desc: "Composed of air and space, Vata controls movement in the body, including circulation, breathing, and the flow of thoughts. When balanced, Vata promotes creativity and flexibility. When imbalanced, it can lead to anxiety, dry skin, and digestive issues.",
+      },
+      {
+        title: "Pitta:",
+        desc: "Made up of fire and water, Pitta is responsible for metabolism, digestion, and body temperature regulation. A balanced Pitta leads to a sharp intellect and healthy digestion, while an imbalance can result in irritability, inflammation, and ulcers.",
+      },
+      {
+        title: "Kapah:",
+        desc: "Formed from earth and water, Kapha provides structure and stability. It governs the immune system, lubrication of joints, and emotional resilience. Balanced Kapha is linked to calmness and strength, but an imbalance can cause weight gain, lethargy, and respiratory problems.",
+      },
+    ],
+  },
+  {
+    slug: "protect-skin-sunlight",
+    title: "How to Protect Your Skin in Sunlight",
+    image: "/blog/blog4.png",
+    content:
+      "In a world where modern medicine often takes the spotlight, the ancient wisdom of Ayurveda continues to thrive, offering a holistic approach to health and well-being. Rooted in India's rich heritage, Ayurveda is more than just a system of medicine—it's a way of life that emphasizes balance, harmony, and connection with nature.Rooted in India's rich heritage, Ayurveda is more than just a system of medicine Ayurveda is more than just a system of medicine",
+    title2: "What is Ayurveda?",
+    content2:
+      "Ayurveda, which translates to the science of life, is one of the world's oldest healing systems, dating back over 5,000 years. Unlike conventional medicine, which often focuses on treating symptoms, Ayurveda seeks to address the root cause of ailments by restoring balance within the body, mind, and spirit. It is based on the belief that each individual is unique, and therefore, treatment should be personalized to meet their specific needs.",
+    title3: "The Three Doshas: Vata, Pitta, and Kapha",
+    para: "Central to Ayurvedic philosophy is the concept of the three doshas—Vata, Pitta, and Kapha. These doshas are energies that govern our physiological and psychological functions.",
+    points: [
+      {
+        title: "Vata:",
+        desc: "Composed of air and space, Vata controls movement in the body, including circulation, breathing, and the flow of thoughts. When balanced, Vata promotes creativity and flexibility. When imbalanced, it can lead to anxiety, dry skin, and digestive issues.",
+      },
+      {
+        title: "Pitta:",
+        desc: "Made up of fire and water, Pitta is responsible for metabolism, digestion, and body temperature regulation. A balanced Pitta leads to a sharp intellect and healthy digestion, while an imbalance can result in irritability, inflammation, and ulcers.",
+      },
+      {
+        title: "Kapah:",
+        desc: "Formed from earth and water, Kapha provides structure and stability. It governs the immune system, lubrication of joints, and emotional resilience. Balanced Kapha is linked to calmness and strength, but an imbalance can cause weight gain, lethargy, and respiratory problems.",
+      },
+    ],
+  },
+  {
+    slug: "dealing-with-blemish",
+    title: "Method for Dealing with Your Blemish",
+    image: "/blog/blog5.png",
+    content:
+      "In a world where modern medicine often takes the spotlight, the ancient wisdom of Ayurveda continues to thrive, offering a holistic approach to health and well-being. Rooted in India's rich heritage, Ayurveda is more than just a system of medicine—it's a way of life that emphasizes balance, harmony, and connection with nature.Rooted in India's rich heritage, Ayurveda is more than just a system of medicine Ayurveda is more than just a system of medicine",
+    title2: "What is Ayurveda?",
+    content2:
+      "Ayurveda, which translates to the science of life, is one of the world's oldest healing systems, dating back over 5,000 years. Unlike conventional medicine, which often focuses on treating symptoms, Ayurveda seeks to address the root cause of ailments by restoring balance within the body, mind, and spirit. It is based on the belief that each individual is unique, and therefore, treatment should be personalized to meet their specific needs.",
+    title3: "The Three Doshas: Vata, Pitta, and Kapha",
+    para: "Central to Ayurvedic philosophy is the concept of the three doshas—Vata, Pitta, and Kapha. These doshas are energies that govern our physiological and psychological functions.",
+    points: [
+      {
+        title: "Vata:",
+        desc: "Composed of air and space, Vata controls movement in the body, including circulation, breathing, and the flow of thoughts. When balanced, Vata promotes creativity and flexibility. When imbalanced, it can lead to anxiety, dry skin, and digestive issues.",
+      },
+      {
+        title: "Pitta:",
+        desc: "Made up of fire and water, Pitta is responsible for metabolism, digestion, and body temperature regulation. A balanced Pitta leads to a sharp intellect and healthy digestion, while an imbalance can result in irritability, inflammation, and ulcers.",
+      },
+      {
+        title: "Kapah:",
+        desc: "Formed from earth and water, Kapha provides structure and stability. It governs the immune system, lubrication of joints, and emotional resilience. Balanced Kapha is linked to calmness and strength, but an imbalance can cause weight gain, lethargy, and respiratory problems.",
+      },
+    ],
+  },
+  {
+    slug: "herbal-tea-weight-loss",
+    title: "Best Herbal Tea for Weight Loss",
+    image: "/blog/blog6.png",
+    content:
+      "In a world where modern medicine often takes the spotlight, the ancient wisdom of Ayurveda continues to thrive, offering a holistic approach to health and well-being. Rooted in India's rich heritage, Ayurveda is more than just a system of medicine—it's a way of life that emphasizes balance, harmony, and connection with nature.Rooted in India's rich heritage, Ayurveda is more than just a system of medicine Ayurveda is more than just a system of medicine",
+    title2: "What is Ayurveda?",
+    content2:
+      "Ayurveda, which translates to the science of life, is one of the world's oldest healing systems, dating back over 5,000 years. Unlike conventional medicine, which often focuses on treating symptoms, Ayurveda seeks to address the root cause of ailments by restoring balance within the body, mind, and spirit. It is based on the belief that each individual is unique, and therefore, treatment should be personalized to meet their specific needs.",
+    title3: "The Three Doshas: Vata, Pitta, and Kapha",
+    para: "Central to Ayurvedic philosophy is the concept of the three doshas—Vata, Pitta, and Kapha. These doshas are energies that govern our physiological and psychological functions.",
+    points: [
+      {
+        title: "Vata:",
+        desc: "Composed of air and space, Vata controls movement in the body, including circulation, breathing, and the flow of thoughts. When balanced, Vata promotes creativity and flexibility. When imbalanced, it can lead to anxiety, dry skin, and digestive issues.",
+      },
+      {
+        title: "Pitta:",
+        desc: "Made up of fire and water, Pitta is responsible for metabolism, digestion, and body temperature regulation. A balanced Pitta leads to a sharp intellect and healthy digestion, while an imbalance can result in irritability, inflammation, and ulcers.",
+      },
+      {
+        title: "Kapah:",
+        desc: "Formed from earth and water, Kapha provides structure and stability. It governs the immune system, lubrication of joints, and emotional resilience. Balanced Kapha is linked to calmness and strength, but an imbalance can cause weight gain, lethargy, and respiratory problems.",
+      },
+    ],
+  },
+  {
+    slug: "protect-skin-sunlight",
+    title: "How to Protect Your Skin in Sunlight",
+    image: "/blog/blog1.png",
+    content:
+      "In a world where modern medicine often takes the spotlight, the ancient wisdom of Ayurveda continues to thrive, offering a holistic approach to health and well-being. Rooted in India's rich heritage, Ayurveda is more than just a system of medicine—it's a way of life that emphasizes balance, harmony, and connection with nature.Rooted in India's rich heritage, Ayurveda is more than just a system of medicine Ayurveda is more than just a system of medicine",
+    title2: "What is Ayurveda?",
+    content2:
+      "Ayurveda, which translates to the science of life, is one of the world's oldest healing systems, dating back over 5,000 years. Unlike conventional medicine, which often focuses on treating symptoms, Ayurveda seeks to address the root cause of ailments by restoring balance within the body, mind, and spirit. It is based on the belief that each individual is unique, and therefore, treatment should be personalized to meet their specific needs.",
+    title3: "The Three Doshas: Vata, Pitta, and Kapha",
+    para: "Central to Ayurvedic philosophy is the concept of the three doshas—Vata, Pitta, and Kapha. These doshas are energies that govern our physiological and psychological functions.",
+    points: [
+      {
+        title: "Vata:",
+        desc: "Composed of air and space, Vata controls movement in the body, including circulation, breathing, and the flow of thoughts. When balanced, Vata promotes creativity and flexibility. When imbalanced, it can lead to anxiety, dry skin, and digestive issues.",
+      },
+      {
+        title: "Pitta:",
+        desc: "Made up of fire and water, Pitta is responsible for metabolism, digestion, and body temperature regulation. A balanced Pitta leads to a sharp intellect and healthy digestion, while an imbalance can result in irritability, inflammation, and ulcers.",
+      },
+      {
+        title: "Kapah:",
+        desc: "Formed from earth and water, Kapha provides structure and stability. It governs the immune system, lubrication of joints, and emotional resilience. Balanced Kapha is linked to calmness and strength, but an imbalance can cause weight gain, lethargy, and respiratory problems.",
+      },
+    ],
+  },
+  {
+    slug: "dealing-with-blemish",
+    title: "Method for Dealing with Your Blemish",
+    image: "/blog/blog2.png",
+    content:
+      "In a world where modern medicine often takes the spotlight, the ancient wisdom of Ayurveda continues to thrive, offering a holistic approach to health and well-being. Rooted in India's rich heritage, Ayurveda is more than just a system of medicine—it's a way of life that emphasizes balance, harmony, and connection with nature.Rooted in India's rich heritage, Ayurveda is more than just a system of medicine Ayurveda is more than just a system of medicine",
+    title2: "What is Ayurveda?",
+    content2:
+      "Ayurveda, which translates to the science of life, is one of the world's oldest healing systems, dating back over 5,000 years. Unlike conventional medicine, which often focuses on treating symptoms, Ayurveda seeks to address the root cause of ailments by restoring balance within the body, mind, and spirit. It is based on the belief that each individual is unique, and therefore, treatment should be personalized to meet their specific needs.",
+    title3: "The Three Doshas: Vata, Pitta, and Kapha",
+    para: "Central to Ayurvedic philosophy is the concept of the three doshas—Vata, Pitta, and Kapha. These doshas are energies that govern our physiological and psychological functions.",
+    points: [
+      {
+        title: "Vata:",
+        desc: "Composed of air and space, Vata controls movement in the body, including circulation, breathing, and the flow of thoughts. When balanced, Vata promotes creativity and flexibility. When imbalanced, it can lead to anxiety, dry skin, and digestive issues.",
+      },
+      {
+        title: "Pitta:",
+        desc: "Made up of fire and water, Pitta is responsible for metabolism, digestion, and body temperature regulation. A balanced Pitta leads to a sharp intellect and healthy digestion, while an imbalance can result in irritability, inflammation, and ulcers.",
+      },
+      {
+        title: "Kapah:",
+        desc: "Formed from earth and water, Kapha provides structure and stability. It governs the immune system, lubrication of joints, and emotional resilience. Balanced Kapha is linked to calmness and strength, but an imbalance can cause weight gain, lethargy, and respiratory problems.",
+      },
+    ],
+  },
+  {
+    slug: "herbal-tea-weight-loss",
+    title: "Best Herbal Tea for Weight Loss",
+    image: "/blog/blog3.png",
+    content:
+      "In a world where modern medicine often takes the spotlight, the ancient wisdom of Ayurveda continues to thrive, offering a holistic approach to health and well-being. Rooted in India's rich heritage, Ayurveda is more than just a system of medicine—it's a way of life that emphasizes balance, harmony, and connection with nature.Rooted in India's rich heritage, Ayurveda is more than just a system of medicine Ayurveda is more than just a system of medicine",
+    title2: "What is Ayurveda?",
+    content2:
+      "Ayurveda, which translates to the science of life, is one of the world's oldest healing systems, dating back over 5,000 years. Unlike conventional medicine, which often focuses on treating symptoms, Ayurveda seeks to address the root cause of ailments by restoring balance within the body, mind, and spirit. It is based on the belief that each individual is unique, and therefore, treatment should be personalized to meet their specific needs.",
+    title3: "The Three Doshas: Vata, Pitta, and Kapha",
+    para: "Central to Ayurvedic philosophy is the concept of the three doshas—Vata, Pitta, and Kapha. These doshas are energies that govern our physiological and psychological functions.",
+    points: [
+      {
+        title: "Vata:",
+        desc: "Composed of air and space, Vata controls movement in the body, including circulation, breathing, and the flow of thoughts. When balanced, Vata promotes creativity and flexibility. When imbalanced, it can lead to anxiety, dry skin, and digestive issues.",
+      },
+      {
+        title: "Pitta:",
+        desc: "Made up of fire and water, Pitta is responsible for metabolism, digestion, and body temperature regulation. A balanced Pitta leads to a sharp intellect and healthy digestion, while an imbalance can result in irritability, inflammation, and ulcers.",
+      },
+      {
+        title: "Kapah:",
+        desc: "Formed from earth and water, Kapha provides structure and stability. It governs the immune system, lubrication of joints, and emotional resilience. Balanced Kapha is linked to calmness and strength, but an imbalance can cause weight gain, lethargy, and respiratory problems.",
+      },
+    ],
   },
 ];
 
@@ -47,23 +261,77 @@ const BlogPost = ({ params }) => {
   }
 
   return (
-    <div className="min-h-screen pt-20 pb-10 bg-gray-100">
-      <div className="container px-4 mx-auto md:px-8 lg:px-16">
-        <h1 className="mb-8 text-4xl font-bold text-center text-gray-800">
-          {blog.title}
-        </h1>
-        <div className="p-6 mb-8 bg-white rounded-lg shadow-lg md:p-12">
-          <img
+    <section className="px-5 pt-32 pb-10 md:px-10">
+      {/* FIRST  */}
+      <div className="flex gap-10">
+        <div className="relative h-[400px] w-[600px]">
+          <Image
             src={blog.image}
             alt={blog.title}
-            className="object-cover w-full h-auto mb-8 rounded-lg"
+            fill
+            objectFit="cover"
+            className="rounded-xl"
           />
-          <p className="mb-6 text-lg leading-relaxed text-gray-700">
+        </div>
+        <div className="w-[900px]">
+          <h2 className="text-5xl font-medium">{blog.title}</h2>
+          <p className="mt-5 text-2xl leading-10 text-justify text-zinc-800">
             {blog.content}
           </p>
         </div>
       </div>
-    </div>
+
+      {/* SECOND */}
+      <div className="flex gap-10 mt-10">
+        <div className="w-[900px]">
+          <h2 className="text-5xl font-medium">{blog.title2}</h2>
+          <p className="mt-5 text-2xl leading-10 text-justify text-zinc-800">
+            {blog.content2}
+          </p>
+        </div>
+        <div className="flex items-center justify-center gap-10">
+          <div className="relative h-[400px] w-[250px]">
+            <Image
+              src={blog.image}
+              alt={blog.title}
+              fill
+              objectFit="cover"
+              className="rounded-xl"
+            />
+          </div>
+          <div className="relative h-[300px] w-[200px]">
+            <Image
+              src={blog.image}
+              alt={blog.title}
+              fill
+              objectFit="cover"
+              className="rounded-xl"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* THIRD */}
+      <div className="flex flex-col gap-3 mt-10">
+        <div>
+          <h2 className="text-5xl font-medium">{blog.title3}</h2>
+          <p className="mt-5 text-2xl leading-10 text-justify text-zinc-800">
+            {blog.para}
+          </p>
+        </div>
+
+        <div>
+          {blog.points.map((item, index) => (
+            <ul key={index} className="mb-5 text-zinc-800">
+              <li className="ml-5 text-2xl list-disc">
+                <span className="font-semibold">{item.title} </span>
+                {item.desc}
+              </li>
+            </ul>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
