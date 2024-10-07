@@ -7,17 +7,17 @@ import { FaX } from "react-icons/fa6";
 
 function Page() {
   const [selected, setSelected] = useState(0);
-  const tabs = ["Order", "Cancelled Order", "Track Order"];
+  const tabs = ["Order", "Cancelled Order"];
   const [tabWidth, setTabWidth] = useState(0);
   const tabRefs = useRef([]);
-  const [fade, setFade] = useState(true); // State for fade animation
+  const [fade, setFade] = useState(true);
 
   const handleSelectTab = (index) => {
-    setFade(false); // Start fading out
+    setFade(false);
     setTimeout(() => {
       setSelected(index);
-      setFade(true); // Start fading in after a short delay
-    }, 300); // Match the duration of your transition
+      setFade(true);
+    }, 300);
   };
 
   useEffect(() => {
@@ -64,9 +64,8 @@ function Page() {
               <div className="overflow-hidden border-2 border-zinc-500 rounded-2xl">
                 <div className="flex items-center justify-between w-full text-lg font-medium bg-[#F7F7F7] p-4">
                   <span>Order</span>
-                  <span className="text-blue-500 cursor-pointer">
-                    Order Details
-                  </span>
+                  <span className="text-blue-500">Order Details</span>
+                  <span>Track</span>
                   <span>Order D01-546-56KId</span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-2 text-xl border-y-2 border-zinc-500">
@@ -77,7 +76,13 @@ function Page() {
                     width={150}
                     className="-ml-10"
                   />
-                  <span className="-ml-32">Cuff - C Syrup</span>
+                  <span className="-ml-16">Cuff - C Syrup</span>
+                  <Link
+                    href={"/profile/track"}
+                    className="px-5 py-1 text-white duration-200 bg-green-600 rounded-full hover:opacity-85"
+                  >
+                    Track Order
+                  </Link>
                   <Link
                     href={"/product/1"}
                     className="px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85"
@@ -94,9 +99,8 @@ function Page() {
               <div className="overflow-hidden border-2 border-zinc-500 rounded-2xl">
                 <div className="flex items-center justify-between w-full text-lg font-medium bg-[#F7F7F7] p-4">
                   <span>Order</span>
-                  <span className="text-blue-500 cursor-pointer">
-                    Order Details
-                  </span>
+                  <span className="text-blue-500">Order Details</span>
+                  <span>Track</span>
                   <span>Order D01-546-56KId</span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-2 text-xl border-y-2 border-zinc-500">
@@ -107,7 +111,13 @@ function Page() {
                     width={150}
                     className="-ml-10"
                   />
-                  <span className="-ml-32">Cuff - C Syrup</span>
+                  <span className="-ml-16">Cuff - C Syrup</span>
+                  <Link
+                    href={"/profile/track"}
+                    className="px-5 py-1 text-white duration-200 bg-green-600 rounded-full hover:opacity-85"
+                  >
+                    Track Order
+                  </Link>
                   <Link
                     href={"/product/1"}
                     className="px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85"

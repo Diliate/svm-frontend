@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
@@ -38,19 +40,17 @@ function SamplePrevArrow(props) {
 
 const ProductList = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const products = Array.from({ length: 12 });
-  const totalSlides = products.length;
-  const slidesToShow = 4.5;
-
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
   const settings = {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: slidesToShow,
+    slidesToShow: 4.5,
     slidesToScroll: 3,
-    nextArrow: (
-      <SampleNextArrow isVisible={currentSlide < totalSlides - slidesToShow} />
-    ),
+    nextArrow: <SampleNextArrow isVisible={currentSlide < 12 - 4.5} />,
     prevArrow: <SamplePrevArrow isVisible={currentSlide > 0} />,
     beforeChange: (current, next) => setCurrentSlide(next),
     responsive: [
@@ -82,27 +82,23 @@ const ProductList = () => {
   };
 
   return (
-    <div className="p-5 py-10 md:px-10">
-      <div className="flex flex-col items-start justify-between gap-5 mb-6 md:gap-0 md:items-center md:flex-row">
-        <div>
-          <h3 className="font-light uppercase md:text-lg">
-            our popular products
-          </h3>
-          <h1 className="text-3xl font-medium md:text-4xl">
-            Latest Herbal <br /> Collections
-          </h1>
-        </div>
-        <Link href={"/shop"}>
-          <button className="flex items-center gap-2 md:py-3 py-2 md:px-10 px-5 uppercase border-[1px] border-black rounded-full hover:bg-black hover:text-white duration-200">
-            view all products <FaChevronRight />
-          </button>
-        </Link>
-      </div>
+    <div ref={ref} className="p-5 py-10 md:px-10">
+      <h1 className="text-3xl font-medium">Our Popular Products</h1>
       <Slider {...settings}>
-        {products.map((_, index) => (
-          <div className="p-5 ">
-            <ProductCard key={index} />
-          </div>
+        {Array.from({ length: 12 }).map((_, index) => (
+          <AnimatePresence key={index}>
+            {inView && (
+              <motion.div
+                className="p-5"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <ProductCard />
+              </motion.div>
+            )}
+          </AnimatePresence>
         ))}
       </Slider>
     </div>
