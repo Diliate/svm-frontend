@@ -4,9 +4,9 @@ import { FaLocationDot } from "react-icons/fa6";
 
 const page = () => {
   return (
-    <section className="flex gap-10 p-10 pt-28">
-      <div className="flex flex-col w-1/2 gap-10">
-        <div className="flex justify-between p-5 border-2 rounded-xl">
+    <section className="flex flex-col gap-10 px-5 pb-10 md:px-10 md:flex-row pt-28">
+      <div className="flex flex-col w-full gap-10 md:w-1/2">
+        <div className="flex flex-col justify-between gap-10 p-3 border-2 md:p-5 md:gap-0 md:flex-row rounded-xl">
           <div className="flex flex-col gap-5">
             <div className="flex items-baseline gap-1">
               <FaLocationDot size={20} />
@@ -17,7 +17,7 @@ const page = () => {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 py-3 border-dashed md:border-y-0 border-y-2 border-zinc-600 md:py-0">
               <h2 className="text-3xl font-medium">SVM (Name of customer)</h2>
               <p className="text-xl">Address (Address of Customer)</p>
               <p className="text-xl">Phone No. - (+91) 123456789</p>
@@ -41,9 +41,9 @@ const page = () => {
             Payment Option
           </h2>
 
-          <div className="flex gap-5 p-5">
+          <div className="flex flex-col gap-5 p-3 md:p-5 md:flex-row">
             {/* PAYMENT METHODS */}
-            <div className="w-1/2 bg-[#F7F7F7] text-2xl font-medium p-5">
+            <div className="md:w-1/2 w-full bg-[#F7F7F7] md:text-2xl text-xl font-medium md:p-5 p-3">
               <h2 className="flex items-center justify-between pb-2 mb-4 border-b-2 cursor-pointer border-zinc-600">
                 Credit/ Debit Card
                 <span className="h-2 w-2 rounded-full bg-[#005431]"></span>
@@ -60,7 +60,7 @@ const page = () => {
             </div>
 
             {/* CARD DETAILS */}
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <h2 className="mb-5 text-2xl font-medium">Add New Card</h2>
               <div className="flex flex-col gap-5">
                 <div className="flex flex-col">
@@ -128,7 +128,7 @@ const page = () => {
       </div>
 
       {/* Order Details */}
-      <div className="bg-[#F7F7F7] p-5 w-1/2 h-[330px]">
+      <div className="bg-[#F7F7F7] md:p-5 p-3 md:w-1/2 w-full md:h-[330px] h-auto">
         <div className="flex flex-col gap-5">
           <h2 className="text-3xl font-medium">Order Details</h2>
           <div className="flex justify-between text-xl">
