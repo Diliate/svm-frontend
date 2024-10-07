@@ -20,7 +20,7 @@ const page = () => {
     },
   ];
   return (
-    <section className="px-5 pt-20 pb-10 md:px-10">
+    <section className="px-5 pb-10 pt-28 md:px-10">
       <div className="flex flex-col items-center justify-center gap-10 md:gap-20">
         {/* First Section */}
         <div className="flex flex-col items-center gap-10 md:flex-row md:items-start">
