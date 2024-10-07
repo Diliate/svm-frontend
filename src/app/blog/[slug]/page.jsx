@@ -263,8 +263,8 @@ const BlogPost = ({ params }) => {
   return (
     <section className="px-5 pt-32 pb-10 md:px-10">
       {/* FIRST  */}
-      <div className="flex gap-10">
-        <div className="relative h-[400px] w-[600px]">
+      <div className="flex flex-col gap-5 md:gap-10 md:flex-row">
+        <div className="relative md:h-[400px] h-[200px] w-full md:w-[600px]">
           <Image
             src={blog.image}
             alt={blog.title}
@@ -273,24 +273,24 @@ const BlogPost = ({ params }) => {
             className="rounded-xl"
           />
         </div>
-        <div className="w-[900px]">
-          <h2 className="text-5xl font-medium">{blog.title}</h2>
-          <p className="mt-5 text-2xl leading-10 text-justify text-zinc-800">
+        <div className="md:w-[900px] w-full">
+          <h2 className="text-3xl font-medium md:text-5xl">{blog.title}</h2>
+          <p className="mt-3 text-xl leading-8 text-justify md:leading-10 md:mt-5 md:text-2xl text-zinc-800">
             {blog.content}
           </p>
         </div>
       </div>
 
       {/* SECOND */}
-      <div className="flex gap-10 mt-10">
-        <div className="w-[900px]">
-          <h2 className="text-5xl font-medium">{blog.title2}</h2>
-          <p className="mt-5 text-2xl leading-10 text-justify text-zinc-800">
+      <div className="flex flex-col gap-10 mt-10 md:flex-row">
+        <div className="md:w-[900px] w-full">
+          <h2 className="text-3xl font-medium md:text-5xl">{blog.title2}</h2>
+          <p className="mt-3 text-xl leading-8 text-justify md:leading-10 md:mt-5 md:text-2xl text-zinc-800">
             {blog.content2}
           </p>
         </div>
-        <div className="flex items-center justify-center gap-10">
-          <div className="relative h-[400px] w-[250px]">
+        <div className="flex items-center justify-center gap-5 md:gap-10">
+          <div className="relative md:h-[400px] h-[300px] md:w-[250px] w-[165px]">
             <Image
               src={blog.image}
               alt={blog.title}
@@ -299,7 +299,7 @@ const BlogPost = ({ params }) => {
               className="rounded-xl"
             />
           </div>
-          <div className="relative h-[300px] w-[200px]">
+          <div className="relative md:h-[300px] h-[230px] md:w-[200px] w-[125px]">
             <Image
               src={blog.image}
               alt={blog.title}
@@ -314,8 +314,8 @@ const BlogPost = ({ params }) => {
       {/* THIRD */}
       <div className="flex flex-col gap-3 mt-10">
         <div>
-          <h2 className="text-5xl font-medium">{blog.title3}</h2>
-          <p className="mt-5 text-2xl leading-10 text-justify text-zinc-800">
+          <h2 className="text-3xl font-medium md:text-5xl">{blog.title3}</h2>
+          <p className="mt-5 text-xl leading-8 text-justify md:leading-10 md:text-2xl text-zinc-800">
             {blog.para}
           </p>
         </div>
@@ -323,7 +323,7 @@ const BlogPost = ({ params }) => {
         <div>
           {blog.points.map((item, index) => (
             <ul key={index} className="mb-5 text-zinc-800">
-              <li className="ml-5 text-2xl list-disc">
+              <li className="ml-5 text-xl leading-8 list-disc md:text-2xl">
                 <span className="font-semibold">{item.title} </span>
                 {item.desc}
               </li>
