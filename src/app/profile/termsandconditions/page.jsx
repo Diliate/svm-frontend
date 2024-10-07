@@ -29,11 +29,12 @@ const page = () => {
             responsible for maintaining the confidentiality of your account, and
             we reserve the right to terminate accounts if necessary. All content
             on our site is protected by intellectual property laws and is for
-            personal use only. We provide our website and products "as is" and
-            are not liable for any indirect or consequential damages. These
-            terms are governed by the laws of [Your Country/State], and disputes
-            will be resolved through arbitration. For questions, please contact
-            us at support@yourayurvedicwebsite.com or +[Your Phone Number].
+            personal use only. We provide our website and products &quot;as
+            is&quot; and are not liable for any indirect or consequential
+            damages. These terms are governed by the laws of [Your
+            Country/State], and disputes will be resolved through arbitration.
+            For questions, please contact us at support@yourayurvedicwebsite.com
+            or +[Your Phone Number].
           </p>
 
           <div className="flex items-center gap-3">

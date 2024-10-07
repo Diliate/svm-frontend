@@ -66,7 +66,7 @@ const Sidebar = () => {
           <h2 className="text-3xl">SVM</h2>
         </div>
         {menuList.map((item) => (
-          <Link href={item.path} className="">
+          <Link href={item.path} className="" key={item.id}>
             <div
               className="px-[3px] duration-200 border-b-2  hover:bg-gray-300 pb-1"
               key={item.id}

@@ -23,9 +23,9 @@ const TestimonialCard = () => {
       </div>
       <div>
         <p className="my-3 text-lg text-justify">
-          "Outstanding herbal products that truly deliver results; the natural
-          ingredients and careful formulation have made a noticeable difference
-          in my well-being."
+          &quot;Outstanding herbal products that truly deliver results; the
+          natural ingredients and careful formulation have made a noticeable
+          difference in my well-being.&quot;
         </p>
         <span className="text-lg text-gray-600">@kayray</span>
       </div>

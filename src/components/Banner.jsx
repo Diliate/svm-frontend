@@ -25,9 +25,10 @@ const Banner = () => {
           <p className="mb-5 text-xl text-justify text-gray-500 md:text-2xl">
             In a world where modern medicine often takes the spotlight, the
             ancient wisdom of Ayurveda continues to thrive, offering a holistic
-            approach to health and well-being. Rooted in India's rich heritage,
-            Ayurveda is more than just a system of medicine&mdash;it's a way of
-            life that emphasizes balance, harmony, and connection with nature.
+            approach to health and well-being. Rooted in India&apos;s rich
+            heritage, Ayurveda is more than just a system of
+            medicine&mdash;it&apos;s a way of life that emphasizes balance,
+            harmony, and connection with nature.
           </p>
           <Link href={"/about"}>
             <button className="px-4 py-2 text-xl text-white duration-200 bg-black rounded-md shadow-lg hover:opacity-85">

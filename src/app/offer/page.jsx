@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-const page = () => {
+const Page = () => {
   const products = Array.from({ length: 8 });
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = products.length;
@@ -128,4 +128,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

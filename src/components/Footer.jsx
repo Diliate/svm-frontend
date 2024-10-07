@@ -20,9 +20,9 @@ const Footer = () => {
           {/* Text Container with Limited Width */}
           <div className="max-w-md">
             <p className="text-base text-justify sm:text-lg">
-              We're currently crafting the website; it appears spectacular, hip,
-              and commendable. We're currently crafting the website; it appears
-              spectacular, hip, and commendable.
+              We&apos;re currently crafting the website; it appears spectacular,
+              hip, and commendable. We&apos;re currently crafting the website;
+              it appears spectacular, hip, and commendable.
             </p>
           </div>
 

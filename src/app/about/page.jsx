@@ -39,7 +39,7 @@ const page = () => {
           <div className="flex flex-col w-full gap-5 md:w-1/2">
             <h1 className="text-3xl font-semibold md:text-5xl">About SVM</h1>
             <p className="text-base md:text-[21px] text-justify text-gray-600">
-              At SVM, we believe in nature's power to heal, nurture, and
+              At SVM, we believe in nature&apos;s power to heal, nurture, and
               restore. Our journey began with a simple idea: to bring the purest
               and most effective herbal products to everyone. We are passionate
               about harnessing the natural goodness of herbs, plants, and
