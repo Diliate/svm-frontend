@@ -49,7 +49,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="mt-20">
+    <section className="my-10">
       <div className="relative">
         <Slider {...settings}>
           {images.map((img, index) => (

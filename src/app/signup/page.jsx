@@ -4,7 +4,7 @@ import React from "react";
 
 function page() {
   return (
-    <section className="flex flex-col items-center justify-center p-5 md:p-10 pt-28">
+    <section className="flex flex-col items-center justify-center px-5 pb-10 pt-28 md:px-10">
       <div className="flex flex-col items-center justify-center gap-5">
         <h1 className="text-5xl font-medium">Welcome to SVM</h1>
         <div className="w-full mt-5">

@@ -42,7 +42,7 @@ const ProductList2 = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.1,
+    threshold: 0.8,
   });
   const settings = {
     dots: false,
@@ -93,7 +93,7 @@ const ProductList2 = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.15 }}
               >
                 <ProductCard />
               </motion.div>

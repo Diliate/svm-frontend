@@ -1,12 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import {
   FaUser,
-  FaRegFileAlt,
   FaMapMarkerAlt,
   FaBoxOpen,
   FaHeadset,
@@ -15,6 +12,8 @@ import {
 import { FaFileContract } from "react-icons/fa6";
 
 const Sidebar = () => {
+  const [activeTab, setActiveTab] = useState("1"); // Default active tab is "Your Account"
+
   const menuList = [
     {
       id: "1",
@@ -54,10 +53,8 @@ const Sidebar = () => {
     },
   ];
 
-  const path = usePathname();
-
   return (
-    <section className="p-10 pt-28 ">
+    <section className="p-10 pt-28">
       <div className="w-[450px] p-5 border-2 rounded-3xl bg-white">
         <div className="flex flex-col items-center justify-center gap-3 mb-5">
           <div className="flex items-center justify-center w-[100px] h-[100px] border-2 rounded-full gap-3">
@@ -68,13 +65,16 @@ const Sidebar = () => {
         {menuList.map((item) => (
           <Link href={item.path} className="" key={item.id}>
             <div
-              className="px-[3px] duration-200 border-b-2  hover:bg-gray-300 pb-1"
-              key={item.id}
+              className={`px-[3px] duration-200 border-b-2 flex justify-between items-center pb-1 group `}
+              onClick={() => setActiveTab(item.id)}
             >
               <h2 className="flex items-center gap-2 mt-5 text-xl">
                 <item.icon />
                 {item.name}
               </h2>
+              {activeTab === item.id && (
+                <div className="h-3 w-3 rounded-full bg-[#004A06] mt-6 duration-300"></div>
+              )}
             </div>
           </Link>
         ))}

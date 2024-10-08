@@ -25,13 +25,13 @@ const Categories = () => {
           {/* top both container */}
           <div className="flex flex-col items-center justify-center gap-5 md:flex-row">
             {/* top left container */}
-            <div className="w-[333px] md:w-[430px] h-[265px] relative overflow-hidden">
+            <div className="w-[333px] md:w-[430px] h-[265px] relative overflow-hidden group">
               <Image
                 src="/category2.png"
                 alt="category"
                 fill
                 objectFit="cover"
-                className="absolute"
+                className="absolute duration-300 group-hover:scale-110"
               />
               <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 left-[30%] md:left-[40%] hover:opacity-85 duration-200">
                 c l e a n s e
@@ -39,13 +39,13 @@ const Categories = () => {
             </div>
 
             {/* top right container */}
-            <div className="w-[333px] md:w-[430px] h-[265px] relative overflow-hidden">
+            <div className="w-[333px] md:w-[430px] h-[265px] relative overflow-hidden group">
               <Image
                 src="/category2.png"
                 alt="category"
                 fill
                 objectFit="cover"
-                className="absolute"
+                className="absolute duration-300 group-hover:scale-110"
               />
               <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 left-[30%] md:left-[40%] hover:opacity-85 duration-200">
                 d e t o x
@@ -56,13 +56,13 @@ const Categories = () => {
           {/* bottom both container */}
           <div className="flex flex-col items-center justify-center gap-5 mt-5 md:flex-row">
             {/* bottom left Container */}
-            <div className="w-[333px] md:w-[430px] h-[265px] relative overflow-hidden">
+            <div className="w-[333px] md:w-[430px] h-[265px] relative overflow-hidden group">
               <Image
                 src="/category3.png"
                 alt="category"
                 fill
                 objectFit="cover"
-                className="absolute"
+                className="absolute duration-300 group-hover:scale-110"
               />
               <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 left-[30%] md:left-[40%] hover:opacity-85 duration-200">
                 n a t u r a l
@@ -76,7 +76,7 @@ const Categories = () => {
                 alt="category"
                 fill
                 objectFit="cover"
-                className="absolute"
+                className="absolute duration-300 group-hover:scale-110"
               />
               <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 left-[30%] md:left-[40%] hover:opacity-85 duration-200">
                 h e r b a l

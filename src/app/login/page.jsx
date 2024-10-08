@@ -4,7 +4,7 @@ import React from "react";
 
 function page() {
   return (
-    <section className="flex flex-col items-center justify-center p-5 md:p-10 pt-28">
+    <section className="flex flex-col items-center justify-center p-5 md:px-10 pt-28">
       <div className="flex flex-col items-center justify-center gap-5">
         <h1 className="text-5xl font-medium">Welcome back!</h1>
         <h2 className="text-2xl">
