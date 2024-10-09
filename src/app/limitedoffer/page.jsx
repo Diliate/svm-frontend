@@ -1,12 +1,13 @@
 "use client";
 
+// Page.jsx
 import React, { useState } from "react";
+import AnimatedOfferCards from "@/components/AnimatedOfferCards";
 import OfferProductCard from "@/components/OfferProductCard";
-import LimitedOfferProductCard from "@/components/LimitedOfferProductCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Page = () => {
   const products = Array.from({ length: 8 });
@@ -95,10 +96,10 @@ const Page = () => {
           Get 50% off on Ayurvedic Product
         </h1>
 
-        <div className="grid grid-cols-1 gap-16 mt-10 md:grid-cols-4 place-items-center">
+        <div className="grid grid-cols-1 gap-5 mt-10 md:gap-16 md:grid-cols-4 place-items-center">
           {products.map((_, index) => (
             <div key={index} className="mb-10">
-              <LimitedOfferProductCard />
+              <AnimatedOfferCards index={index} />
             </div>
           ))}
         </div>
@@ -108,7 +109,9 @@ const Page = () => {
           <h2 className="mb-10 text-4xl font-medium">Recent View Product</h2>
           <Slider {...settings}>
             {products.map((_, index) => (
-              <OfferProductCard key={index} />
+              <div key={index} className="p-5">
+                <OfferProductCard index={index} />
+              </div>
             ))}
           </Slider>
         </div>
