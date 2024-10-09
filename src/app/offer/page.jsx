@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import AnimatedDiscountsCards from "@/components/AnimatedDiscountCards";
 
 const Page = () => {
   const products = Array.from({ length: 8 });
@@ -105,7 +106,7 @@ const Page = () => {
         <div className="grid grid-cols-1 gap-5 mt-10 md:gap-16 md:grid-cols-4 place-items-center">
           {products.map((_, index) => (
             <div key={index} className="mb-10">
-              <OfferProductCard />
+              <AnimatedDiscountsCards index={index} />
             </div>
           ))}
         </div>
@@ -114,12 +115,14 @@ const Page = () => {
           <h3 className="mb-2 text-lg font-light uppercase md:text-2xl">
             new arrivals
           </h3>
-          <h2 className="mb-10 text-3xl font-medium md:text-4xl">
+          <h2 className="mb-8 text-3xl font-medium md:text-4xl">
             Recent View Product
           </h2>
           <Slider {...settings}>
             {products.map((_, index) => (
-              <OfferProductCard key={index} />
+              <div className="p-5" key={index}>
+                <OfferProductCard />
+              </div>
             ))}
           </Slider>
         </div>
