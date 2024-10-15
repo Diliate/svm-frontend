@@ -2,7 +2,7 @@ import React from "react";
 
 const SidebarFilter = () => {
   return (
-    <section className="pt-14">
+    <section className="pt-10">
       <div className="p-3 bg-gray-100">
         <h1 className="text-3xl font-medium">Our Products</h1>
         <div className="flex flex-col gap-5">
