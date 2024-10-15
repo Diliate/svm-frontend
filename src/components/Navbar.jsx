@@ -1,18 +1,41 @@
 "use client";
 
-import Image from "next/image";
 import React, { useState } from "react";
-import { FaRegHeart, FaRegUser, FaBars, FaTimes } from "react-icons/fa";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  FaCaretDown,
+  FaRegHeart,
+  FaRegUser,
+  FaBars,
+  FaTimes,
+  FaPlus,
+} from "react-icons/fa";
 import { IoCartOutline, IoLocationOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
-import Link from "next/link";
 import { navLinks } from "../data/navLinks";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [position, setPosition] = useState("bottom");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const closeDropdown = () => {
+    setDropdownOpen(false);
   };
 
   return (
@@ -54,10 +77,46 @@ const Navbar = () => {
                 className="w-64 ml-2 bg-transparent border-none focus:outline-none"
               />
             </div>
-            <div className="flex items-center px-3 py-2 space-x-1 rounded-full cursor-pointer hover:bg-gray-100">
-              <IoLocationOutline size={20} className="text-gray-600" />
-              <span className="text-lg font-medium">Update Location</span>
-            </div>
+
+            <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+              <DropdownMenuTrigger asChild>
+                <div className="flex items-center px-3 py-2 space-x-1 rounded-full cursor-pointer hover:bg-gray-100">
+                  <IoLocationOutline size={20} className="text-gray-600" />
+                  <span className="text-lg font-medium">Update Location</span>
+                  <FaCaretDown size={20} />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>Your Addresses</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={position}
+                  onValueChange={setPosition}
+                >
+                  <DropdownMenuRadioItem value="top">
+                    Address 1
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="bottom">
+                    Address 2
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="right">
+                    Address 3
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+                <div
+                  className="flex items-center justify-center py-2 duration-200 border-2 border-dashed hover:bg-gray-100"
+                  value="left"
+                >
+                  <Link
+                    href={"/profile/address"}
+                    className="flex items-center justify-center gap-2"
+                    onClick={closeDropdown}
+                  >
+                    Add your Address <FaPlus />
+                  </Link>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Icons */}
