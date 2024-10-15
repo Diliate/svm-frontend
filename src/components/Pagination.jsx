@@ -49,7 +49,7 @@ import {
 
 function PaginationComp() {
   return (
-    <div>
+    <div className="w-full -ml-6 md:-ml-0">
       <Pagination>
         <PaginationContent>
           <PaginationItem>
