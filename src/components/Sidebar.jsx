@@ -1,32 +1,33 @@
 "use client";
 
-import Link from "next/link";
 import React, { useState } from "react";
+import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+// Ensure correct imports based on your UI library
 import {
   FaUser,
   FaMapMarkerAlt,
   FaBoxOpen,
   FaHeadset,
   FaUndo,
+  FaFileContract,
 } from "react-icons/fa";
-import { FaFileContract } from "react-icons/fa6";
+import CustomerCareDialog from "./CustomerCareDialog";
 
 const Sidebar = () => {
-  const [activeTab, setActiveTab] = useState("1"); // Default active tab is "Your Account"
+  const [activeTab, setActiveTab] = useState("1");
+  const [isCustomerCareModalOpen, setCustomerCareModalOpen] = useState(false);
 
   const menuList = [
-    {
-      id: "1",
-      name: "Your Account",
-      icon: FaUser,
-      path: "/profile/account",
-    },
-    {
-      id: "2",
-      name: "Your Order",
-      icon: FaBoxOpen,
-      path: "/profile/orders",
-    },
+    { id: "1", name: "Your Account", icon: FaUser, path: "/profile/account" },
+    { id: "2", name: "Your Order", icon: FaBoxOpen, path: "/profile/orders" },
     {
       id: "3",
       name: "Your Address",
@@ -49,7 +50,7 @@ const Sidebar = () => {
       id: "6",
       name: "Customer Care",
       icon: FaHeadset,
-      path: "/profile/customercare",
+      action: () => setCustomerCareModalOpen(true),
     },
   ];
 
@@ -62,27 +63,40 @@ const Sidebar = () => {
           </div>
           <h2 className="text-3xl">SVM</h2>
         </div>
-        {menuList.map((item) => (
-          <Link href={item.path} className="" key={item.id}>
+        {menuList.map((item) =>
+          item.action ? (
             <div
-              className={`px-[3px] duration-200 border-b-2 flex justify-between items-center pb-1 group `}
-              onClick={() => setActiveTab(item.id)}
+              key={item.id}
+              onClick={item.action}
+              className="flex items-center justify-between pb-1 mt-5 border-b-2 cursor-pointer group"
             >
-              <h2 className="flex items-center gap-2 mt-5 text-xl">
+              <h2 className="flex items-center gap-2 text-xl">
                 <item.icon />
                 {item.name}
               </h2>
-              {activeTab === item.id && (
-                <div className="h-3 w-3 rounded-full bg-[#004A06] mt-6 duration-300"></div>
-              )}
             </div>
-          </Link>
-        ))}
-        <div>
-          <button className="p-2 px-5 mt-5 text-2xl font-medium text-white duration-200 bg-red-500 rounded-full hover:opacity-85">
-            Logout
-          </button>
-        </div>
+          ) : (
+            <Link
+              href={item.path}
+              key={item.id}
+              className="flex items-center justify-between pb-1 mt-5 border-b-2 cursor-pointer group"
+            >
+              <h2 className="flex items-center gap-2 text-xl">
+                <item.icon />
+                {item.name}
+              </h2>
+            </Link>
+          )
+        )}
+
+        <CustomerCareDialog
+          isCustomerCareModalOpen={isCustomerCareModalOpen}
+          setCustomerCareModalOpen={setCustomerCareModalOpen}
+        />
+
+        <button className="px-5 py-2 mt-5 text-xl font-medium text-white duration-200 bg-red-600 rounded-full hover:opacity-85">
+          Logout
+        </button>
       </div>
     </section>
   );
