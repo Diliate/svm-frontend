@@ -21,11 +21,13 @@ import {
 } from "react-icons/fa";
 import CustomerCareDialog from "./CustomerCareDialog";
 import ReturnDialog from "./ReturnDialog";
+import TermsDialog from "./TermsDialog";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState("1");
   const [isCustomerCareModalOpen, setCustomerCareModalOpen] = useState(false);
   const [isReturnModalOpen, setReturnModalOpen] = useState(false);
+  const [isTermsModalOpen, setTermsModalOpen] = useState(false);
 
   const menuList = [
     { id: "1", name: "Your Account", icon: FaUser, path: "/profile/account" },
@@ -40,7 +42,7 @@ const Sidebar = () => {
       id: "4",
       name: "Terms and Conditions",
       icon: FaFileContract,
-      path: "/profile/termsandconditions",
+      action: () => setTermsModalOpen(true),
     },
     {
       id: "5",
@@ -91,14 +93,19 @@ const Sidebar = () => {
           )
         )}
 
-        <CustomerCareDialog
-          isCustomerCareModalOpen={isCustomerCareModalOpen}
-          setCustomerCareModalOpen={setCustomerCareModalOpen}
+        <TermsDialog
+          isTermsModalOpen={isTermsModalOpen}
+          setTermsModalOpen={setTermsModalOpen}
         />
 
         <ReturnDialog
           isReturnModalOpen={isReturnModalOpen}
           setReturnModalOpen={setReturnModalOpen}
+        />
+
+        <CustomerCareDialog
+          isCustomerCareModalOpen={isCustomerCareModalOpen}
+          setCustomerCareModalOpen={setCustomerCareModalOpen}
         />
 
         <button className="px-5 py-2 mt-5 text-xl font-medium text-white duration-200 bg-red-600 rounded-full hover:opacity-85">
