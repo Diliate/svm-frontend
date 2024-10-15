@@ -20,10 +20,12 @@ import {
   FaFileContract,
 } from "react-icons/fa";
 import CustomerCareDialog from "./CustomerCareDialog";
+import ReturnDialog from "./ReturnDialog";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState("1");
   const [isCustomerCareModalOpen, setCustomerCareModalOpen] = useState(false);
+  const [isReturnModalOpen, setReturnModalOpen] = useState(false);
 
   const menuList = [
     { id: "1", name: "Your Account", icon: FaUser, path: "/profile/account" },
@@ -44,7 +46,7 @@ const Sidebar = () => {
       id: "5",
       name: "Return and Refund Policy",
       icon: FaUndo,
-      path: "/profile/return",
+      action: () => setReturnModalOpen(true),
     },
     {
       id: "6",
@@ -92,6 +94,11 @@ const Sidebar = () => {
         <CustomerCareDialog
           isCustomerCareModalOpen={isCustomerCareModalOpen}
           setCustomerCareModalOpen={setCustomerCareModalOpen}
+        />
+
+        <ReturnDialog
+          isReturnModalOpen={isReturnModalOpen}
+          setReturnModalOpen={setReturnModalOpen}
         />
 
         <button className="px-5 py-2 mt-5 text-xl font-medium text-white duration-200 bg-red-600 rounded-full hover:opacity-85">
