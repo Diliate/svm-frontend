@@ -16,7 +16,7 @@ const AdminSidebar = () => {
       id: "1",
       title: "Users",
       icon: FaUser,
-      path: "/admin/users",
+      path: "/admin",
     },
     {
       id: "2",
