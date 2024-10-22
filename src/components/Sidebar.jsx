@@ -3,15 +3,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-// Ensure correct imports based on your UI library
-import {
   FaUser,
   FaMapMarkerAlt,
   FaBoxOpen,

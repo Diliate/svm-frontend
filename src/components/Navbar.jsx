@@ -48,9 +48,9 @@ const Navbar = () => {
               <Image
                 src="/svm-logo.png"
                 alt="Logo"
-                width={100}
-                height={100}
-                className="object-contain"
+                width={80}
+                height={80}
+                className="w-auto h-auto "
               />
             </Link>
             <ul className="hidden ml-6 space-x-4 md:flex">
