@@ -9,7 +9,7 @@ function page() {
           <h2 className="text-3xl font-medium">Your Address</h2>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-5 mt-5">
+      <div className="grid grid-cols-1 gap-5 mt-5 place-items-center md:place-content-start md:grid-cols-3">
         <div className="bg-[#F7F7F7] rounded-xl h-60 w-60 flex flex-col justify-center gap-10 items-center border-2 cursor-pointer">
           <BsPlusSquare size={50} />
           <h2 className="text-3xl font-medium">Add Address</h2>
