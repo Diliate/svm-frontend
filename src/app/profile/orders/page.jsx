@@ -28,7 +28,7 @@ function Page() {
 
   return (
     <section className="p-5">
-      <h1 className="text-4xl font-medium">Your Order</h1>
+      <h1 className="text-3xl font-medium md:text-4xl">Your Order</h1>
       <div className="relative">
         <div
           className={`absolute top-0 left-0 h-12 bg-green-600 transition-transform duration-300 ease-in-out rounded-full`}
@@ -37,7 +37,7 @@ function Page() {
             transform: `translateX(${tabRefs.current[selected]?.offsetLeft}px)`,
           }}
         />
-        <div className="flex gap-10 pb-1 my-5 border-b-2">
+        <div className="flex gap-2 pb-1 my-5 border-b-2 md:gap-10">
           {tabs.map((data, index) => (
             <button
               key={index}
@@ -64,7 +64,9 @@ function Page() {
               <div className="overflow-hidden border-2 border-zinc-500 rounded-2xl">
                 <div className="flex items-center justify-between w-full text-lg font-medium bg-[#F7F7F7] p-4">
                   <span>Order</span>
-                  <span className="text-blue-500">Order Details</span>
+                  <span className="hidden text-blue-500 md:block">
+                    Order Details
+                  </span>
                   <span>Track</span>
                   <span>Order D01-546-56KId</span>
                 </div>

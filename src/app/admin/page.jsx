@@ -79,7 +79,7 @@ const data = [
 function page() {
   return (
     <section className="p-5">
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-5 mb-5">
         <div className="flex items-center gap-2 p-2 bg-white rounded-lg">
           <FaSearch />
           <input
@@ -104,8 +104,8 @@ function page() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <Table>
-        <TableHeader>
+      <Table className="text-lg">
+        <TableHeader className="bg-[#EFF4FA] text-[#8F9BB3] uppercase">
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>User ID</TableHead>
@@ -127,8 +127,13 @@ function page() {
                 <IoMdCheckmarkCircleOutline
                   size={22}
                   className="cursor-pointer"
+                  color="#046C42"
                 />{" "}
-                <RiDeleteBin6Line size={22} className="cursor-pointer" />
+                <RiDeleteBin6Line
+                  size={22}
+                  className="cursor-pointer"
+                  color="red"
+                />
               </TableCell>
             </TableRow>
           ))}

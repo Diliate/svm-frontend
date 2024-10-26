@@ -21,7 +21,7 @@ const Sidebar = () => {
   const [isTermsModalOpen, setTermsModalOpen] = useState(false);
 
   const menuList = [
-    { id: "1", name: "Your Account", icon: FaUser, path: "/profile/account" },
+    { id: "1", name: "Your Account", icon: FaUser, path: "/profile/" },
     { id: "2", name: "Your Order", icon: FaBoxOpen, path: "/profile/orders" },
     {
       id: "3",
