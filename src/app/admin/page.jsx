@@ -109,9 +109,9 @@ function page() {
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>User ID</TableHead>
-            <TableHead className="hidden md:block">Lorem Ispum</TableHead>
+            <TableHead>Lorem Ispum</TableHead>
             <TableHead>Order Date</TableHead>
-            <TableHead className="hidden md:block">Lorem Ispum</TableHead>
+            <TableHead>Lorem Ispum</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
