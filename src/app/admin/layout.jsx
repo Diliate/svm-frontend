@@ -1,14 +1,21 @@
-import AdminSidebar from "@/components/AdminSidebar";
 import React from "react";
+import AdminSidebar from "@/components/AdminSidebar";
 
 function AdminLayout({ children }) {
   return (
-    <section className="flex bg-[#F7F7F7] pb-10">
-      <div className="bg-[#F7F7F7]">
-        <AdminSidebar />
+    <div className="flex bg-[#F7F7F7]">
+      <div className="relative md:w-[300px] w-auto">
+        {" "}
+        <div className="sticky top-0 h-(screen-20) overflow-y-auto">
+          {" "}
+          <AdminSidebar />
+        </div>
       </div>
-      <div className="w-full h-auto mt-28 rounded-2xl">{children}</div>
-    </section>
+      <main className="flex-1 pt-20 pb-16 overflow-hidden md:pt-28 rounded-2xl">
+        {" "}
+        {children}
+      </main>
+    </div>
   );
 }
 

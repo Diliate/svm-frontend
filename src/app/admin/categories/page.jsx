@@ -51,7 +51,7 @@ const data = [
 function page() {
   return (
     <section className="p-5">
-      <div className="flex items-center w-[415px] gap-5 p-2 border-2 rounded-xl">
+      <div className="flex md:flex-row flex-col md:items-center items-start md:w-[415px] w-auto gap-5 p-2 border-2 rounded-xl">
         <div className="p-2 bg-white rounded-lg ">
           <input
             placeholder="Enter Category Name"

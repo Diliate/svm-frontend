@@ -79,12 +79,12 @@ const data = [
 function page() {
   return (
     <section className="p-5">
-      <div className="flex items-center gap-5 mb-5">
+      <div className="flex items-center gap-3 mb-5 md:gap-5">
         <div className="flex items-center gap-2 p-2 bg-white rounded-lg">
           <FaSearch />
           <input
             placeholder="Search"
-            className="border-none outline-none w-[340px]"
+            className="border-none outline-none md:w-[340px] w-[110px]"
           />
         </div>
         <DropdownMenu>
@@ -104,14 +104,14 @@ function page() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <Table className="text-lg">
+      <Table className="text-lg md:w-full w-[180px]">
         <TableHeader className="bg-[#EFF4FA] text-[#8F9BB3] uppercase">
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>User ID</TableHead>
-            <TableHead>Lorem Ispum</TableHead>
+            <TableHead className="hidden md:block">Lorem Ispum</TableHead>
             <TableHead>Order Date</TableHead>
-            <TableHead>Lorem Ispum</TableHead>
+            <TableHead className="hidden md:block">Lorem Ispum</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>

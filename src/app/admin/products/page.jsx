@@ -18,11 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { FaSearch } from "react-icons/fa";
 import { FaAngleDown } from "react-icons/fa6";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { RiDeleteBin6Line } from "react-icons/ri";
 
 const data = [
   {
@@ -79,7 +75,7 @@ const data = [
 function page() {
   return (
     <section className="p-5">
-      <div className="flex items-center w-[990px] gap-5 p-2 border-2 rounded-xl">
+      <div className="flex flex-col md:flex-row md:items-center items-start md:w-[990px] w-auto gap-5 p-2 border-2 rounded-xl">
         <div className="p-2 bg-white rounded-lg ">
           <input
             placeholder="Enter Product Name"
@@ -140,7 +136,7 @@ function page() {
           Add Product
         </Button>
       </div>
-      <div className="flex gap-10 pb-1 mt-10 mb-2 text-lg border-b-2">
+      <div className="hidden gap-10 pb-1 mt-10 mb-2 text-lg border-b-2 ">
         <span className="font-medium cursor-pointer">All (1200)</span>
         <span className="cursor-pointer">Published (1120)</span>
         <span className="cursor-pointer">On Discount (542)</span>

@@ -1,6 +1,16 @@
 import React from "react";
 import { IoIosTrendingUp, IoIosTrendingDown } from "react-icons/io";
 import { FaHandHoldingDollar } from "react-icons/fa6";
+import AnalyticsGraph from "./_components/Analytics";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const data = [
   {
@@ -8,7 +18,7 @@ const data = [
     title: "Revenue",
     trend: 11.01,
     increase: true,
-    total: 0, // Placeholder if you want to show a total value here
+    total: 0,
   },
   {
     id: 2,
@@ -33,10 +43,43 @@ const data = [
   },
 ];
 
+const tableData = [
+  {
+    id: "1",
+    name: "Medicine Cream",
+    sold: 80,
+    price: 200,
+  },
+  {
+    id: "2",
+    name: "Medicine Cream",
+    sold: 80,
+    price: 200,
+  },
+  {
+    id: "3",
+    name: "Medicine Cream",
+    sold: 80,
+    price: 200,
+  },
+  {
+    id: "4",
+    name: "Medicine Cream",
+    sold: 80,
+    price: 200,
+  },
+  {
+    id: "5",
+    name: "Medicine Cream",
+    sold: 80,
+    price: 200,
+  },
+];
+
 function page() {
   return (
     <section className="p-5">
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap justify-between gap-5 md:gap-0">
         {data.map((item) => (
           <div
             key={item.id}
@@ -72,7 +115,38 @@ function page() {
         ))}
       </div>
 
-      <div className="mt-5 border-2 w-full h-[400px] bg-white rounded-xl"></div>
+      <div className="mt-5 border-2 w-full h-[370px] bg-white rounded-xl pt-10">
+        <AnalyticsGraph />
+      </div>
+
+      <div className="w-full p-5 mt-5 bg-white border-2 rounded-xl">
+        <h2 className="text-4xl font-medium">Top Selling Products</h2>
+
+        <Table className="mt-5 text-lg">
+          <TableHeader className="border-b-8 border-[#E6EFF5]">
+            <TableRow>
+              <TableHead className="uppercase text-[#718EBF]">
+                Product Name
+              </TableHead>
+              <TableHead className="uppercase text-[#718EBF]">Price</TableHead>
+              <TableHead className="uppercase text-[#718EBF]">Sold</TableHead>
+              <TableHead className="uppercase text-[#718EBF]">Sold</TableHead>
+              <TableHead className="uppercase text-[#718EBF]">Sales</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tableData.map((medicine) => (
+              <TableRow key={medicine.id}>
+                <TableCell className="font-medium">{medicine.id}</TableCell>
+                <TableCell>{medicine.name}</TableCell>
+                <TableCell>Rs. {medicine.price}</TableCell>
+                <TableCell>{medicine.sold}</TableCell>
+                <TableCell>Rs. {medicine.price * medicine.sold}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </section>
   );
 }
