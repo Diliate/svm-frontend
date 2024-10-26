@@ -158,7 +158,7 @@ const Navbar = () => {
                     <DropdownMenuRadioItem
                       onClick={() => setProfileDropdownOpen(false)}
                     >
-                      <Link href="/profile/account">Your Account</Link>
+                      <Link href="/profile">Your Account</Link>
                     </DropdownMenuRadioItem>
                     <DropdownMenuRadioItem
                       onClick={() => setProfileDropdownOpen(false)}

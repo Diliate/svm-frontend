@@ -37,7 +37,7 @@ function Page() {
             transform: `translateX(${tabRefs.current[selected]?.offsetLeft}px)`,
           }}
         />
-        <div className="flex gap-2 pb-1 my-5 border-b-2 md:gap-10">
+        <div className="flex gap-2 pb-1 my-5 border-b-2 ">
           {tabs.map((data, index) => (
             <button
               key={index}
@@ -67,27 +67,46 @@ function Page() {
                   <span className="hidden text-blue-500 md:block">
                     Order Details
                   </span>
-                  <span>Track</span>
+                  <span className="hidden md:block">Track</span>
                   <span>Order D01-546-56KId</span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-2 text-xl border-y-2 border-zinc-500">
-                  <Image
-                    src="/product.png"
-                    alt="product"
-                    height={150}
-                    width={150}
-                    className="-ml-10"
-                  />
-                  <span className="-ml-16">Cuff - C Syrup</span>
+                  <div>
+                    <Image
+                      src="/product.png"
+                      alt="product"
+                      height={150}
+                      width={150}
+                      className="-ml-10"
+                    />
+                    <span className="block text-base md:hidden">
+                      Cuff - C Syrup
+                    </span>
+                  </div>
+                  <span className="hidden -ml-16 md:block">Cuff - C Syrup</span>
                   <Link
                     href={"/profile/track"}
-                    className="px-5 py-1 text-white duration-200 bg-green-600 rounded-full hover:opacity-85"
+                    className="hidden px-5 py-1 text-white duration-200 bg-green-600 rounded-full md:block hover:opacity-85"
                   >
                     Track Order
                   </Link>
+                  <div className="flex flex-col items-center justify-center md:hidden">
+                    <Link
+                      href={"/profile/track"}
+                      className="block px-5 py-1 mb-2 text-white duration-200 bg-green-600 rounded-full md:hidden hover:opacity-85"
+                    >
+                      Track Order
+                    </Link>
+                    <Link
+                      href={"/product/1"}
+                      className="px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85"
+                    >
+                      View
+                    </Link>
+                  </div>
                   <Link
                     href={"/product/1"}
-                    className="px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85"
+                    className="hidden px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85 md:block"
                   >
                     View
                   </Link>
@@ -101,28 +120,49 @@ function Page() {
               <div className="overflow-hidden border-2 border-zinc-500 rounded-2xl">
                 <div className="flex items-center justify-between w-full text-lg font-medium bg-[#F7F7F7] p-4">
                   <span>Order</span>
-                  <span className="text-blue-500">Order Details</span>
-                  <span>Track</span>
+                  <span className="hidden text-blue-500 md:block">
+                    Order Details
+                  </span>
+                  <span className="hidden md:block">Track</span>
                   <span>Order D01-546-56KId</span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-2 text-xl border-y-2 border-zinc-500">
-                  <Image
-                    src="/product.png"
-                    alt="product"
-                    height={150}
-                    width={150}
-                    className="-ml-10"
-                  />
-                  <span className="-ml-16">Cuff - C Syrup</span>
+                  <div>
+                    <Image
+                      src="/product.png"
+                      alt="product"
+                      height={150}
+                      width={150}
+                      className="-ml-10"
+                    />
+                    <span className="block text-base md:hidden">
+                      Cuff - C Syrup
+                    </span>
+                  </div>
+                  <span className="hidden -ml-16 md:block">Cuff - C Syrup</span>
                   <Link
                     href={"/profile/track"}
-                    className="px-5 py-1 text-white duration-200 bg-green-600 rounded-full hover:opacity-85"
+                    className="hidden px-5 py-1 text-white duration-200 bg-green-600 rounded-full md:block hover:opacity-85"
                   >
                     Track Order
                   </Link>
+                  <div className="flex flex-col items-center justify-center md:hidden">
+                    <Link
+                      href={"/profile/track"}
+                      className="block px-5 py-1 mb-2 text-white duration-200 bg-green-600 rounded-full md:hidden hover:opacity-85"
+                    >
+                      Track Order
+                    </Link>
+                    <Link
+                      href={"/product/1"}
+                      className="px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85"
+                    >
+                      View
+                    </Link>
+                  </div>
                   <Link
                     href={"/product/1"}
-                    className="px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85"
+                    className="hidden px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85 md:block"
                   >
                     View
                   </Link>
@@ -140,20 +180,25 @@ function Page() {
               <div className="overflow-hidden border-2 border-zinc-500 rounded-2xl">
                 <div className="flex items-center justify-between w-full text-lg font-medium bg-[#F7F7F7] p-4">
                   <span>Order</span>
-                  <span className="text-blue-500 cursor-pointer">
+                  <span className="hidden text-blue-500 cursor-pointer md:block">
                     Order Details
                   </span>
                   <span>Order D01-546-56KId</span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-2 text-xl border-y-2 border-zinc-500">
-                  <Image
-                    src="/product.png"
-                    alt="product"
-                    height={150}
-                    width={150}
-                    className="-ml-10"
-                  />
-                  <span className="-ml-20">Cuff - C Syrup</span>
+                  <div>
+                    <Image
+                      src="/product.png"
+                      alt="product"
+                      height={150}
+                      width={150}
+                      className="-ml-10"
+                    />
+                    <span className="block text-base md:hidden">
+                      Cuff - C Syrup
+                    </span>
+                  </div>
+                  <span className="hidden -ml-20 md:block">Cuff - C Syrup</span>
                   <button className="flex items-center gap-1 px-5 py-1 text-red-600 duration-200 rounded-full hover:opacity-85">
                     Cancelled <FaX />
                   </button>
@@ -167,20 +212,25 @@ function Page() {
               <div className="overflow-hidden border-2 border-zinc-500 rounded-2xl">
                 <div className="flex items-center justify-between w-full text-lg font-medium bg-[#F7F7F7] p-4">
                   <span>Order</span>
-                  <span className="text-blue-500 cursor-pointer">
+                  <span className="hidden text-blue-500 cursor-pointer md:block">
                     Order Details
                   </span>
                   <span>Order D01-546-56KId</span>
                 </div>
                 <div className="flex items-center justify-between px-4 py-2 text-xl border-y-2 border-zinc-500">
-                  <Image
-                    src="/product.png"
-                    alt="product"
-                    height={150}
-                    width={150}
-                    className="-ml-10"
-                  />
-                  <span className="-ml-20">Cuff - C Syrup</span>
+                  <div>
+                    <Image
+                      src="/product.png"
+                      alt="product"
+                      height={150}
+                      width={150}
+                      className="-ml-10"
+                    />
+                    <span className="block text-base md:hidden">
+                      Cuff - C Syrup
+                    </span>
+                  </div>
+                  <span className="hidden -ml-20 md:block">Cuff - C Syrup</span>
                   <button className="flex items-center gap-1 px-5 py-1 text-red-600 duration-200 rounded-full hover:opacity-85">
                     Cancelled <FaX />
                   </button>
