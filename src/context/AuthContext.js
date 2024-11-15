@@ -4,6 +4,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -78,6 +79,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
+    toast.success("Logout successfully");
     router.push("/login"); // redirect to login page after logout
   };
 

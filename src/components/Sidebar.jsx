@@ -13,9 +13,11 @@ import {
 import CustomerCareDialog from "./CustomerCareDialog";
 import ReturnDialog from "./ReturnDialog";
 import TermsDialog from "./TermsDialog";
+import { useAuth } from "@/context/AuthContext";
 
 const Sidebar = () => {
-  const [activeTab, setActiveTab] = useState("1");
+  const { logout } = useAuth();
+  // const [activeTab, setActiveTab] = useState("1");
   const [isCustomerCareModalOpen, setCustomerCareModalOpen] = useState(false);
   const [isReturnModalOpen, setReturnModalOpen] = useState(false);
   const [isTermsModalOpen, setTermsModalOpen] = useState(false);
@@ -99,7 +101,10 @@ const Sidebar = () => {
           setCustomerCareModalOpen={setCustomerCareModalOpen}
         />
 
-        <button className="px-5 py-2 mt-5 text-xl font-medium text-white duration-200 bg-red-600 rounded-full hover:opacity-85">
+        <button
+          className="px-5 py-2 mt-5 text-xl font-medium text-white duration-200 bg-red-600 rounded-full hover:opacity-85"
+          onClick={logout}
+        >
           Logout
         </button>
       </div>
