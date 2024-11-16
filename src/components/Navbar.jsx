@@ -24,8 +24,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
+  const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [position, setPosition] = useState("bottom");
   const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
@@ -131,13 +133,29 @@ const Navbar = () => {
               >
                 <IoCartOutline size={20} />
               </Link>
-
-              <Link
-                href="/profile"
-                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
-              >
-                <FaRegUser size={20} />
-              </Link>
+              {user ? (
+                <Link
+                  href="/profile"
+                  className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+                >
+                  <FaRegUser size={20} />
+                </Link>
+              ) : (
+                <div className="mt-1">
+                  <Link
+                    href={"/login"}
+                    className="p-2 rounded-full bg-[#004A06]  transition duration-150 text-white hover:opacity-85 mr-2"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href={"/signup"}
+                    className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150  hover:opacity-85 border-2"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Profile Dropdown for Mobile */}

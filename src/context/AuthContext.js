@@ -83,8 +83,16 @@ export const AuthProvider = ({ children }) => {
     router.push("/login"); // redirect to login page after logout
   };
 
+  // Update user in context and localStorage
+  const updateUserInContext = (updatedUser) => {
+    setUser(updatedUser); // Update state
+    localStorage.setItem("user", JSON.stringify(updatedUser)); // Update localStorage
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, loading }}>
+    <AuthContext.Provider
+      value={{ user, login, signup, logout, updateUserInContext, loading }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );

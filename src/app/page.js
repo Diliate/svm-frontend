@@ -10,7 +10,7 @@ import SaleBanner from "@/components/SaleBanner";
 
 export default function Home() {
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden min-h-[500px]">
       <Hero />
       <Categories />
       <ProductList />

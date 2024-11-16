@@ -1,8 +1,59 @@
-import React from "react";
+"use client";
 
-const page = () => {
+import { useAuth } from "@/context/AuthContext";
+import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+
+const Page = () => {
+  const { user, updateUserInContext } = useAuth();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+  });
+
+  // Pre-fill form data from the user object
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || "",
+        email: user.email || "",
+      });
+    }
+  }, [user]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update user");
+      }
+
+      const data = await response.json();
+      toast.success("User details updated successfully!");
+
+      // Update the user in context
+      updateUserInContext(data.user);
+    } catch (error) {
+      toast.error("Failed to update user details");
+      console.error("Update error:", error);
+    }
+  };
+
   return (
-    <section className="w-full bg-white rounded-2xl">
+    <section className="w-full bg-white rounded-2xl min-h-[500px]">
       <div className="p-5">
         <h2 className="text-4xl font-medium md:text-5xl">Your Account</h2>
         <p className="my-3 text-2xl md:my-5">Edit your details</p>
@@ -12,8 +63,10 @@ const page = () => {
             <h2 className="w-[200px] text-2xl font-medium">Username</h2>
             <input
               type="text"
+              name="name"
               placeholder="Your Name"
-              value={"SVM"}
+              value={formData.name}
+              onChange={handleChange}
               className="text-xl bg-transparent border-b-2 outline-none md:text-2xl"
             />
           </div>
@@ -21,8 +74,10 @@ const page = () => {
             <h2 className="w-[200px] text-2xl font-medium">Email Id</h2>
             <input
               type="email"
+              name="email"
               placeholder="Your Email"
-              value={"svm@gmail.com"}
+              value={formData.email}
+              onChange={handleChange}
               className="text-xl bg-transparent border-b-2 outline-none md:text-2xl"
             />
           </div>
@@ -31,7 +86,8 @@ const page = () => {
             <input
               type="text"
               placeholder="Your address"
-              value={"New Delhi, India"}
+              value={user?.address || ""}
+              readOnly
               className="text-xl bg-transparent border-b-2 outline-none md:text-2xl"
             />
           </div>
@@ -40,12 +96,16 @@ const page = () => {
             <input
               type="number"
               placeholder="Your Number"
-              value={"12345678"}
+              value={user?.mobile || ""}
+              readOnly
               className="text-xl bg-transparent border-b-2 outline-none md:text-2xl"
             />
           </div>
           <div className="flex md:justify-end">
-            <button className="px-10 py-1 mt-5 text-xl font-medium text-white duration-200 bg-green-600 rounded-lg hover:opacity-85">
+            <button
+              onClick={handleSave}
+              className="px-10 py-1 mt-5 text-xl font-medium text-white duration-200 bg-green-600 rounded-lg hover:opacity-85"
+            >
               Save
             </button>
           </div>
@@ -56,11 +116,11 @@ const page = () => {
           <div className="flex flex-col justify-between gap-5 md:flex-row">
             <div className="flex flex-col items-center justify-center h-20 text-center bg-[#F7F7F7] border-[1px] border-black w-52 rounded-xl">
               <h2 className="text-xl font-medium">Email Id</h2>
-              <p>svm@gmail.com</p>
+              <p>{formData.email}</p>
             </div>
             <div className="flex flex-col items-center justify-center h-20 text-center bg-[#F7F7F7] border-[1px] border-black w-52 rounded-xl">
               <h2 className="text-xl font-medium">Password</h2>
-              <p>123456789</p>
+              <p>*********</p>
             </div>
             <div className="flex flex-col items-center justify-center h-20 text-center bg-[#F7F7F7] border-[1px] border-black w-52 rounded-xl">
               <h2 className="text-xl font-medium">Mobile No.</h2>
@@ -76,4 +136,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
