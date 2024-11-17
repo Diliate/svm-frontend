@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { FaLocationDot } from "react-icons/fa6";
 
-const page = () => {
+const Page = () => {
   return (
     <section className="flex flex-col gap-10 px-5 pb-10 md:px-10 md:flex-row pt-28">
       <div className="flex flex-col w-full gap-10 md:w-1/2">
@@ -157,4 +157,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

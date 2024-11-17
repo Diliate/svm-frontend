@@ -24,7 +24,7 @@ import toast from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
 
-function page() {
+function Page() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -327,4 +327,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

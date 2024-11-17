@@ -76,7 +76,7 @@ const tableData = [
   },
 ];
 
-function page() {
+function Page() {
   return (
     <section className="p-5">
       <div className="flex flex-wrap justify-between gap-5 md:gap-0">
@@ -151,4 +151,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

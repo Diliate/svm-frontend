@@ -1,4 +1,4 @@
-// Blog page component
+// Blog Page component
 import React from "react";
 import AnimatedBlogCard from "@/components/AnimatedBlogCard";
 

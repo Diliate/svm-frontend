@@ -29,10 +29,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/auth/login",
-        {
-          email,
-          password,
-        }
+        { email, password }
       );
 
       const { token, user } = response.data;
@@ -41,11 +38,19 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
+      console.log("User from login:", user);
       setUser(user);
-      router.push("/profile"); // redirect after login
+      toast.success("Logged in successfully!"); // Feedback for successful login
     } catch (error) {
-      console.error("Login error", error);
-      throw error;
+      if (error.response) {
+        // Backend returned an error
+        console.error("Login error:", error.response.data.message);
+        toast.error(error.response.data.message || "Failed to log in.");
+      } else {
+        // Network or other errors
+        console.error("Login error:", error.message);
+        toast.error("Network error or server is down.");
+      }
     }
   };
 

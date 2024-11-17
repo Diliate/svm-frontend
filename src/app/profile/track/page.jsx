@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { FaCheckCircle, FaRegCircle } from "react-icons/fa";
 
-function page() {
+function Page() {
   return (
     <section className="p-5">
       {/* Order Details */}
@@ -100,4 +100,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

@@ -11,6 +11,8 @@ const Page = () => {
     email: "",
   });
 
+  console.log("User Details: ", user);
+
   // Pre-fill form data from the user object
   useEffect(() => {
     if (user) {

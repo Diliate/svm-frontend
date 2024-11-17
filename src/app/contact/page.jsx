@@ -3,7 +3,7 @@ import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
 
-function page() {
+function Page() {
   return (
     <section className="px-5 pt-32 pb-10 md:px-10">
       <div className="flex flex-col items-center justify-center">
@@ -83,4 +83,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   const aboutData = [
     {
       image: "/about1.png",
@@ -119,4 +119,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

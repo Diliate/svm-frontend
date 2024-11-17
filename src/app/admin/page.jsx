@@ -76,7 +76,7 @@ const data = [
   },
 ];
 
-function page() {
+function Page() {
   return (
     <section className="p-5">
       <div className="flex items-center gap-3 mb-5 md:gap-5">
@@ -143,4 +143,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
