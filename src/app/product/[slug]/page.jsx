@@ -144,7 +144,7 @@ const Page = () => {
               immune-boosting and anti-inflammatory properties.
             </p>
             <div className="flex items-start">
-              <button className="flex items-center gap-2 px-2 text-white bg-black rounded-full">
+              <button className="flex items-center gap-2 px-2 text-white bg-[#050B0F] rounded-full">
                 <FaMinus
                   onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
                 />
@@ -155,7 +155,7 @@ const Page = () => {
             <h3 className="text-2xl font-medium">Rs 1490</h3>
             <div className="flex gap-3">
               <Link href={"/cart"}>
-                <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-black rounded-full hover:opacity-85">
+                <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-[#050B0F] rounded-full hover:opacity-85">
                   Add to Cart
                 </button>
               </Link>
