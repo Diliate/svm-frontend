@@ -3,6 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const Page = () => {
   const { user, updateUserInContext } = useAuth();
@@ -10,6 +11,7 @@ const Page = () => {
     name: "",
     email: "",
   });
+  const [defaultAddress, setDefaultAddress] = useState(null);
 
   console.log("User Details: ", user);
 
@@ -22,6 +24,40 @@ const Page = () => {
       });
     }
   }, [user]);
+
+  // Fetch addresses and determine the default address
+  useEffect(() => {
+    const fetchDefaultAddress = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const defaultAddressId = localStorage.getItem("defaultAddressId");
+
+        if (defaultAddressId) {
+          // Fetch the user's addresses
+          const response = await axios.get(
+            "http://localhost:5000/api/addresses",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
+          // Find the default address from the list of addresses
+          const address = response.data.find(
+            (addr) => addr.id === parseInt(defaultAddressId, 10)
+          );
+
+          if (address) {
+            setDefaultAddress(address); // Set default address in state
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching default address:", error);
+        toast.error("Failed to fetch default address.");
+      }
+    };
+
+    fetchDefaultAddress();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,13 +121,16 @@ const Page = () => {
           </div>
           <div className="flex flex-col gap-5 md:gap-10 md:flex-row">
             <h2 className="w-[200px] text-2xl font-medium">Address</h2>
-            <input
-              type="text"
-              placeholder="Your address"
-              value={user?.address || ""}
-              readOnly
-              className="text-xl bg-transparent border-b-2 outline-none md:text-2xl"
-            />
+            {defaultAddress ? (
+              <div className="text-xl bg-transparent outline-none md:text-2xl">
+                {defaultAddress.area}, {defaultAddress.city},{" "}
+                {defaultAddress.state} - {defaultAddress.zipCode}
+              </div>
+            ) : (
+              <div className="text-xl bg-transparent border-b-2 outline-none md:text-2xl">
+                No default address selected
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-5 md:gap-10 md:flex-row">
             <h2 className="w-[200px] text-2xl font-medium">Mobile No.</h2>

@@ -3,17 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FaCaretDown,
-  FaRegHeart,
-  FaRegUser,
-  FaBars,
-  FaTimes,
-  FaPlus,
-} from "react-icons/fa";
-import { IoCartOutline, IoLocationOutline } from "react-icons/io5";
+import { FaRegHeart, FaRegUser, FaBars, FaTimes } from "react-icons/fa";
+import { IoCartOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 import { navLinks } from "../data/navLinks";
+import { HiOutlineShoppingCart } from "react-icons/hi";
 
 import {
   DropdownMenu,
@@ -76,46 +70,6 @@ const Navbar = () => {
                 className="w-64 ml-2 bg-transparent border-none focus:outline-none"
               />
             </div>
-
-            <DropdownMenu
-              open={locationDropdownOpen}
-              onOpenChange={setLocationDropdownOpen}
-            >
-              <DropdownMenuTrigger asChild>
-                <div className="flex items-center px-3 py-2 space-x-1 rounded-full cursor-pointer hover:bg-gray-100">
-                  <IoLocationOutline size={20} className="text-gray-600" />
-                  <span className="text-lg font-medium">Update Location</span>
-                  <FaCaretDown size={20} />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Your Addresses</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup
-                  value={position}
-                  onValueChange={setPosition}
-                >
-                  <DropdownMenuRadioItem value="top">
-                    Address 1
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="bottom">
-                    Address 2
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="right">
-                    Address 3
-                  </DropdownMenuRadioItem>
-                </DropdownMenuRadioGroup>
-                <div className="flex items-center justify-center py-2 border-2 border-dashed hover:bg-gray-100">
-                  <Link
-                    href="/profile/address"
-                    className="flex items-center gap-2"
-                    onClick={() => setLocationDropdownOpen(false)}
-                  >
-                    Add your Address <FaPlus />
-                  </Link>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
 
           {/* Icons */}
@@ -131,7 +85,7 @@ const Navbar = () => {
                 href="/cart"
                 className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
               >
-                <IoCartOutline size={20} />
+                <HiOutlineShoppingCart size={20} />
               </Link>
               {user ? (
                 <Link

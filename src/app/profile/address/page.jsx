@@ -23,6 +23,7 @@ function Page() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [defaultAddressId, setDefaultAddressId] = useState(null);
   const [open, setOpen] = useState(false); // State to manage dialog visibility
 
   // Fetch all addresses for the user
@@ -32,10 +33,15 @@ function Page() {
       const response = await axios.get("http://localhost:5000/api/addresses", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setAddresses(response.data); // API returns an array of addresses
+      setAddresses(response.data);
+
+      // Load default address ID from local storage
+      const savedDefault = localStorage.getItem("defaultAddressId");
+      if (savedDefault) {
+        setDefaultAddressId(parseInt(savedDefault, 10));
+      }
     } catch (error) {
       console.error("Error fetching addresses:", error);
-      // toast.error("Failed to fetch addresses.");
     }
   };
 
@@ -62,6 +68,7 @@ function Page() {
       setState("");
       setZipCode("");
       setOpen(false); // Close the dialog
+      fetchAddresses(); // Refresh addresses
     } catch (error) {
       console.error("Error adding address:", error);
       toast.error("Failed to add address.");
@@ -84,10 +91,24 @@ function Page() {
       updateUserInContext(response.data);
 
       toast.success("Address removed successfully!");
+
+      // Clear default address if it was removed
+      if (defaultAddressId === addressId) {
+        setDefaultAddressId(null);
+        localStorage.removeItem("defaultAddressId");
+      }
+
+      fetchAddresses(); // Refresh addresses
     } catch (error) {
       console.error("Error removing address:", error);
       toast.error("Failed to remove address.");
     }
+  };
+
+  const handleSetDefault = (addressId) => {
+    setDefaultAddressId(addressId);
+    localStorage.setItem("defaultAddressId", addressId);
+    toast.success("Default address updated!");
   };
 
   // Fetch addresses on component mount
@@ -151,10 +172,12 @@ function Page() {
         {addresses.map((address) => (
           <div
             key={address.id}
-            className="bg-[#F7F7F7] rounded-xl h-60 w-60 gap-10 border-2"
+            className={`bg-[#F7F7F7] rounded-xl h-60 w-60 gap-10 border-2 ${
+              defaultAddressId === address.id ? "border-green-600" : ""
+            }`}
           >
             <h2 className="w-full pb-1 text-3xl font-medium text-center bg-white border-b-2 rounded-t-xl">
-              Address
+              {defaultAddressId === address.id ? "Default Address" : "Address"}
             </h2>
             <div className="flex flex-col items-start justify-start p-2">
               <h2 className="text-2xl font-medium">{address.area}</h2>
@@ -162,7 +185,13 @@ function Page() {
                 {address.city}, {address.state}, {address.zipCode}
               </p>
             </div>
-            <div className="flex items-center justify-start w-full gap-3 p-2">
+            <div className="flex items-center justify-start w-full gap-3 p-2 text-sm">
+              <button
+                className="px-5 py-1 text-white duration-200 bg-blue-600 rounded-full hover:opacity-85"
+                onClick={() => handleSetDefault(address.id)}
+              >
+                Set Default
+              </button>
               <button
                 className="px-5 py-1 text-white duration-200 bg-red-600 rounded-full hover:opacity-85"
                 onClick={() => handleRemoveAddress(address.id)}

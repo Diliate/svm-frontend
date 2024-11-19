@@ -32,22 +32,22 @@ export const AuthProvider = ({ children }) => {
         { email, password }
       );
 
+      // If login is successful, process the response
       const { token, user } = response.data;
 
       // Save user data and token to localStorage
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      console.log("User from login:", user);
       setUser(user);
-      toast.success("Logged in successfully!"); // Feedback for successful login
+      toast.success("Logged in successfully!");
+      router.push("/profile");
     } catch (error) {
+      // Handle login errors
       if (error.response) {
-        // Backend returned an error
         console.error("Login error:", error.response.data.message);
         toast.error(error.response.data.message || "Failed to log in.");
       } else {
-        // Network or other errors
         console.error("Login error:", error.message);
         toast.error("Network error or server is down.");
       }
@@ -84,8 +84,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
-    toast.success("Logout successfully");
     router.push("/login"); // redirect to login page after logout
+    toast.success("Logout successfully");
   };
 
   // Update user in context and localStorage

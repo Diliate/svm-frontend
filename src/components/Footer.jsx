@@ -82,16 +82,6 @@ const Footer = () => {
                 Track Order
               </li>
               </Link> */}
-              <Link href={"/profile/termsandconditions"}>
-                <li className="cursor-pointer hover:text-[#004A06]">
-                  Terms and Conditions
-                </li>
-              </Link>
-              <Link href={"/profile/return"}>
-                <li className="cursor-pointer hover:text-[#004A06]">
-                  Return &amp; Refund
-                </li>
-              </Link>
             </ul>
           </div>
 

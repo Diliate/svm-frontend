@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 
 function Page() {
@@ -26,9 +25,7 @@ function Page() {
 
     try {
       await signup(name, email, password);
-      toast.success("Registered successfully!");
     } catch (error) {
-      toast.error("Registration failed");
       setError(error.response?.data?.message || "Registration failed");
     }
   };

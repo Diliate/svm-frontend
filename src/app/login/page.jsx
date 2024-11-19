@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 
 function Page() {
@@ -23,9 +22,7 @@ function Page() {
 
     try {
       await login(email, password);
-      toast.success("Logged in successfully!");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed");
       setError(error.response?.data?.message || "Login failed");
     }
   };

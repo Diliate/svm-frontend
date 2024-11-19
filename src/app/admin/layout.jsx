@@ -33,7 +33,7 @@ function AdminLayout({ children }) {
 
   if (!isAuthorized) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen gap-3">
+      <div className="flex flex-col items-center justify-center min-h-[500px] gap-3">
         <h1 className="text-2xl font-semibold text-red-600">Not Authorized</h1>
         <Link
           href={"/"}
