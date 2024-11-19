@@ -49,79 +49,100 @@ const contactData = [
 
 const Page = () => {
   return (
-    <section className="p-5 mt-2">
-      <div className="flex flex-col items-center justify-center">
+    <section className="p-5">
+      {/* Header Section */}
+      <div className="text-center ">
+        <h1 className="text-4xl font-bold text-gray-800">
+          Need Help with Orders?
+        </h1>
+        <p className="mt-4 text-lg text-gray-600">
+          Welcome to SVM&apos;s Customer Care page! We are committed to
+          providing you with the best service and support as you embark on your
+          journey to natural health and wellness.
+        </p>
+      </div>
+
+      {/* Main Content */}
+      <div className="p-8 space-y-12 bg-white rounded-lg md:p-10">
+        {/* How Can We Help You Section */}
         <div>
-          <h1 className="text-4xl font-semibold">Need Help with Orders?</h1>
-          <p className="mt-2 mb-5 text-xl leading-10">
-            Welcome to SVM&apos;s Customer Care page! We are committed to
-            providing you with the best service and support as you embark on
-            your journey to natural health and wellness.
-          </p>
-        </div>
-        <div>
-          <h2 className="text-3xl font-semibold">How Can We Help You?</h2>
-          <p className="text-xl leading-10">
+          <h2 className="mb-6 text-3xl font-semibold text-gray-800">
+            How Can We Help You?
+          </h2>
+          <p className="mb-8 text-lg leading-relaxed text-gray-600">
             Whether you have a question about our products, need help with an
             order, or want to learn more about Ayurveda, our dedicated customer
             care team is here to assist you. Below are some of the ways we can
             support you:
           </p>
-          <div>
-            <ul className="list-decimal list-inside">
-              {data.map((item, index) => (
-                <li key={index} className="my-3 text-xl leading-10">
-                  <span className="text-2xl font-semibold">{item.title}:</span>{" "}
-                  <br />
-                  <p className="ml-5"> • {item.content}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul className="space-y-6">
+            {data.map((item, index) => (
+              <li
+                key={index}
+                className="p-5 border-l-4 border-green-500 rounded-lg bg-gray-50"
+              >
+                <h3 className="mb-2 text-2xl font-semibold text-gray-800">
+                  {item.title}
+                </h3>
+                <p className="text-lg text-gray-600">{item.content}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          <div className="mt-10">
-            <h2 className="text-3xl font-semibold">Contact Us</h2>
-            <p className="text-xl leading-10">
-              We are dedicated to ensuring your satisfaction and well-being. If
-              you need to reach out to us, you can do so through any of the
-              following methods:
-            </p>
+        {/* Contact Us Section */}
+        <div>
+          <h2 className="mb-6 text-3xl font-semibold text-gray-800">
+            Contact Us
+          </h2>
+          <p className="mb-8 text-lg leading-relaxed text-gray-600">
+            We are dedicated to ensuring your satisfaction and well-being. If
+            you need to reach out to us, you can do so through any of the
+            following methods:
+          </p>
+          <ul className="space-y-6">
+            {contactData.map((item, index) => (
+              <li
+                key={index}
+                className="flex flex-col items-start gap-4 md:flex-row md:items-center"
+              >
+                <h3 className="text-2xl font-semibold text-gray-800">
+                  {item.title}:
+                </h3>
+                <p className="text-lg text-gray-600">{item.desc}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-            <ul className="list-disc list-inside">
-              {contactData.map((item, index) => (
-                <li key={index} className="my-3 text-xl leading-10 ">
-                  <span className="text-2xl font-semibold">{item.title}:</span>{" "}
-                  <span className="ml-1">{item.desc}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* FAQs Section */}
+        <div>
+          <h2 className="mb-6 text-3xl font-semibold text-gray-800">
+            Frequently Asked Questions (FAQs)
+          </h2>
+          <p className="text-lg leading-relaxed text-gray-600">
+            Looking for quick answers? Visit our FAQs page, where we have
+            compiled answers to common questions about our products, orders, and
+            more.
+          </p>
+        </div>
 
-          <div className="flex flex-col gap-3 mt-10">
-            <h2 className="text-3xl font-semibold">
-              Frequently Asked Questions (FAQs)
-            </h2>
-            <p className="text-xl leading-10">
-              Looking for quick answers? Visit our FAQs page, where we have
-              compiled answers to common questions about our products, orders,
-              and more.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-3 mt-10">
-            <h2 className="text-3xl font-semibold">Our Commitment to You</h2>
-            <p className="text-xl leading-10">
-              At SVM, we believe in the power of Ayurveda to transform lives.
-              Our goal is to support your wellness journey with top-quality
-              products and exceptional customer service. Your satisfaction is
-              our priority, and we are here to ensure you have a positive
-              experience every time you shop with us.
-            </p>
-            <p className="mt-5 text-2xl font-medium leading-10">
-              Thank you for choosing us as your trusted partner in Ayurvedic
-              health and wellness!
-            </p>
-          </div>
+        {/* Our Commitment Section */}
+        <div>
+          <h2 className="mb-6 text-3xl font-semibold text-gray-800">
+            Our Commitment to You
+          </h2>
+          <p className="text-lg leading-relaxed text-gray-600">
+            At SVM, we believe in the power of Ayurveda to transform lives. Our
+            goal is to support your wellness journey with top-quality products
+            and exceptional customer service. Your satisfaction is our priority,
+            and we are here to ensure you have a positive experience every time
+            you shop with us.
+          </p>
+          <p className="mt-5 text-2xl font-medium text-gray-800">
+            Thank you for choosing us as your trusted partner in Ayurvedic
+            health and wellness!
+          </p>
         </div>
       </div>
     </section>

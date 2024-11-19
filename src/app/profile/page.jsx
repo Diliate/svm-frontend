@@ -52,7 +52,6 @@ const Page = () => {
         }
       } catch (error) {
         console.error("Error fetching default address:", error);
-        toast.error("Failed to fetch default address.");
       }
     };
 
