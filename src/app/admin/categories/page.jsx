@@ -21,19 +21,22 @@ function Page() {
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState("");
 
+  // Fetch categories on component mount
   useEffect(() => {
     fetchCategories();
   }, []);
 
+  // Fetch all categories
   const fetchCategories = async () => {
     try {
       const { data } = await axios.get("http://localhost:5000/api/categories");
       setCategories(data);
     } catch (error) {
-      console.error("Error fetching categories: ", error);
+      console.error("Error fetching categories:", error);
     }
   };
 
+  // Add a new category
   const addCategory = async () => {
     if (!categoryName.trim()) {
       toast.error("Category name cannot be empty");
@@ -52,16 +55,19 @@ function Page() {
     }
   };
 
+  // Start editing a category
   const startEditing = (id, name) => {
     setEditingId(id);
     setEditName(name);
   };
 
+  // Cancel editing
   const cancelEditing = () => {
     setEditingId(null);
     setEditName("");
   };
 
+  // Update an existing category
   const updateCategory = async () => {
     if (!editName.trim()) {
       toast.error("Category name cannot be empty");
@@ -71,7 +77,7 @@ function Page() {
       await axios.put(`http://localhost:5000/api/categories/${editingId}`, {
         name: editName,
       });
-      fetchCategories();
+      fetchCategories(); // Refresh categories
       setEditingId(null);
       setEditName("");
       toast.success("Category updated successfully!");
@@ -80,6 +86,7 @@ function Page() {
     }
   };
 
+  // Delete a category
   const deleteCategory = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/categories/${id}`);
@@ -92,30 +99,29 @@ function Page() {
 
   return (
     <section className="p-5">
-      <div className="flex md:flex-row flex-col md:items-center items-start md:w-[415px] w-auto gap-5 p-2 border-2 rounded-xl">
-        <div className="p-2 bg-white rounded-lg ">
-          <input
-            value={categoryName}
-            onChange={(e) => setCategoryName(e.target.value)}
-            placeholder="Enter Category Name"
-            className="border-none outline-none w-[240px]"
-          />
-        </div>
+      {/* Add Category Section */}
+      <div className="flex items-center gap-3 mb-5">
+        <input
+          value={categoryName}
+          onChange={(e) => setCategoryName(e.target.value)}
+          placeholder="Enter Category Name"
+          className="p-2 border rounded w-full max-w-[300px] focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
         <Button
           onClick={addCategory}
-          className="bg-[#046C42] hover:bg-[#046C42] hover:opacity-85 duration-300"
+          className="text-white bg-green-800 hover:bg-green-700"
         >
           Add Category
         </Button>
       </div>
+
+      {/* Categories Table */}
       <Table className="mt-5 text-lg">
-        <TableHeader className="bg-[#E6EFF5]">
+        <TableHeader className="bg-gray-100">
           <TableRow>
-            <TableHead className="uppercase text-[#718EBF]">ID</TableHead>
-            <TableHead className="uppercase text-[#718EBF]">
-              Category Name
-            </TableHead>
-            <TableHead className="uppercase text-[#718EBF]">Actions</TableHead>
+            <TableHead>ID</TableHead>
+            <TableHead>Category Name</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -128,7 +134,7 @@ function Page() {
                     type="text"
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
-                    className="p-1 border-2 border-gray-300 rounded"
+                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 ) : (
                   category.name
@@ -139,13 +145,13 @@ function Page() {
                   <>
                     <Button
                       onClick={updateCategory}
-                      className="text-xs bg-[#046C42] hover:bg-[#046C42] hover:opacity-85 duration-300"
+                      className="text-sm text-white bg-blue-500 hover:bg-blue-600"
                     >
                       Save
                     </Button>
                     <Button
                       onClick={cancelEditing}
-                      className="text-xs duration-300 bg-red-600 hover:opacity-85"
+                      className="text-sm text-white bg-red-500 hover:bg-red-600"
                     >
                       Cancel
                     </Button>
@@ -153,16 +159,14 @@ function Page() {
                 ) : (
                   <>
                     <TbEdit
-                      size={22}
+                      size={20}
                       onClick={() => startEditing(category.id, category.name)}
-                      className="cursor-pointer"
-                      color="#046C42"
+                      className="text-blue-500 cursor-pointer"
                     />
                     <RiDeleteBin6Line
-                      size={22}
+                      size={20}
                       onClick={() => deleteCategory(category.id)}
-                      className="cursor-pointer"
-                      color="red"
+                      className="text-red-500 cursor-pointer"
                     />
                   </>
                 )}

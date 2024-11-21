@@ -11,60 +11,65 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { FaAngleDown } from "react-icons/fa6";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
+import { FaPlus } from "react-icons/fa";
 
 function Page() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // Product States
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState(0);
   const [inStock, setInStock] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [description, setDescription] = useState("");
   const [indications, setIndications] = useState("");
   const [precautions, setPrecautions] = useState("");
   const [punchline, setPunchline] = useState("");
   const [quantity, setQuantity] = useState("");
   const [dosage, setDosage] = useState("");
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
 
+  // Fetch products and categories on load
   useEffect(() => {
     fetchCategories();
     fetchProducts();
   }, []);
 
+  // Fetch all categories
   const fetchCategories = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/categories");
       setCategories(response.data);
     } catch (error) {
-      console.log("Error fetching categories: ", error);
+      console.error("Error fetching categories:", error);
     }
   };
 
+  // Fetch all products
   const fetchProducts = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/products");
       setProducts(response.data);
     } catch (error) {
-      console.log("Error fetching products: ", error);
+      console.error("Error fetching products:", error);
     }
   };
 
-  const handleAddProduct = async () => {
+  // Add or Update Product
+  const handleSaveProduct = async () => {
     const formData = new FormData();
     formData.append("name", productName);
     formData.append("price", price);
@@ -76,7 +81,11 @@ function Page() {
     formData.append("punchline", punchline);
     formData.append("quantity", quantity);
     formData.append("dosage", dosage);
-    if (image) formData.append("image", image);
+
+    // Append multiple images
+    images.forEach((image) => {
+      formData.append("images", image);
+    });
 
     try {
       const endpoint = isEditing
@@ -89,15 +98,15 @@ function Page() {
       });
 
       toast.success(`Product ${isEditing ? "updated" : "added"} successfully!`);
-
-      // Refetch products to update table with full category details
-      fetchProducts();
+      fetchProducts(); // Refresh products
       clearForm();
+      setModalOpen(false);
     } catch (error) {
       toast.error(`Failed to ${isEditing ? "update" : "add"} product`);
     }
   };
 
+  // Delete a product
   const handleDeleteProduct = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/products/${id}`);
@@ -108,6 +117,7 @@ function Page() {
     }
   };
 
+  // Edit a product
   const handleEditProduct = (product) => {
     setProductName(product.name);
     setPrice(product.price);
@@ -121,8 +131,10 @@ function Page() {
     setDosage(product.dosage);
     setEditProductId(product.id);
     setIsEditing(true);
+    setModalOpen(true);
   };
 
+  // Clear the form
   const clearForm = () => {
     setProductName("");
     setPrice(0);
@@ -134,189 +146,154 @@ function Page() {
     setPunchline("");
     setQuantity("");
     setDosage("");
-    setImage(null);
+    setImages([]);
     setIsEditing(false);
     setEditProductId(null);
   };
 
   return (
     <section className="p-5">
-      {/* Product Form */}
-      <div className="flex flex-col md:flex-row md:items-center items-start md:w-[990px] w-auto gap-5 p-2 border-2 rounded-xl">
-        {/* Form Fields */}
-        <div className="flex flex-col gap-2">
-          <div className="p-2 bg-white rounded-lg">
-            <input
-              placeholder="Enter Product Name"
-              className="border-none outline-none w-[240px]"
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
-            />
-          </div>
-          <div className="p-2 bg-white rounded-lg">
-            <input
-              type="number"
-              placeholder="Enter Product Price"
-              className="border-none outline-none w-[240px]"
-              value={price}
-              onChange={(e) => setPrice(parseFloat(e.target.value))}
-            />
-          </div>
+      {/* Add Product Button */}
+      <Button
+        onClick={() => {
+          clearForm();
+          setModalOpen(true);
+        }}
+        className="flex items-center gap-1 text-lg font-semibold text-white transition-all bg-green-800 hover:bg-green-700"
+      >
+        <FaPlus className="mt-[3px]" /> Add Product
+      </Button>
 
-          <div className="p-2 bg-white rounded-lg">
-            <input
-              placeholder="Enter Description"
-              className="border-none outline-none w-[240px]"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
+      {/* Modal for Add/Edit Product */}
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+        <DialogContent className="h-[500px] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {isEditing ? "Edit Product" : "Add Product"}
+            </DialogTitle>
+          </DialogHeader>
 
-          <div className="p-2 bg-white rounded-lg">
-            <input
-              placeholder="Enter Indications"
-              className="border-none outline-none w-[240px]"
-              value={indications}
-              onChange={(e) => setIndications(e.target.value)}
-            />
-          </div>
+          {/* Input Fields */}
+          <input
+            type="text"
+            placeholder="Product Name"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+            className="w-full p-2 my-2 border rounded focus:outline-none focus:ring-2"
+          />
+          <input
+            type="number"
+            placeholder="Price"
+            value={price}
+            onChange={(e) => setPrice(parseFloat(e.target.value))}
+            className="w-full p-2 my-2 border border-gray-300 rounded resize-none focus:outline-none focus:ring-2"
+          />
+          <textarea
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full h-[43px] p-2 my-2 border border-gray-300 rounded resize-none focus:outline-none focus:ring-2"
+          />
+          <textarea
+            placeholder="Indications"
+            value={indications}
+            onChange={(e) => setIndications(e.target.value)}
+            className="w-full p-2 h-[43px] my-2 border border-gray-300 rounded resize-none focus:outline-none focus:ring-2"
+          />
+          <textarea
+            placeholder="Precautions (comma-separated)"
+            value={precautions}
+            onChange={(e) => setPrecautions(e.target.value)}
+            className="w-full p-2 my-2 border border-gray-300 rounded resize-none focus:outline-none focus:ring-2 h-[43px]"
+          />
+          <input
+            type="text"
+            placeholder="Punchline"
+            value={punchline}
+            onChange={(e) => setPunchline(e.target.value)}
+            className="w-full p-2 my-2 border rounded focus:outline-none focus:ring-2"
+          />
+          <input
+            type="text"
+            placeholder="Quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            className="w-full p-2 my-2 border rounded focus:outline-none focus:ring-2"
+          />
+          <input
+            type="text"
+            placeholder="Dosage"
+            value={dosage}
+            onChange={(e) => setDosage(e.target.value)}
+            className="w-full p-2 my-2 border rounded focus:outline-none focus:ring-2"
+          />
 
-          <div className="p-2 bg-white rounded-lg">
-            <input
-              placeholder="Enter Precautions (comma-separated)"
-              className="border-none outline-none w-[240px]"
-              value={precautions}
-              onChange={(e) => setPrecautions(e.target.value)}
-            />
-          </div>
+          {/* Category Dropdown */}
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full p-2 my-2 border rounded"
+          >
+            <option value="">Select Category</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
 
-          <div className="p-2 bg-white rounded-lg">
-            <input
-              placeholder="Enter Punchline"
-              className="border-none outline-none w-[240px]"
-              value={punchline}
-              onChange={(e) => setPunchline(e.target.value)}
-            />
-          </div>
-
-          <div className="p-2 bg-white rounded-lg">
-            <input
-              placeholder="Enter Quantity"
-              className="border-none outline-none w-[240px]"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            />
-          </div>
-
-          <div className="p-2 bg-white rounded-lg">
-            <input
-              placeholder="Enter Dosage"
-              className="border-none outline-none w-[240px]"
-              value={dosage}
-              onChange={(e) => setDosage(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-2">
-              <span>{selectedCategory || "Select Category"}</span>
-              <FaAngleDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[170px]">
-            <DropdownMenuSeparator />
-            <DropdownMenuRadioGroup
-              value={selectedCategory}
-              onValueChange={(value) => setSelectedCategory(value)}
-            >
-              {categories.map((category) => (
-                <DropdownMenuRadioItem key={category.id} value={category.id}>
-                  {category.name}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-2">
-              <span>In Stock</span>
-              <FaAngleDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[100px]">
-            <DropdownMenuSeparator />
-            <DropdownMenuRadioGroup
-              value={inStock.toString()}
-              onValueChange={(value) => setInStock(value === "true")}
-            >
-              <DropdownMenuRadioItem value="true">True</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="false">False</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <div className="p-2 bg-white rounded-lg ">
+          {/* File Input */}
           <input
             type="file"
-            onChange={(e) => setImage(e.target.files[0])}
-            className="border-none outline-none w-[240px]"
+            multiple
+            onChange={(e) => setImages(Array.from(e.target.files))}
+            className="w-full p-2 my-2 border rounded"
           />
-        </div>
-        {/* Form fields as per your original form inputs */}
 
-        {/* Buttons */}
-        <Button
-          onClick={handleAddProduct}
-          className="bg-[#046C42] hover:bg-[#046C42] hover:opacity-85 duration-300"
-        >
-          {isEditing ? "Update Product" : "Add Product"}
-        </Button>
-        {isEditing && (
-          <Button
-            onClick={clearForm}
-            className="duration-300 bg-gray-400 hover:bg-gray-500"
-          >
-            Cancel Edit
+          {/* Buttons */}
+          <Button onClick={handleSaveProduct} className="mt-4">
+            {isEditing ? "Update Product" : "Add Product"}
           </Button>
-        )}
-      </div>
+          <Button
+            onClick={() => setModalOpen(false)}
+            variant="outline"
+            className="mt-4"
+          >
+            Cancel
+          </Button>
+        </DialogContent>
+      </Dialog>
 
-      {/* Products Table */}
-      <Table className="mt-5 text-lg">
-        <TableHeader className="border-b-8 border-[#E6EFF5]">
-          <TableRow>
+      {/* Product Table */}
+      <Table className="mt-5">
+        <TableHeader>
+          <TableRow className="text-lg">
             <TableHead>Sl. No.</TableHead>
-            <TableHead>Product Title</TableHead>
+            <TableHead>Product Name</TableHead>
             <TableHead>Category</TableHead>
-            <TableHead>In Stock</TableHead>
             <TableHead>Price</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody className="text-lg">
           {products.map((product, index) => (
             <TableRow key={product.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.category?.name}</TableCell>
-              <TableCell>{product.inStock ? "Yes" : "No"}</TableCell>
-              <TableCell>Rs. {product.price}</TableCell>
-              <TableCell className="flex gap-3">
+              <TableCell>{product.price}</TableCell>
+              <TableCell className="flex items-center gap-2">
                 <TbEdit
+                  className="cursor-pointer"
+                  color="green"
                   size={22}
                   onClick={() => handleEditProduct(product)}
-                  className="cursor-pointer"
-                  color="#046C42"
                 />
                 <RiDeleteBin6Line
-                  size={22}
-                  onClick={() => handleDeleteProduct(product.id)}
                   className="cursor-pointer"
                   color="red"
+                  size={22}
+                  onClick={() => handleDeleteProduct(product.id)}
                 />
               </TableCell>
             </TableRow>
