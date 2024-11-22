@@ -250,6 +250,15 @@ function Page() {
             className="w-full p-2 my-2 border rounded"
           />
 
+          <select
+            value={inStock.toString()}
+            onChange={(e) => setInStock(e.target.value === "true")}
+            className="w-full p-2 my-2 border rounded focus:outline-none focus:ring-2"
+          >
+            <option value="true">In Stock</option>
+            <option value="false">Out of Stock</option>
+          </select>
+
           {/* Buttons */}
           <Button onClick={handleSaveProduct} className="mt-4">
             {isEditing ? "Update Product" : "Add Product"}
