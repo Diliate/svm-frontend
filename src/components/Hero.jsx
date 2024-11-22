@@ -55,7 +55,7 @@ const Hero = () => {
           {images.map((img, index) => (
             <div
               key={index}
-              className="relative w-full h-[40vh] sm:h-[50vh] md:h-[70vh] lg:h-[80vh]"
+              className="relative w-full h-[30vh] sm:h-[50vh] md:h-[70vh] lg:h-[90vh]"
             >
               <Image
                 src={img}

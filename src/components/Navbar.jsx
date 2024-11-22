@@ -3,8 +3,17 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaRegHeart, FaRegUser, FaBars, FaTimes } from "react-icons/fa";
-import { IoCartOutline } from "react-icons/io5";
+import {
+  FaRegHeart,
+  FaRegUser,
+  FaBars,
+  FaTimes,
+  FaUser,
+  FaBoxOpen,
+  FaMapMarkerAlt,
+  FaHeadset,
+  FaFileContract,
+} from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import { navLinks } from "../data/navLinks";
 import { HiOutlineShoppingCart } from "react-icons/hi";
@@ -19,17 +28,58 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
+import { RiRefund2Line } from "react-icons/ri";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [position, setPosition] = useState("bottom");
-  const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
   const handleProfileOpenChange = (open) => setProfileDropdownOpen(open);
+
+  const menuList = [
+    {
+      id: "1",
+      name: "Your Account",
+      icon: <FaUser />,
+      path: "/profile/",
+    },
+    {
+      id: "2",
+      name: "Your Orders",
+      icon: <FaBoxOpen />,
+      path: "/profile/orders",
+    },
+    {
+      id: "3",
+      name: "Your Address",
+      icon: <FaMapMarkerAlt />,
+      path: "/profile/address",
+    },
+    {
+      id: "4",
+      name: "Customer Care",
+      icon: <FaHeadset />,
+      path: "/profile/customer-care",
+    },
+    {
+      id: "5",
+      name: "Terms and Conditions",
+      icon: <FaFileContract />,
+      path: "/t-c",
+      newTab: true,
+    },
+    {
+      id: "6",
+      name: "Return and Refund Policy",
+      icon: <RiRefund2Line />,
+      path: "/return-refund-policy",
+      newTab: true,
+    },
+  ];
 
   return (
     <nav className="fixed z-50 w-full bg-white shadow-md">
@@ -113,45 +163,61 @@ const Navbar = () => {
             </div>
 
             {/* Profile Dropdown for Mobile */}
-            <div className="block md:hidden">
-              <DropdownMenu
-                open={profileDropdownOpen}
-                onOpenChange={handleProfileOpenChange}
-              >
-                <DropdownMenuTrigger asChild>
-                  <button className="p-2 rounded-full focus:outline-none">
-                    <FaRegUser size={20} />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>Profile</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuRadioGroup value={position}>
-                    <DropdownMenuRadioItem
-                      onClick={() => setProfileDropdownOpen(false)}
+            {user && (
+              <div className="block md:hidden">
+                <DropdownMenu
+                  open={profileDropdownOpen}
+                  onOpenChange={handleProfileOpenChange}
+                >
+                  <DropdownMenuTrigger asChild>
+                    <button className="p-2 rounded-full focus:outline-none">
+                      <FaRegUser size={20} />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="mr-5">
+                    <DropdownMenuLabel>Profile</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuRadioGroup value={position}>
+                      {menuList.map((item) => (
+                        <DropdownMenuRadioItem
+                          key={item.id}
+                          onClick={() => setProfileDropdownOpen(false)}
+                        >
+                          {item.newTab ? (
+                            <a
+                              href={item.path}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center"
+                            >
+                              {item.icon}
+                              <span className="ml-2">{item.name}</span>
+                            </a>
+                          ) : (
+                            <Link
+                              href={item.path}
+                              className="flex items-center"
+                            >
+                              {item.icon}
+                              <span className="ml-2">{item.name}</span>
+                            </Link>
+                          )}
+                        </DropdownMenuRadioItem>
+                      ))}
+                    </DropdownMenuRadioGroup>
+                    <button
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        logout();
+                      }}
+                      className="w-full py-1 my-2 text-center text-white bg-red-600 rounded-full"
                     >
-                      <Link href="/profile">Your Account</Link>
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem
-                      onClick={() => setProfileDropdownOpen(false)}
-                    >
-                      <Link href="/profile/orders">Your Orders</Link>
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem
-                      onClick={() => setProfileDropdownOpen(false)}
-                    >
-                      <Link href="/profile/address">Your Address</Link>
-                    </DropdownMenuRadioItem>
-                  </DropdownMenuRadioGroup>
-                  <button
-                    onClick={() => setProfileDropdownOpen(false)}
-                    className="px-4 py-1 my-2 text-left text-white bg-red-600 rounded-full "
-                  >
-                    Logout
-                  </button>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+                      Logout
+                    </button>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
 
             {/* Mobile Menu Button */}
             <button
@@ -167,7 +233,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="bg-white shadow-md md:hidden">
+        <div className="pb-5 bg-white shadow-md md:hidden h-fit">
           <ul className="flex flex-col px-4 py-2 space-y-2">
             {navLinks.map((link) => (
               <li key={link.name}>
@@ -180,6 +246,22 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+          {!user && (
+            <div className="flex flex-col w-full gap-4 px-4 mt-1 text-center">
+              <Link
+                href={"/login"}
+                className="p-2 rounded-full bg-[#004A06]  transition duration-150 text-white hover:opacity-85 mr-2"
+              >
+                Login
+              </Link>
+              <Link
+                href={"/signup"}
+                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150  hover:opacity-85 border-2"
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </nav>
