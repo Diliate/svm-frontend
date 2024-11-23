@@ -10,10 +10,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
 import { TbEdit } from "react-icons/tb";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import toast from "react-hot-toast";
+import {
+  fetchAllCategories,
+  addCategory,
+  updateCategory,
+  deleteCategory,
+} from "@/services/categoryServices";
 
 function Page() {
   const [categories, setCategories] = useState([]);
@@ -23,31 +28,26 @@ function Page() {
 
   // Fetch categories on component mount
   useEffect(() => {
-    fetchCategories();
+    const loadCategories = async () => {
+      try {
+        const data = await fetchAllCategories();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    loadCategories();
   }, []);
 
-  // Fetch all categories
-  const fetchCategories = async () => {
-    try {
-      const { data } = await axios.get("http://localhost:5000/api/categories");
-      setCategories(data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
   // Add a new category
-  const addCategory = async () => {
+  const handleAddCategory = async () => {
     if (!categoryName.trim()) {
       toast.error("Category name cannot be empty");
       return;
     }
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/categories",
-        { name: categoryName }
-      );
-      setCategories([...categories, data]);
+      const newCategory = await addCategory(categoryName);
+      setCategories([...categories, newCategory]);
       setCategoryName("");
       toast.success("Category added successfully!");
     } catch (error) {
@@ -68,16 +68,16 @@ function Page() {
   };
 
   // Update an existing category
-  const updateCategory = async () => {
+  const handleUpdateCategory = async () => {
     if (!editName.trim()) {
       toast.error("Category name cannot be empty");
       return;
     }
     try {
-      await axios.put(`http://localhost:5000/api/categories/${editingId}`, {
-        name: editName,
-      });
-      fetchCategories(); // Refresh categories
+      const updatedCategory = await updateCategory(editingId, editName);
+      setCategories((prev) =>
+        prev.map((cat) => (cat.id === editingId ? updatedCategory : cat))
+      );
       setEditingId(null);
       setEditName("");
       toast.success("Category updated successfully!");
@@ -87,10 +87,10 @@ function Page() {
   };
 
   // Delete a category
-  const deleteCategory = async (id) => {
+  const handleDeleteCategory = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/categories/${id}`);
-      setCategories(categories.filter((category) => category.id !== id));
+      await deleteCategory(id);
+      setCategories((prev) => prev.filter((cat) => cat.id !== id));
       toast.success("Category deleted successfully!");
     } catch (error) {
       toast.error("Failed to delete category");
@@ -108,7 +108,7 @@ function Page() {
           className="p-2 border rounded w-full max-w-[300px] focus:outline-none focus:ring-2 focus:ring-green-500"
         />
         <Button
-          onClick={addCategory}
+          onClick={handleAddCategory}
           className="text-white bg-green-800 hover:bg-green-700"
         >
           Add Category
@@ -144,7 +144,7 @@ function Page() {
                 {editingId === category.id ? (
                   <>
                     <Button
-                      onClick={updateCategory}
+                      onClick={handleUpdateCategory}
                       className="text-sm text-white bg-blue-500 hover:bg-blue-600"
                     >
                       Save
@@ -165,7 +165,7 @@ function Page() {
                     />
                     <RiDeleteBin6Line
                       size={20}
-                      onClick={() => deleteCategory(category.id)}
+                      onClick={() => handleDeleteCategory(category.id)}
                       className="text-red-500 cursor-pointer"
                     />
                   </>

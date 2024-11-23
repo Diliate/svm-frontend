@@ -23,13 +23,20 @@ const ProductCard = () => {
         Its a syrup medicine which helps in reducing coungh.
       </p>
       <div className="flex items-center justify-between mt-5">
-        <p className="text-xl font-semibold">Rs 1200</p>
+        <p className="text-xl font-semibold">Rs. 1200</p>
         <Link
           href={"/product/1"}
-          className="bg-[#166534] text-white rounded-full p-3 flex items-center justify-center group"
+          className="bg-[#166534] text-white rounded-full p-3 flex items-center justify-center group relative overflow-hidden w-12 h-12"
         >
+          {/* Arrow Moving Out */}
           <FaArrowRight
-            className="duration-300 transform group-hover:translate-x-2"
+            className="absolute duration-300 transform -translate-x-1/2 left-1/2 group-hover:translate-x-full group-hover:delay-0"
+            size={24}
+          />
+
+          {/* Arrow Coming In */}
+          <FaArrowRight
+            className="absolute left-[-50%] transform translate-x-0 duration-300 group-hover:left-1/2 group-hover:translate-x-[-60%] group-hover:delay-300"
             size={24}
           />
         </Link>
