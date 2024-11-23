@@ -14,7 +14,6 @@ import {
   FaHeadset,
   FaFileContract,
 } from "react-icons/fa";
-import { IoIosSearch } from "react-icons/io";
 import { navLinks } from "../data/navLinks";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 
@@ -29,6 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/AuthContext";
 import { RiRefund2Line } from "react-icons/ri";
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -110,16 +110,9 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* Search and Location */}
-          <div className="items-center hidden space-x-4 md:flex">
-            <div className="flex items-center px-4 py-2 bg-gray-100 rounded-full">
-              <IoIosSearch size={20} className="text-gray-600" />
-              <input
-                type="text"
-                placeholder="Search your medicines..."
-                className="w-64 ml-2 bg-transparent border-none focus:outline-none"
-              />
-            </div>
+          {/* Search */}
+          <div className="items-center hidden mr-28 md:flex">
+            <SearchBar />
           </div>
 
           {/* Icons */}

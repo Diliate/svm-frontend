@@ -48,7 +48,11 @@ function Page() {
     try {
       await saveProduct(formData, isEditing, currentProduct?.id);
       toast.success(`Product ${isEditing ? "updated" : "added"} successfully!`);
-      setProducts(await fetchAllProducts());
+
+      const data = await fetchAllProducts();
+      setProducts(data);
+      console.log("DATA IN PRODUCT PAGE: ", data);
+
       setModalOpen(false);
       setCurrentProduct(null);
     } catch (error) {

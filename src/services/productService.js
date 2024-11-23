@@ -44,3 +44,11 @@ export const deleteProduct = async (id) => {
   const response = await axios.delete(`${API_BASE_URL}/products/${id}`);
   return response.data;
 };
+
+// get searched products
+export const searchProducts = async (query) => {
+  const response = await axios.get(`${API_BASE_URL}/products/search`, {
+    params: { query },
+  });
+  return response.data;
+};
