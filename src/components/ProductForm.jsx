@@ -26,31 +26,30 @@ const ProductForm = ({
     ...initialData, // Override defaults with provided initialData
   });
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([]); // State to manage images
 
   const handleChange = (e) => {
-    console.log("Form Field Change:", { [e.target.name]: e.target.value });
     const { name, value, type, checked } = e.target;
     const fieldValue = type === "checkbox" ? checked : value;
     setFormState((prev) => ({ ...prev, [name]: fieldValue }));
   };
 
   const handleFileChange = (e) => {
-    setImages(Array.from(e.target.files));
+    setImages(Array.from(e.target.files)); // Update images with uploaded files
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form's default submission behavior
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // Convert precautions to an array if provided as a comma-separated string
-    const finalFormState = {
+    const updatedFormState = {
       ...formState,
-      precautions: formState.precautions
-        ? formState.precautions.split(",").map((item) => item.trim())
-        : [],
+      precautions: Array.isArray(formState.precautions)
+        ? formState.precautions
+        : formState.precautions.split(",").map((item) => item.trim()),
+      discountExpiry: formState.discountExpiry || null, // Set to null if empty
     };
 
-    onSave(finalFormState, images); // Call parent save handler
+    onSave(updatedFormState, images);
   };
 
   return (
@@ -62,6 +61,7 @@ const ProductForm = ({
         onChange={handleChange}
         placeholder="Name"
         className="w-full p-2 mb-3 border rounded"
+        required
       />
       <input
         type="number"
@@ -70,6 +70,7 @@ const ProductForm = ({
         onChange={handleChange}
         placeholder="Price"
         className="w-full p-2 mb-3 border rounded"
+        required
       />
       <textarea
         name="indications"
@@ -84,12 +85,14 @@ const ProductForm = ({
         onChange={handleChange}
         placeholder="Description"
         className="w-full p-2 mb-3 border rounded"
+        required
       />
       <select
         name="categoryId"
         value={formState.categoryId || ""}
         onChange={handleChange}
         className="w-full p-2 mb-3 border rounded"
+        required
       >
         {categories.length === 0 ? (
           <option value="">No categories available</option>
@@ -132,33 +135,36 @@ const ProductForm = ({
         placeholder="Dosage"
         className="w-full p-2 mb-3 border rounded"
       />
-      <input
-        type="checkbox"
-        name="inStock"
-        checked={formState.inStock || false}
-        onChange={handleChange}
-        className="mr-2"
-      />
-      In Stock
-      <br />
-      <input
-        type="checkbox"
-        name="featured"
-        checked={formState.featured || false}
-        onChange={handleChange}
-        className="mr-2"
-      />
-      Featured
-      <br />
-      <input
-        type="checkbox"
-        name="limitedOffer"
-        checked={formState.limitedOffer || false}
-        onChange={handleChange}
-        className="mr-2"
-      />
-      Limited Offer
-      <br />
+      <div className="mb-3">
+        <input
+          type="checkbox"
+          name="inStock"
+          checked={formState.inStock || false}
+          onChange={handleChange}
+          className="mr-2"
+        />
+        In Stock
+      </div>
+      <div className="mb-3">
+        <input
+          type="checkbox"
+          name="featured"
+          checked={formState.featured || false}
+          onChange={handleChange}
+          className="mr-2"
+        />
+        Featured
+      </div>
+      <div className="mb-3">
+        <input
+          type="checkbox"
+          name="limitedOffer"
+          checked={formState.limitedOffer || false}
+          onChange={handleChange}
+          className="mr-2"
+        />
+        Limited Offer
+      </div>
       <input
         type="number"
         name="discount"
@@ -174,16 +180,17 @@ const ProductForm = ({
         onChange={handleChange}
         className="w-full p-2 mb-3 border rounded"
       />
+
       <input
         type="file"
         multiple
-        onChange={handleFileChange}
+        onChange={handleFileChange} // Handle file change
         className="w-full p-2 mb-3 border rounded"
       />
       <Button type="submit" className="mt-3">
         {isEditing ? "Update Product" : "Add Product"}
       </Button>
-      <Button onClick={onClose} className="mt-3" variant="outline">
+      <Button onClick={onClose} className="mt-3 ml-2" variant="outline">
         Cancel
       </Button>
     </form>

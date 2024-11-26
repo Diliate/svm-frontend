@@ -29,14 +29,29 @@ export const fetchDiscountedProducts = async () => {
 
 // Add or update a product
 export const saveProduct = async (productData, isEditing, id) => {
-  const endpoint = isEditing
-    ? `${API_BASE_URL}/products/${id}`
-    : `${API_BASE_URL}/products`;
-  const method = isEditing ? "put" : "post";
-  const response = await axios[method](endpoint, productData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
-  return response.data;
+  try {
+    const endpoint = isEditing
+      ? `${API_BASE_URL}/products/${id}`
+      : `${API_BASE_URL}/products`;
+    const method = isEditing ? "put" : "post";
+
+    const response = await axios({
+      method,
+      url: endpoint,
+      data: productData,
+      headers: {
+        "Content-Type": "multipart/form-data", // Ensure the correct content type
+      },
+    });
+
+    return response.data; // Return the response data if successful
+  } catch (error) {
+    console.error(
+      "Error saving product:",
+      error.response?.data || error.message
+    );
+    throw error; // Re-throw the error to be caught in the calling code
+  }
 };
 
 // Delete a product
