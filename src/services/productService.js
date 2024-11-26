@@ -58,3 +58,21 @@ export const fetchProductById = async (id) => {
   const response = await axios.get(`${API_BASE_URL}/products/${id}`);
   return response.data;
 };
+
+// get filtered products
+export const fetchFilteredProducts = async (filters) => {
+  // Ensure categoryId is converted into a comma-separated string if it's an array
+  if (filters.categoryId && Array.isArray(filters.categoryId)) {
+    filters.categoryId = filters.categoryId.join(",");
+  }
+
+  try {
+    const response = await axios.get(`${API_BASE_URL}/products/filtered`, {
+      params: filters,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching filtered products:", error);
+    throw error;
+  }
+};

@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
 
       <p className="text-lg">{product?.description}</p>
       <div className="flex items-center justify-between mt-5">
-        <p className="text-xl font-semibold">Rs. 1200</p>
+        <p className="text-xl font-semibold">Rs. {product?.price}</p>
         <Link
           href={`product/${product?.id}`}
           className="bg-[#166534] text-white rounded-full p-3 flex items-center justify-center group relative overflow-hidden w-12 h-12"
