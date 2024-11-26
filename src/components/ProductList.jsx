@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import ProductCard from "./ProductCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { fetchFeaturedProducts } from "@/services/productService"; // Import the service
 import { useInView } from "react-intersection-observer";
 
 function SampleNextArrow(props) {
@@ -40,17 +39,37 @@ function SamplePrevArrow(props) {
 
 const ProductList = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [products, setProducts] = useState([]); // State for featured products
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.8,
   });
+
+  console.log("PRODUCTS: ", products);
+
+  // Fetch featured products when the component mounts
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const featuredProducts = await fetchFeaturedProducts();
+        setProducts(featuredProducts); // Store products in state
+      } catch (error) {
+        console.error("Failed to fetch featured products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const settings = {
     dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 4.5,
     slidesToScroll: 3,
-    nextArrow: <SampleNextArrow isVisible={currentSlide < 12 - 4.5} />,
+    nextArrow: (
+      <SampleNextArrow isVisible={currentSlide < products.length - 4.5} />
+    ),
     prevArrow: <SamplePrevArrow isVisible={currentSlide > 0} />,
     beforeChange: (current, next) => setCurrentSlide(next),
     responsive: [
@@ -84,23 +103,17 @@ const ProductList = () => {
   return (
     <div ref={ref} className="p-5 py-10 md:px-10">
       <h1 className="text-3xl font-medium">Our Popular Products</h1>
-      <Slider {...settings}>
-        {Array.from({ length: 12 }).map((_, index) => (
-          <AnimatePresence key={index}>
-            {inView && (
-              <motion.div
-                className="p-5"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: index * 0.15 }}
-              >
-                <ProductCard />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        ))}
-      </Slider>
+      {products.length > 0 ? (
+        <Slider {...settings}>
+          {products.map((product) => (
+            <div key={product.id} className="p-5">
+              <ProductCard product={product} /> {/* Pass product data */}
+            </div>
+          ))}
+        </Slider>
+      ) : (
+        <p>Loading featured products...</p>
+      )}
     </div>
   );
 };
