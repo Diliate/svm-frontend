@@ -3,7 +3,7 @@
 import Features from "@/components/Features";
 import TestimonialCard from "@/components/TestimonialCard";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaMinus,
   FaPlus,
@@ -16,6 +16,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import { fetchProductById } from "@/services/productService";
+import ProductList from "@/components/ProductList";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
@@ -46,6 +50,8 @@ function SamplePrevArrow(props) {
 }
 
 const Page = () => {
+  const { slug: id } = useParams();
+  const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const rating = 4.1;
   const starCount = Math.floor(rating);
@@ -54,6 +60,8 @@ const Page = () => {
   const products = Array.from({ length: 12 });
   const totalSlides = testimonials.length;
   const slidesToShow = 3.5;
+
+  console.log("PRODUCT (SLUG): ", product);
 
   const settings = {
     dots: false,
@@ -94,6 +102,21 @@ const Page = () => {
     ],
   };
 
+  useEffect(() => {
+    if (id) {
+      const fetchProductData = async () => {
+        try {
+          const productData = await fetchProductById(id);
+          setProduct(productData);
+        } catch (error) {
+          console.error("Error Fetching Product Data in Product(slug) ", error);
+        }
+      };
+
+      fetchProductData();
+    }
+  }, [id]);
+
   return (
     <section className="px-5 pt-20 pb-20 md:pt-32 md:px-10">
       <div className="w-full">
@@ -101,24 +124,38 @@ const Page = () => {
           {/* IMAGES */}
           <div className="flex flex-col-reverse items-center justify-center w-full gap-5 md:flex-row md:w-1/2">
             <div className="flex flex-row gap-2 md:flex-col">
-              {Array.from({ length: 4 }, (_, index) => (
-                <div
-                  key={index}
-                  className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center"
-                >
+              {product?.imageUrls?.length > 0 ? (
+                product.imageUrls.map((url, index) => (
+                  <div
+                    key={index}
+                    className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center"
+                  >
+                    <Image
+                      src={url} // Render the image URL
+                      alt={`product-image-${index}`}
+                      height={100}
+                      width={100}
+                    />
+                  </div>
+                ))
+              ) : (
+                // Fallback if no images are available
+                <div className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center">
                   <Image
-                    src="/product.png"
-                    alt="product"
+                    src="/not-found.png"
+                    alt="Fallback product"
                     height={100}
                     width={100}
                   />
                 </div>
-              ))}
+              )}
             </div>
+
+            {/* Main Image */}
             <div className="border-2 rounded-xl bg-[#F9F9EB] md:w-[300px] w-[345px] md:h-[340px] h-[250px] flex items-center justify-center">
               <Image
-                src="/product.png"
-                alt="product"
+                src={product?.imageUrls?.[0] || "/not-found.png"}
+                alt={product?.name || "Product"}
                 height={300}
                 width={300}
               />
@@ -127,9 +164,7 @@ const Page = () => {
 
           {/* DESC */}
           <div className="flex flex-col md:w-[45%] w-full gap-5">
-            <h1 className="text-3xl font-medium">
-              SKIN : PILE - C - Capsules - for Bleeding and Healing
-            </h1>
+            <h1 className="text-3xl font-medium">{product?.name}</h1>
             <div className="flex items-end gap-2">
               <h2 className="flex text-4xl">{rating}</h2>
               <span>
@@ -138,11 +173,7 @@ const Page = () => {
 
               <span className="text-lg">(400+ Trusted Customers)</span>
             </div>
-            <p className="text-xl">
-              Each tablet contains a carefully selected combination of
-              echinacea, turmeric, ashwagandha, and elderberry, known for their
-              immune-boosting and anti-inflammatory properties.
-            </p>
+            <p className="text-xl">{product?.description}</p>
             <div className="flex items-start">
               <button className="flex items-center gap-2 px-2 text-white bg-[#050B0F] rounded-full">
                 <FaMinus
@@ -175,15 +206,7 @@ const Page = () => {
               Description
             </h2>
             <div className="flex flex-col gap-2">
-              <p className="text-xl md:text-2xl">
-                Each tablet contains a carefully selected combination of
-                echinacea, turmeric, ashwagandha, and elderberry, known for
-                their immune-boosting and anti-inflammatory properties.
-              </p>
-              <p className="text-xl md:text-2xl">
-                This powerful blend has been formulated to support your overall
-                health and well-being, helping you to stay active and energized.
-              </p>
+              <p className="text-xl md:text-2xl">{product?.description}</p>
             </div>
           </div>
         </div>
@@ -227,24 +250,8 @@ const Page = () => {
         {/* RELATED PRODUCTS */}
         <div className="flex justify-center mt-20">
           <div className="w-[90%] flex flex-col">
-            <div>
-              <h2 className="text-xl font-light uppercase">
-                our popular products
-              </h2>
-              <h2 className="mt-5 text-5xl italic font-semibold">
-                Related <br />
-                Products
-              </h2>
-            </div>
-
             <div className="mt-5">
-              <Slider {...settings}>
-                {products.map((_, index) => (
-                  <div className="p-5" key={index}>
-                    <ProductCard />
-                  </div>
-                ))}
-              </Slider>
+              <ProductList headline="Related Products" />
             </div>
           </div>
         </div>

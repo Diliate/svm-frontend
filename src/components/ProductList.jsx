@@ -6,7 +6,7 @@ import ProductCard from "./ProductCard";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import { fetchFeaturedProducts } from "@/services/productService"; // Import the service
+import { fetchFeaturedProducts } from "@/services/productService";
 import { useInView } from "react-intersection-observer";
 
 function SampleNextArrow(props) {
@@ -37,9 +37,9 @@ function SamplePrevArrow(props) {
   );
 }
 
-const ProductList = () => {
+const ProductList = ({ headline }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [products, setProducts] = useState([]); // State for featured products
+  const [products, setProducts] = useState([]);
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.8,
@@ -52,7 +52,7 @@ const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const featuredProducts = await fetchFeaturedProducts();
-        setProducts(featuredProducts); // Store products in state
+        setProducts(featuredProducts);
       } catch (error) {
         console.error("Failed to fetch featured products:", error);
       }
@@ -102,12 +102,12 @@ const ProductList = () => {
 
   return (
     <div ref={ref} className="p-5 py-10 md:px-10">
-      <h1 className="text-3xl font-medium">Our Popular Products</h1>
+      <h1 className="text-4xl font-semibold">{headline}</h1>
       {products.length > 0 ? (
         <Slider {...settings}>
           {products.map((product) => (
             <div key={product.id} className="p-5">
-              <ProductCard product={product} /> {/* Pass product data */}
+              <ProductCard product={product} />
             </div>
           ))}
         </Slider>

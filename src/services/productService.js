@@ -52,3 +52,9 @@ export const searchProducts = async (query) => {
   });
   return response.data;
 };
+
+// get product from id
+export const fetchProductById = async (id) => {
+  const response = await axios.get(`${API_BASE_URL}/products/${id}`);
+  return response.data;
+};

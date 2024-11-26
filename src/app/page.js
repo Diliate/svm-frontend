@@ -13,7 +13,7 @@ export default function Home() {
     <div className="overflow-hidden min-h-[500px]">
       <Hero />
       <Categories />
-      <ProductList />
+      <ProductList headline={"Our Popular Products"} />
       <Banner />
       <Features />
       <ProductList2 />
