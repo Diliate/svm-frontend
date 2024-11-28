@@ -62,9 +62,11 @@ export const deleteProduct = async (id) => {
 
 // get searched products
 export const searchProducts = async (query) => {
+  console.log("Sending query:", query);
   const response = await axios.get(`${API_BASE_URL}/products/search`, {
     params: { query },
   });
+  console.log("Search Results:", response.data);
   return response.data;
 };
 

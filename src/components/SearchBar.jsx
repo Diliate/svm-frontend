@@ -14,29 +14,32 @@ const SearchBar = () => {
   // Debounce Effect: Updates debouncedTerm after 700ms
   useEffect(() => {
     const handler = setTimeout(() => {
+      console.log("Debounced Term:", searchTerm);
       setDebouncedTerm(searchTerm);
     }, 700);
 
-    return () => {
-      clearTimeout(handler); // Cleanup the timeout
-    };
+    return () => clearTimeout(handler);
   }, [searchTerm]);
 
   // Fetch search suggestions whenever debouncedTerm changes
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (!debouncedTerm) {
-        setSuggestions([]); // Clear suggestions if input is empty
+        setSuggestions([]);
         setShowSuggestions(false);
         return;
       }
 
       try {
+        console.log("Fetching suggestions for:", debouncedTerm); // Debug log
         const results = await searchProducts(debouncedTerm);
         setSuggestions(results);
         setShowSuggestions(true);
       } catch (error) {
-        console.error("Error fetching search suggestions:", error);
+        console.error(
+          "Error fetching suggestions:",
+          error.response?.data || error.message
+        );
       }
     };
 

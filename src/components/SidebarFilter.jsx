@@ -7,9 +7,11 @@ const SidebarFilter = ({
   priceRange,
   maxPrice,
   onPriceChange,
+  handleFilter,
+  resetFilters,
 }) => {
   return (
-    <section className="pt-10">
+    <section className="pt-5 mb-10">
       <div className="hidden p-3 bg-gray-100 md:block">
         <h1 className="text-3xl font-medium">Our Products</h1>
         <div className="flex flex-col gap-5">
@@ -72,6 +74,22 @@ const SidebarFilter = ({
               <input type="checkbox" />
               <div className="text-xl">★☆☆☆☆</div>
             </div>
+          </div>
+
+          {/* Filter buttons */}
+          <div className="flex gap-4 mt-4">
+            <button
+              onClick={handleFilter}
+              className="px-4 py-2 text-white bg-green-600 rounded"
+            >
+              Apply Filters
+            </button>
+            <button
+              onClick={resetFilters}
+              className="px-4 py-2 text-white bg-red-600 rounded"
+            >
+              Reset Filters
+            </button>
           </div>
         </div>
       </div>

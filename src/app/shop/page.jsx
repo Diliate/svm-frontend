@@ -9,6 +9,7 @@ import {
   fetchAllProducts,
 } from "@/services/productService";
 import { fetchAllCategories } from "@/services/categoryServices";
+import ResponsiveFilter from "@/components/ResponsiveFilter";
 
 function Page() {
   const [products, setProducts] = useState([]);
@@ -16,9 +17,7 @@ function Page() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
   const [maxPrice, setMaxPrice] = useState(0);
-  const [error, setError] = useState(null); // State for error handling
-  const [currentPage, setCurrentPage] = useState(1); // Current page number
-  const [itemsPerPage, setItemsPerPage] = useState(9); // Items per page
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,7 +32,7 @@ function Page() {
         setMaxPrice(maxPrice);
       } catch (error) {
         console.error("Failed to fetch products:", error);
-        setError("Failed to fetch products."); // Set error if fetch fails
+        setError("Failed to fetch products.");
       }
     };
 
@@ -44,7 +43,7 @@ function Page() {
         setError(null); // Reset error
       } catch (error) {
         console.error("Failed to fetch categories:", error);
-        setError("Failed to fetch categories."); // Set error if fetch fails
+        setError("Failed to fetch categories.");
       }
     };
 
@@ -63,7 +62,7 @@ function Page() {
       const filteredProducts = await fetchFilteredProducts(filters);
       setProducts(filteredProducts);
       setError(null); // Reset error when products are successfully fetched
-      setCurrentPage(1); // Reset to the first page after filtering
+      // setCurrentPage(1); // Reset to the first page after filtering
     } catch (error) {
       console.error("Error applying filters:", error);
       setProducts([]); // Clear the products state
@@ -87,15 +86,28 @@ function Page() {
     }));
   };
 
-  // Pagination logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
+  const resetFilters = () => {
+    setSelectedCategories([]);
+    setPriceRange({ min: 0, max: maxPrice });
+    setError(null);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    // Optionally refetch all products after reset
+    const fetchDefaultProducts = async () => {
+      try {
+        const products = await fetchAllProducts();
+        setProducts(products);
+        setError(null);
+      } catch (error) {
+        console.error("Failed to fetch default products:", error);
+        setError("Failed to reset filters.");
+      }
+    };
+
+    fetchDefaultProducts();
+  };
 
   return (
-    <div className="flex h-screen px-4 pt-14 lg:px-8">
+    <div className="flex h-screen px-4 pb-10 pt-14 lg:px-8">
       {/* Sidebar for larger screens */}
       <aside className="hidden w-1/4 p-4 md:block">
         <SidebarFilter
@@ -105,26 +117,34 @@ function Page() {
           priceRange={priceRange}
           maxPrice={maxPrice}
           onPriceChange={handlePriceChange}
+          handleFilter={handleFilter}
+          resetFilters={resetFilters}
         />
-        <button
-          onClick={handleFilter}
-          className="px-4 py-2 mt-4 text-white bg-green-600 rounded"
-        >
-          Apply Filters
-        </button>
       </aside>
 
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 mt-5 md:mt-0">
+        {/* Drawer for mobile screens */}
+        <ResponsiveFilter
+          categories={categories}
+          selectedCategories={selectedCategories}
+          onCategoryChange={handleCategoryChange}
+          priceRange={priceRange}
+          maxPrice={maxPrice}
+          onPriceChange={(range) => setPriceRange(range)}
+          onApplyFilters={handleFilter}
+          resetFilters={resetFilters}
+        />
+
         {/* Product Grid Wrapper - Scrollable */}
         <div className="flex-1 p-5 overflow-y-auto">
           {error ? ( // Display error message if it exists
             <div className="text-xl font-medium text-center text-gray-600">
               {error}
             </div>
-          ) : currentProducts.length > 0 ? (
+          ) : products.length > 0 ? (
             <div className="grid grid-cols-1 gap-10 mt-5 md:gap-5 md:mt-10 sm:grid-cols-2 lg:grid-cols-3">
-              {currentProducts.map((product) => (
+              {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
@@ -133,11 +153,6 @@ function Page() {
               No products found.
             </div>
           )}
-        </div>
-
-        {/* Pagination Control */}
-        <div className="flex justify-center py-3">
-          <PaginationComp />
         </div>
       </div>
     </div>
