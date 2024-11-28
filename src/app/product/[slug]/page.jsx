@@ -14,10 +14,8 @@ import {
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import axios from "axios";
 import { fetchProductById } from "@/services/productService";
 import ProductList from "@/components/ProductList";
 
@@ -57,9 +55,8 @@ const Page = () => {
   const starCount = Math.floor(rating);
   const [currentSlide, setCurrentSlide] = useState(0);
   const testimonials = Array.from({ length: 8 });
-  const products = Array.from({ length: 12 });
   const totalSlides = testimonials.length;
-  const slidesToShow = 3.5;
+  const slidesToShow = 4;
 
   console.log("PRODUCT (SLUG): ", product);
 
@@ -203,10 +200,31 @@ const Page = () => {
         <div className="flex flex-col items-center justify-center mt-10 mb-10 md:mt-20">
           <div className="md:w-[85%] w-full">
             <h2 className="mb-3 text-4xl font-medium text-left md:text-center">
-              Description
+              Product Details
             </h2>
             <div className="flex flex-col gap-2">
-              <p className="text-xl md:text-2xl">{product?.description}</p>
+              <h3 className="text-2xl">
+                <span className="font-semibold">Quantity:</span>{" "}
+                {product?.quantity}
+              </h3>
+              <h3 className="text-2xl">
+                <span className="font-semibold">Indications: </span>{" "}
+                {product?.indications}
+              </h3>
+              <h3 className="text-2xl">
+                <span className="font-semibold">Dosage:</span> {product?.dosage}
+              </h3>
+              <h3 className="text-2xl">
+                <span className="font-semibold">Precautions:</span>
+                <br />
+                <ul>
+                  {product?.precautions.map((precaution, index) => (
+                    <li key={index} className="ml-6 list-disc">
+                      {precaution}
+                    </li>
+                  ))}
+                </ul>
+              </h3>
             </div>
           </div>
         </div>
@@ -237,7 +255,7 @@ const Page = () => {
 
           {/* TESTIMONIALS */}
           <div className="flex items-center justify-center">
-            <Slider {...settings} className="md:w-[90%] w-full">
+            <Slider {...settings} className="md:w-[95%] w-full">
               {testimonials.map((_, index) => (
                 <div key={index} className="p-2">
                   <TestimonialCard />
@@ -249,7 +267,7 @@ const Page = () => {
 
         {/* RELATED PRODUCTS */}
         <div className="flex justify-center mt-20">
-          <div className="w-[90%] flex flex-col">
+          <div className="flex w-[100%] flex-col ">
             <div className="mt-5">
               <ProductList headline="Related Products" />
             </div>

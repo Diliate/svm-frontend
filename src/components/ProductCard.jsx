@@ -16,18 +16,13 @@ const ProductCard = ({ product }) => {
       </div>
       <div className="flex justify-between my-2">
         <h1 className="text-2xl font-semibold">{product?.name}</h1>
-        {/* <div className="flex items-center gap-1">
-                {Array.from({ length: 4 }, (_, index) => (
-                  <FaStar key={index} color="#FFB345" />
-                ))}
-              </div> */}
       </div>
 
       <p className="text-lg">{product?.description}</p>
       <div className="flex items-center justify-between mt-5">
         <p className="text-xl font-semibold">Rs. {product?.price}</p>
         <Link
-          href={`product/${product?.id}`}
+          href={`/product/${product?.id}`}
           className="bg-[#166534] text-white rounded-full p-3 flex items-center justify-center group relative overflow-hidden w-12 h-12"
           aria-label={`View details for ${product?.name}`}
         >
