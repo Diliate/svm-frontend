@@ -21,6 +21,10 @@ import { fetchProductById } from "@/services/productService";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/lib/slices/cartSlice";
 import { useAuth } from "@/context/AuthContext";
+import toast from "react-hot-toast";
+import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
+import { addToWishlist, removeFromWishlist } from "@/services/wishlistService";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
@@ -62,6 +66,8 @@ const Page = () => {
   const testimonials = Array.from({ length: 8 });
   const totalSlides = testimonials.length;
   const slidesToShow = 4;
+
+  const [favourite, setFavourite] = useState(false);
 
   const settings = {
     dots: false,
@@ -121,6 +127,28 @@ const Page = () => {
     const userId = user?.id; // Replace this with actual user ID from your auth system
     if (product) {
       dispatch(addToCart({ userId, productId: product.id, quantity }));
+      toast.success(`Product added to cart`);
+    }
+  };
+
+  const handleAddFavourite = async () => {
+    if (!user) {
+      toast.error("Please login to add items to your wishlist.");
+      return;
+    }
+
+    try {
+      if (favourite) {
+        await removeFromWishlist(user.id, product.id);
+        toast.success("Product removed from wishlist.");
+      } else {
+        await addToWishlist(user.id, product.id);
+        toast.success("Product added to wishlist.");
+      }
+      setFavourite(!favourite);
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
+      toast.error("Failed to update wishlist.");
     }
   };
 
@@ -170,7 +198,19 @@ const Page = () => {
 
           {/* DESC */}
           <div className="flex flex-col md:w-[45%] w-full gap-5">
-            <h1 className="text-3xl font-medium">{product?.name}</h1>
+            <div className="flex justify-between">
+              <h1 className="text-3xl font-medium">{product?.name}</h1>
+              <button
+                onClick={handleAddFavourite}
+                className="p-2 border-2 rounded-full w-fit h-fit"
+              >
+                {favourite ? (
+                  <FaHeart size={24} color="red" />
+                ) : (
+                  <FaRegHeart size={24} color="red" />
+                )}
+              </button>
+            </div>
             <div className="flex items-end gap-2">
               <h2 className="flex text-4xl">{rating}</h2>
               <span>

@@ -5,7 +5,7 @@ import Featured from "@/components/Featured";
 import Features from "@/components/Features";
 import Hero from "@/components/Hero";
 import ProductList from "@/components/ProductList";
-import ProductList2 from "@/components/ProductList2";
+// import ProductList2 from "@/components/ProductList2";
 import SaleBanner from "@/components/SaleBanner";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
       <ProductList headline={"Our Popular Products"} />
       <Banner />
       <Features />
-      <ProductList2 />
+      <ProductList headline={"Distinct Plant Products"} />
       <SaleBanner />
       <Blogs />
       <Featured />

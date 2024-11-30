@@ -12,6 +12,7 @@ import {
   removeFromCart,
 } from "@/lib/slices/cartSlice"; // Import Redux actions
 import { useAuth } from "@/context/AuthContext";
+import toast from "react-hot-toast";
 
 function Page() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function Page() {
 
   const handleRemoveItem = (cartItemId) => {
     dispatch(removeFromCart(cartItemId));
+    toast.success(`Product removed from cart`);
   };
 
   const calculateTotalPrice = () => {
