@@ -2,6 +2,7 @@
 
 import Features from "@/components/Features";
 import TestimonialCard from "@/components/TestimonialCard";
+import ProductList from "@/components/ProductList";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import {
@@ -17,7 +18,9 @@ import Slider from "react-slick";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { fetchProductById } from "@/services/productService";
-import ProductList from "@/components/ProductList";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/lib/slices/cartSlice";
+import { useAuth } from "@/context/AuthContext";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
@@ -48,7 +51,9 @@ function SamplePrevArrow(props) {
 }
 
 const Page = () => {
+  const { user } = useAuth();
   const { slug: id } = useParams();
+  const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const rating = 4.1;
@@ -57,8 +62,6 @@ const Page = () => {
   const testimonials = Array.from({ length: 8 });
   const totalSlides = testimonials.length;
   const slidesToShow = 4;
-
-  console.log("PRODUCT (SLUG): ", product);
 
   const settings = {
     dots: false,
@@ -106,13 +109,20 @@ const Page = () => {
           const productData = await fetchProductById(id);
           setProduct(productData);
         } catch (error) {
-          console.error("Error Fetching Product Data in Product(slug) ", error);
+          console.error("Error Fetching Product Data in Product(slug)", error);
         }
       };
 
       fetchProductData();
     }
   }, [id]);
+
+  const handleAddToCart = () => {
+    const userId = user?.id; // Replace this with actual user ID from your auth system
+    if (product) {
+      dispatch(addToCart({ userId, productId: product.id, quantity }));
+    }
+  };
 
   return (
     <section className="px-5 pt-20 pb-20 md:pt-32 md:px-10">
@@ -128,7 +138,7 @@ const Page = () => {
                     className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center"
                   >
                     <Image
-                      src={url} // Render the image URL
+                      src={url}
                       alt={`product-image-${index}`}
                       height={100}
                       width={100}
@@ -136,7 +146,6 @@ const Page = () => {
                   </div>
                 ))
               ) : (
-                // Fallback if no images are available
                 <div className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center">
                   <Image
                     src="/not-found.png"
@@ -167,7 +176,6 @@ const Page = () => {
               <span>
                 <FaStar color="#FFB345" size={30} />
               </span>
-
               <span className="text-lg">(400+ Trusted Customers)</span>
             </div>
             <p className="text-xl">{product?.description}</p>
@@ -180,13 +188,14 @@ const Page = () => {
                 <FaPlus onClick={() => setQuantity((prev) => prev + 1)} />
               </button>
             </div>
-            <h3 className="text-2xl font-medium">Rs 1490</h3>
+            <h3 className="text-2xl font-medium">Rs {product?.price}</h3>
             <div className="flex gap-3">
-              <Link href={"/cart"}>
-                <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-[#050B0F] rounded-full hover:opacity-85">
-                  Add to Cart
-                </button>
-              </Link>
+              <button
+                onClick={handleAddToCart}
+                className="px-4 py-1 text-lg font-medium text-white duration-200 bg-[#050B0F] rounded-full hover:opacity-85"
+              >
+                Add to Cart
+              </button>
               <Link href={"/payment"}>
                 <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-green-800 rounded-full hover:opacity-85">
                   Buy Now
@@ -208,7 +217,7 @@ const Page = () => {
                 {product?.quantity}
               </h3>
               <h3 className="text-2xl">
-                <span className="font-semibold">Indications: </span>{" "}
+                <span className="font-semibold">Indications:</span>{" "}
                 {product?.indications}
               </h3>
               <h3 className="text-2xl">
@@ -216,7 +225,6 @@ const Page = () => {
               </h3>
               <h3 className="text-2xl">
                 <span className="font-semibold">Precautions:</span>
-                <br />
                 <ul>
                   {product?.precautions.map((precaution, index) => (
                     <li key={index} className="ml-6 list-disc">
@@ -234,7 +242,7 @@ const Page = () => {
           <Features />
         </div>
 
-        {/* REVIEW */}
+        {/* TESTIMONIALS */}
         <div className="flex flex-col gap-4 my-5">
           <h2 className="text-2xl font-medium text-left md:text-center">
             User Review
@@ -252,8 +260,6 @@ const Page = () => {
               <p className="mt-3 text-xl">(400+ Trusted Customers)</p>
             </div>
           </div>
-
-          {/* TESTIMONIALS */}
           <div className="flex items-center justify-center">
             <Slider {...settings} className="md:w-[95%] w-full">
               {testimonials.map((_, index) => (
@@ -267,7 +273,7 @@ const Page = () => {
 
         {/* RELATED PRODUCTS */}
         <div className="flex justify-center mt-20">
-          <div className="flex w-[100%] flex-col ">
+          <div className="flex w-[100%] flex-col">
             <div className="mt-5">
               <ProductList headline="Related Products" />
             </div>
