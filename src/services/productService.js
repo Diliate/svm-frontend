@@ -71,9 +71,19 @@ export const searchProducts = async (query) => {
 };
 
 // get product from id
-export const fetchProductById = async (id) => {
-  const response = await axios.get(`${API_BASE_URL}/products/${id}`);
-  return response.data;
+export const fetchProductById = async (id, userId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/products/${id}`, {
+      params: { userId }, // Pass userId as a query parameter
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error fetching product details:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
 };
 
 // get filtered products

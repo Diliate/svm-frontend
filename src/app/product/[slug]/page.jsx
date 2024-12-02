@@ -22,8 +22,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/lib/slices/cartSlice";
 import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
-import { FaHeart } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { addToWishlist, removeFromWishlist } from "@/services/wishlistService";
 
 function SampleNextArrow(props) {
@@ -112,8 +111,9 @@ const Page = () => {
     if (id) {
       const fetchProductData = async () => {
         try {
-          const productData = await fetchProductById(id);
+          const productData = await fetchProductById(id, user?.id); // Include userId in the request
           setProduct(productData);
+          setFavourite(productData.favourite); // Set favourite state based on backend response
         } catch (error) {
           console.error("Error Fetching Product Data in Product(slug)", error);
         }
@@ -121,14 +121,12 @@ const Page = () => {
 
       fetchProductData();
     }
-  }, [id]);
+  }, [id, user]);
 
   const handleAddToCart = () => {
-    const userId = user?.id; // Replace this with actual user ID from your auth system
-    if (product) {
-      dispatch(addToCart({ userId, productId: product.id, quantity }));
-      toast.success(`Product added to cart`);
-    }
+    if (!product) return;
+    dispatch(addToCart({ productId: product.id, quantity }));
+    toast.success(`Product added to cart`);
   };
 
   const handleAddFavourite = async () => {

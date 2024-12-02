@@ -1,14 +1,13 @@
-// Page.jsx
 "use client";
 
 import React, { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import { fetchWishlist } from "@/services/wishlistService";
+import { fetchWishlist, clearWishlist } from "@/services/wishlistService";
 import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
 
-function Page() {
-  const { user } = useAuth(); // Get user info from Auth context
+function WishlistPage() {
+  const { user } = useAuth();
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +20,7 @@ function Page() {
       }
 
       try {
-        const data = await fetchWishlist(user.id); // Fetch wishlist items for the user
+        const data = await fetchWishlist(user.id);
         setWishlist(data.items.map((item) => item.product)); // Extract products from wishlist items
       } catch (error) {
         console.error("Error fetching wishlist:", error);
@@ -33,6 +32,33 @@ function Page() {
 
     loadWishlist();
   }, [user]);
+
+  const handleWishlistUpdate = (action, product) => {
+    setWishlist((prevWishlist) => {
+      if (action === "add") {
+        return [...prevWishlist, product];
+      } else if (action === "remove") {
+        return prevWishlist.filter((item) => item.id !== product.id);
+      }
+      return prevWishlist;
+    });
+  };
+
+  const handleClearWishlist = async () => {
+    if (!user) {
+      toast.error("Please log in to clear your wishlist.");
+      return;
+    }
+
+    try {
+      await clearWishlist(user.id); // Call the clearWishlist service
+      setWishlist([]); // Clear the wishlist state
+      toast.success("Wishlist cleared successfully.");
+    } catch (error) {
+      console.error("Error clearing wishlist:", error);
+      toast.error("Failed to clear wishlist.");
+    }
+  };
 
   if (loading) {
     return (
@@ -52,7 +78,15 @@ function Page() {
 
   return (
     <section className="px-10 pt-20 pb-10">
-      <h1 className="text-4xl font-semibold">Products Wishlist</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-4xl font-semibold">Products Wishlist</h1>
+        <button
+          onClick={handleClearWishlist}
+          className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+        >
+          Clear Wishlist
+        </button>
+      </div>
       <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {wishlist.map((product) => (
           <ProductCard key={product.id} product={product} />
@@ -62,4 +96,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default WishlistPage;
