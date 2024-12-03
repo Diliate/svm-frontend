@@ -24,7 +24,6 @@ function WishlistPage() {
         setWishlist(data.items.map((item) => item.product)); // Extract products from wishlist items
       } catch (error) {
         console.error("Error fetching wishlist:", error);
-        toast.error("Failed to load wishlist.");
       } finally {
         setLoading(false);
       }

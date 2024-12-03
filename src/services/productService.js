@@ -76,7 +76,7 @@ export const fetchProductById = async (id, userId) => {
     const response = await axios.get(`${API_BASE_URL}/products/${id}`, {
       params: { userId }, // Pass userId as a query parameter
     });
-    return response.data;
+    return response.data; // Return the product data including ratings and favourite status
   } catch (error) {
     console.error(
       "Error fetching product details:",
@@ -85,7 +85,6 @@ export const fetchProductById = async (id, userId) => {
     throw error;
   }
 };
-
 // get filtered products
 export const fetchFilteredProducts = async (filters) => {
   // Ensure categoryId is converted into a comma-separated string if it's an array
