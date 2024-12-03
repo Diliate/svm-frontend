@@ -20,7 +20,17 @@ export const fetchCart = async (userId) => {
 
 // Add product to cart
 export const addToCart = async (userId, productId, quantity) => {
+  if (!userId || !productId || quantity <= 0) {
+    console.error("Invalid input parameters for addToCart:", {
+      userId,
+      productId,
+      quantity,
+    });
+    throw new Error("Invalid input parameters.");
+  }
+
   try {
+    console.log("Payload sent to addToCart:", { userId, productId, quantity });
     const response = await axios.post(`${API_BASE_URL}/cart`, {
       userId,
       productId,

@@ -22,10 +22,28 @@ export const fetchCart = createAsyncThunk(
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ userId, productId, quantity }, thunkAPI) => {
+    if (!userId || !productId || quantity <= 0) {
+      console.error("Invalid parameters for addToCart thunk:", {
+        userId,
+        productId,
+        quantity,
+      });
+      return thunkAPI.rejectWithValue("Invalid input parameters.");
+    }
+
     try {
+      console.log("Dispatching addToCart with:", {
+        userId,
+        productId,
+        quantity,
+      });
       const response = await cartService.addToCart(userId, productId, quantity);
-      return { productId, quantity }; // Adjust if backend returns the updated cart
+      return response; // Use response data as needed
     } catch (error) {
+      console.error(
+        "Error in Redux Thunk addToCart:",
+        error.response?.data || error.message
+      );
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Failed to add product to cart."
       );

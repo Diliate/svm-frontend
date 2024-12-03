@@ -127,9 +127,18 @@ const Page = () => {
   }, [id, user]);
 
   const handleAddToCart = () => {
-    if (!product) return;
-    dispatch(addToCart({ productId: product.id, quantity }));
-    toast.success(`Product added to cart`);
+    if (!user || !product || quantity <= 0) {
+      toast.error("Please login and ensure product and quantity are valid.");
+      return;
+    }
+
+    console.log("Adding to cart:", {
+      userId: user.id,
+      productId: product.id,
+      quantity,
+    });
+    dispatch(addToCart({ userId: user.id, productId: product.id, quantity }));
+    toast.success("Product Added to Cart");
   };
 
   const handleAddFavourite = async () => {
