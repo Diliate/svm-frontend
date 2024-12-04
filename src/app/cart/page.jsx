@@ -10,7 +10,7 @@ import {
   fetchCart,
   updateCartItem,
   removeFromCart,
-} from "@/lib/slices/cartSlice"; // Import Redux actions
+} from "@/lib/slices/cartSlice";
 import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
 
@@ -20,8 +20,6 @@ function Page() {
   const { user } = useAuth();
 
   const userId = user?.id;
-
-  console.log("USER ID IN CART: ", user.id);
 
   useEffect(() => {
     // Fetch cart data when the component is mounted
@@ -70,7 +68,7 @@ function Page() {
               <span>Action</span>
             </div>
             {loading && <p>Loading cart items...</p>}
-            {error && <p className="text-red-500">{error}</p>}
+            {/* {error && <p className="text-red-500">{error}</p>} */}
             {items.map((item) => (
               <div
                 key={item.id}
@@ -141,7 +139,11 @@ function Page() {
                 <span>Order Total</span>
                 <span>Rs. {calculateTotalPrice() + 99 + 28}</span>
               </div>
-              <button className="py-2 mt-5 text-xl font-medium text-white duration-200 bg-black hover:opacity-85">
+              <button
+                className={`py-2 mt-5 text-xl font-medium text-white duration-200 bg-black hover:opacity-85 ${
+                  !user && "cursor-not-allowed"
+                }`}
+              >
                 Proceed To Shipping
               </button>
             </div>

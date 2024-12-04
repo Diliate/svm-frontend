@@ -41,25 +41,25 @@ const ProductList = ({ headline }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [products, setProducts] = useState([]);
   const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.8,
+    triggerOnce: true, // Fetch products only the first time the component comes into view
+    threshold: 0.8, // Trigger when 80% of the component is visible
   });
 
-  console.log("PRODUCTS: ", products);
-
-  // Fetch featured products when the component mounts
+  // Fetch products only when the component enters the viewport
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const featuredProducts = await fetchFeaturedProducts();
-        setProducts(featuredProducts);
-      } catch (error) {
-        console.error("Failed to fetch featured products:", error);
-      }
-    };
+    if (inView && products.length === 0) {
+      const fetchProducts = async () => {
+        try {
+          const featuredProducts = await fetchFeaturedProducts();
+          setProducts(featuredProducts);
+        } catch (error) {
+          console.error("Failed to fetch featured products:", error);
+        }
+      };
 
-    fetchProducts();
-  }, []);
+      fetchProducts();
+    }
+  }, [inView, products.length]);
 
   const settings = {
     dots: false,
@@ -112,7 +112,9 @@ const ProductList = ({ headline }) => {
           ))}
         </Slider>
       ) : (
-        <p>Loading featured products...</p>
+        <div className="flex items-center justify-center w-full">
+          <p>Loading featured products...</p>
+        </div>
       )}
     </div>
   );

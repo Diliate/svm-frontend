@@ -4,9 +4,18 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api";
 
 // Fetch all products
-export const fetchAllProducts = async () => {
-  const response = await axios.get(`${API_BASE_URL}/products`);
-  return response.data;
+export const fetchAllProducts = async (page = 1, limit = 10) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/products`, {
+      params: { page, limit },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch products."
+    );
+  }
 };
 
 // Fetch featured products

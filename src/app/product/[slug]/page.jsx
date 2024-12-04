@@ -25,6 +25,7 @@ import toast from "react-hot-toast";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { addToWishlist, removeFromWishlist } from "@/services/wishlistService";
 import RatingModal from "@/components/RatingModal";
+import { useInView } from "react-intersection-observer";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
@@ -69,6 +70,11 @@ const Page = () => {
 
   const [favourite, setFavourite] = useState(false);
   const [feedbackList, setFeedbackList] = useState([]);
+
+  const { ref: testimonialsRef, inView: testimonialsInView } = useInView({
+    triggerOnce: true, // Load testimonials only the first time the section enters the viewport
+    threshold: 0.3, // Trigger when 20% of the section is visible
+  });
 
   const settings = {
     dots: false,
@@ -128,7 +134,7 @@ const Page = () => {
 
   const handleAddToCart = () => {
     if (!user || !product || quantity <= 0) {
-      toast.error("Please login and ensure product and quantity are valid.");
+      toast.error("Please login to add product to cart");
       return;
     }
 
@@ -330,75 +336,79 @@ const Page = () => {
         </div>
 
         {/* TESTIMONIALS */}
-        <div className="flex flex-col gap-4 my-5">
+        <div className="flex flex-col gap-4 my-5" ref={testimonialsRef}>
           <h2 className="text-2xl font-medium text-left md:text-center">
             User Review
           </h2>
-          <div className="flex flex-col items-center justify-center md:flex-row">
-            <div className="md:w-[85%] w-full">
-              <div className="flex items-end gap-2">
-                {/* Calculate the average rating */}
-                <h2 className="text-4xl">
-                  {feedbackList.length > 0
-                    ? (
-                        feedbackList.reduce(
-                          (sum, feedback) => sum + feedback.rating,
-                          0
-                        ) / feedbackList.length
-                      ).toFixed(1)
-                    : "0.0"}
-                </h2>
+          {testimonialsInView && (
+            <>
+              <div className="flex flex-col items-center justify-center md:flex-row">
+                <div className="md:w-[85%] w-full">
+                  <div className="flex items-end gap-2">
+                    {/* Calculate the average rating */}
+                    <h2 className="text-4xl">
+                      {feedbackList.length > 0
+                        ? (
+                            feedbackList.reduce(
+                              (sum, feedback) => sum + feedback.rating,
+                              0
+                            ) / feedbackList.length
+                          ).toFixed(1)
+                        : "0.0"}
+                    </h2>
 
-                {/* Display stars based on the average rating */}
-                <span className="flex">
-                  {Array.from(
-                    {
-                      length:
-                        Math.floor(
-                          feedbackList.reduce(
-                            (sum, feedback) => sum + feedback.rating,
-                            0
-                          ) / feedbackList.length
-                        ) || 0,
-                    },
-                    (_, index) => (
-                      <FaStar key={index} color="#FFB345" size={24} />
-                    )
-                  )}
-                </span>
-              </div>
-
-              {/* Dynamically show the number of customers */}
-              <p className="mt-3 text-xl">
-                {feedbackList.length > 0
-                  ? `(${feedbackList.length} Trusted Customers)`
-                  : "(No ratings yet)"}
-              </p>
-            </div>
-            <div className="w-full mt-5 md:w-auto md:mt-0">
-              <RatingModal
-                productId={product?.id}
-                userId={user?.id}
-                onFeedbackAdded={handleFeedbackAdded}
-              />
-            </div>
-          </div>
-          {feedbackList.length > 0 ? (
-            <div className="flex items-center justify-center">
-              <Slider {...settings} className="md:w-[95%] w-full">
-                {feedbackList.map((feedback, index) => (
-                  <div key={index} className="p-2">
-                    <TestimonialCard key={index} feedback={feedback} />
+                    {/* Display stars based on the average rating */}
+                    <span className="flex">
+                      {Array.from(
+                        {
+                          length:
+                            Math.floor(
+                              feedbackList.reduce(
+                                (sum, feedback) => sum + feedback.rating,
+                                0
+                              ) / feedbackList.length
+                            ) || 0,
+                        },
+                        (_, index) => (
+                          <FaStar key={index} color="#FFB345" size={24} />
+                        )
+                      )}
+                    </span>
                   </div>
-                ))}
-              </Slider>
-            </div>
-          ) : (
-            <div className="flex items-center justify-center">
-              <div className="flex items-center justify-center h-20 text-2xl border-2 rounded-md w-[95%]">
-                <p>No reviews yet. Be the first to review.</p>
+
+                  {/* Dynamically show the number of customers */}
+                  <p className="mt-3 text-xl">
+                    {feedbackList.length > 0
+                      ? `(${feedbackList.length} Trusted Customers)`
+                      : "(No ratings yet)"}
+                  </p>
+                </div>
+                <div className="w-full mt-5 md:w-auto md:mt-0">
+                  <RatingModal
+                    productId={product?.id}
+                    userId={user?.id}
+                    onFeedbackAdded={handleFeedbackAdded}
+                  />
+                </div>
               </div>
-            </div>
+              {feedbackList.length > 0 ? (
+                <div className="flex items-center justify-center">
+                  <Slider {...settings} className="md:w-[95%] w-full">
+                    {feedbackList.map((feedback, index) => (
+                      <div key={index} className="p-2">
+                        <TestimonialCard key={index} feedback={feedback} />
+                      </div>
+                    ))}
+                  </Slider>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center">
+                  <div className="flex items-center justify-center h-20 text-2xl border-2 rounded-md w-[95%]">
+                    <p>No reviews yet. Be the first to review.</p>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
 

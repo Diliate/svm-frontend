@@ -12,6 +12,7 @@ const ProductCard = ({ product }) => {
           alt={product?.name || "product image"}
           height={300}
           width={300}
+          loading="lazy"
         />
       </div>
       <div className="flex justify-between my-2">
