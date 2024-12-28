@@ -12,16 +12,18 @@ function AdminLayout({ children }) {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
 
-  useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    } else if (user.name === "admin" && user.email === "admin@gmail.com") {
-      setIsAuthorized(true);
-    } else {
-      setIsAuthorized(false);
-    }
-    setIsChecking(false);
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     router.push("/login");
+  //   } else if (user.name === "admin" && user.email === "admin@gmail.com") {
+  //     setIsAuthorized(true);
+  //   } else {
+  //     setIsAuthorized(false);
+  //   }
+  //   setIsChecking(false);
+  // }, [user]);
+
+  console.log("USER IN ADMIN: ", user);
 
   if (isChecking) {
     return (

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
@@ -61,29 +60,6 @@ function Page() {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-
-        <div className="flex items-center justify-center gap-3 my-3 ">
-          <div className="bg-gray-500 md:w-[200px] w-full h-[1px]"></div>
-          <span className="text-2xl">or</span>
-          <div className="bg-gray-500 md:w-[200px] w-full h-[1px]"></div>
-        </div>
-
-        <div className="flex flex-col justify-center gap-10 md:flex-row">
-          <div className="flex items-center justify-center w-full gap-3 py-2 text-2xl font-medium duration-200 border-2 border-black rounded-lg cursor-pointer md:w-1/2 hover:bg-gray-200">
-            <Image
-              src="/fb.png"
-              alt="fb"
-              height={40}
-              width={40}
-              className="rounded-xl"
-            />
-            Facebook
-          </div>
-          <div className="flex items-center justify-center w-full gap-3 py-2 text-2xl font-medium duration-200 border-2 border-black rounded-lg cursor-pointer md:w-1/2 hover:bg-gray-200">
-            <Image src="/google.png" alt="google" height={40} width={40} />
-            Google
-          </div>
-        </div>
 
         <div className="flex items-center justify-center mt-10 text-xl">
           <h2>

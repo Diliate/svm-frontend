@@ -14,7 +14,6 @@ function WishlistPage() {
   useEffect(() => {
     const loadWishlist = async () => {
       if (!user) {
-        toast.error("Please log in to view your wishlist.");
         setLoading(false);
         return;
       }

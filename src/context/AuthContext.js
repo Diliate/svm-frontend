@@ -28,51 +28,52 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        { email, password }
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`,
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
       );
 
-      // If login is successful, process the response
-      const { token, user } = response.data;
+      if (response.data.success) {
+        // If login is successful, process the response
+        const { user } = response.data;
 
-      // Save user data and token to localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+        // Save user data and token to localStorage
+        localStorage.setItem("user", JSON.stringify(user));
 
-      setUser(user);
-      toast.success("Logged in successfully!");
-      router.push("/profile");
-    } catch (error) {
-      // Handle login errors
-      if (error.response) {
-        console.error("Login error:", error.response.data.message);
-        toast.error(error.response.data.message || "Failed to log in.");
-      } else {
-        console.error("Login error:", error.message);
-        toast.error("Network error or server is down.");
+        setUser(user);
+        toast.success("Logged in successfully!");
+        router.push("/profile");
       }
+    } catch (error) {
+      toast.error("Error Logging User");
+      console.log("Error Logging User: ", error);
     }
   };
 
   // Signup function
-  const signup = async (name, email, password) => {
+  const signup = async (name, email, password, mobile) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/register`,
         {
           name,
           email,
           password,
+          mobile,
         }
       );
 
-      const { token, user } = response.data;
+      const { user } = response.data;
 
-      localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
       setUser(user);
-      router.push("/profile"); // redirect after signup
+      router.push("/profile");
     } catch (error) {
       console.error("Signup error", error);
       throw error;
@@ -80,12 +81,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Logout function
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-    router.push("/login"); // redirect to login page after logout
-    toast.success("Logout successfully");
+  const logout = async () => {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/logout`
+    );
+
+    if (response.success) {
+      router.push("/login");
+      toast.success("Logout successfully");
+    }
   };
 
   // Update user in context and localStorage

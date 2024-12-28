@@ -1,9 +1,8 @@
 "use client";
 
-import PaginationComp from "@/components/Pagination";
 import ProductCard from "@/components/ProductCard";
 import SidebarFilter from "@/components/SidebarFilter";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   fetchFilteredProducts,
   fetchAllProducts,
@@ -18,38 +17,72 @@ function Page() {
   const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
   const [maxPrice, setMaxPrice] = useState(0);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1); // Current page
+  const [hasMore, setHasMore] = useState(true); // Whether more products are available
+  const loader = useRef(null); // Ref for the Intersection Observer
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const products = await fetchAllProducts();
-        setProducts(products);
-        setError(null); // Reset error
-
-        // Calculate the maximum price for the slider
-        const maxPrice = Math.max(...products.map((product) => product.price));
-        setPriceRange({ min: 0, max: maxPrice });
-        setMaxPrice(maxPrice);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-        setError("Failed to fetch products.");
-      }
-    };
-
-    const fetchCategories = async () => {
+    const fetchInitialData = async () => {
       try {
         const categories = await fetchAllCategories();
         setCategories(categories);
-        setError(null); // Reset error
+
+        const productsData = await fetchAllProducts(1, 6); // Fetch first page
+        setProducts(productsData.products);
+
+        // Set hasMore based on total products and limit
+        setHasMore(productsData.page < productsData.pages); // True if more pages are available
+
+        setMaxPrice(
+          Math.max(...productsData.products.map((product) => product.price))
+        );
+        setError(null);
       } catch (error) {
-        console.error("Failed to fetch categories:", error);
-        setError("Failed to fetch categories.");
+        console.error("Error fetching initial data:", error);
+        setError("Failed to fetch data.");
       }
     };
 
-    fetchProducts();
-    fetchCategories();
+    fetchInitialData();
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          loadMoreProducts();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (loader.current) observer.observe(loader.current);
+
+    return () => {
+      if (loader.current) observer.disconnect(); // Disconnect when unmounting or no more products
+    };
+  }, [loader, hasMore]);
+
+  const loadMoreProducts = async () => {
+    if (!hasMore) return; // Stop fetching if no more products
+
+    try {
+      const nextPage = page + 1; // Calculate next page
+      console.log(`Fetching page ${nextPage}`);
+      const productsData = await fetchAllProducts(nextPage, 6); // Fetch products
+
+      if (productsData.products.length === 0 || nextPage > productsData.pages) {
+        console.log("All products have been loaded.");
+        setHasMore(false); // Stop further API calls
+      } else {
+        setProducts((prev) => [...prev, ...productsData.products]); // Add new products
+        setPage(nextPage); // Update current page
+      }
+    } catch (error) {
+      console.error("Error loading more products:", error);
+      setError("Failed to load more products.");
+    }
+  };
 
   const handleFilter = async () => {
     try {
@@ -62,7 +95,8 @@ function Page() {
       const filteredProducts = await fetchFilteredProducts(filters);
       setProducts(filteredProducts);
       setError(null); // Reset error when products are successfully fetched
-      // setCurrentPage(1); // Reset to the first page after filtering
+      setPage(1); // Reset to the first page after filtering
+      setHasMore(true);
     } catch (error) {
       console.error("Error applying filters:", error);
       setProducts([]); // Clear the products state
@@ -86,24 +120,20 @@ function Page() {
     }));
   };
 
-  const resetFilters = () => {
+  const resetFilters = async () => {
     setSelectedCategories([]);
     setPriceRange({ min: 0, max: maxPrice });
     setError(null);
+    setPage(1); // Reset page to 1
+    setHasMore(true); // Reset infinite scrolling
 
-    // Optionally refetch all products after reset
-    const fetchDefaultProducts = async () => {
-      try {
-        const products = await fetchAllProducts();
-        setProducts(products);
-        setError(null);
-      } catch (error) {
-        console.error("Failed to fetch default products:", error);
-        setError("Failed to reset filters.");
-      }
-    };
-
-    fetchDefaultProducts();
+    try {
+      const productsData = await fetchAllProducts(1, 10); // Fetch first page
+      setProducts(productsData.products);
+    } catch (error) {
+      console.error("Failed to reset filters:", error);
+      setError("Failed to reset filters.");
+    }
   };
 
   return (
@@ -143,11 +173,21 @@ function Page() {
               {error}
             </div>
           ) : products.length > 0 ? (
-            <div className="grid grid-cols-1 gap-10 mt-5 md:gap-5 md:mt-10 sm:grid-cols-2 lg:grid-cols-3">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 gap-10 mt-5 md:gap-5 md:mt-10 sm:grid-cols-2 lg:grid-cols-3">
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              {hasMore && (
+                <div ref={loader} className="flex justify-center mt-5">
+                  <div
+                    className="w-8 h-8 border-4 border-gray-200 rounded-full border-t-blue-500 animate-spin"
+                    role="status"
+                  ></div>
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-xl font-medium text-center text-gray-600">
               No products found.

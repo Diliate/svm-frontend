@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 const Hero = () => {
-  const images = ["/banner1.png", "/banner2.png", "/banner3.png"];
+  const images = ["/banner1.jpg", "/banner2.jpg", "/banner3.png"];
 
   const PrevArrow = ({ onClick }) => (
     <button
@@ -61,7 +61,6 @@ const Hero = () => {
                 src={img}
                 alt={`Banner ${index + 1}`}
                 layout="fill"
-                objectFit="cover"
                 priority
               />
             </div>

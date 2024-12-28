@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 function Page() {
   const { signup, loading } = useAuth();
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -45,6 +46,16 @@ function Page() {
               className="px-3 py-2 border-2 outline-none rounded-xl"
             />
           </div>
+          <div className="flex flex-col mt-4">
+            <label className="mb-2 text-xl font-medium">Phone No.</label>
+            <input
+              type="number"
+              placeholder="Enter your phone no."
+              // value={phone}
+              // onChange={(e) => setPhone(e.target.value)}
+              className="px-3 py-2 border-2 outline-none rounded-xl"
+            />
+          </div>
           <div className="flex flex-col mt-5">
             <label className="mb-2 text-xl font-medium">Email Address</label>
             <input
@@ -74,29 +85,6 @@ function Page() {
             {loading ? "Registering..." : "Sign Up"}
           </button>
         </form>
-
-        <div className="flex items-center justify-center gap-3 my-3 ">
-          <div className="bg-gray-500 md:w-[200px] w-full h-[1px]"></div>
-          <span className="text-2xl">or</span>
-          <div className="bg-gray-500 md:w-[200px] w-full h-[1px]"></div>
-        </div>
-
-        <div className="flex flex-col justify-center gap-10 md:flex-row">
-          <div className="flex items-center justify-center w-full gap-3 px-5 py-2 text-2xl font-medium duration-200 border-2 border-black rounded-lg cursor-pointer md:w-1/2 hover:bg-gray-200">
-            <Image
-              src="/fb.png"
-              alt="fb"
-              height={40}
-              width={40}
-              className="rounded-xl"
-            />
-            Facebook
-          </div>
-          <div className="flex items-center justify-center w-full gap-3 py-2 text-2xl font-medium duration-200 border-2 border-black rounded-lg cursor-pointer md:w-1/2 hover:bg-gray-200">
-            <Image src="/google.png" alt="fb" height={40} width={40} />
-            Google
-          </div>
-        </div>
 
         <div className="flex items-center justify-center mt-10 text-xl">
           <h2>

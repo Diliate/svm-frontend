@@ -42,7 +42,7 @@ const ProductList = ({ headline }) => {
   const [products, setProducts] = useState([]);
   const { ref, inView } = useInView({
     triggerOnce: true, // Fetch products only the first time the component comes into view
-    threshold: 0.8, // Trigger when 80% of the component is visible
+    threshold: 1, // Trigger when 100% of the component is visible
   });
 
   // Fetch products only when the component enters the viewport
@@ -113,7 +113,10 @@ const ProductList = ({ headline }) => {
         </Slider>
       ) : (
         <div className="flex items-center justify-center w-full">
-          <p>Loading featured products...</p>
+          <div
+            className="w-8 h-8 border-4 border-gray-200 rounded-full border-t-blue-500 animate-spin"
+            role="status"
+          ></div>
         </div>
       )}
     </div>
