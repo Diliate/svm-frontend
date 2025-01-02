@@ -50,8 +50,8 @@ function Page() {
       toast.success(`Product ${isEditing ? "updated" : "added"} successfully!`);
 
       const data = await fetchAllProducts();
-      setProducts(data);
-      console.log("DATA IN PRODUCT PAGE: ", data);
+      setProducts(data.products);
+      console.log("DATA IN PRODUCT PAGE: ", data?.products);
 
       setModalOpen(false);
       setCurrentProduct(null);
@@ -95,12 +95,12 @@ function Page() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((product) => (
+          {products?.map((product) => (
             <TableRow key={product.id}>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.category?.name}</TableCell>
               <TableCell>{product.price}</TableCell>
-              <TableCell>
+              <TableCell className="flex items-center gap-2">
                 <TbEdit
                   onClick={() => handleEditProduct(product)}
                   className="cursor-pointer"

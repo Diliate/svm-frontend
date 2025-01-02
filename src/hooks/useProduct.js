@@ -7,17 +7,16 @@ export const useProducts = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  console.log("useProducts hook initialized"); // Log initialization
-
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
       try {
         const categoriesData = await fetchAllCategories();
-        console.log("Categories before setCategories:", categoriesData); // Log fetched data
 
-        setCategories(categoriesData); // Update categories state
-        console.log("Categories after setCategories:", categoriesData); // Log after state update
+        setCategories(categoriesData);
+        const productsData = await fetchAllProducts();
+        setProducts(productsData.products);
+        console.log("Fetched products:", productsData.products);
       } catch (error) {
         console.error("Error fetching categories:", error.message);
       } finally {

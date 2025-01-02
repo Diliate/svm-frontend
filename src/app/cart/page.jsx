@@ -89,28 +89,48 @@ function Page() {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // from .env.local
         amount: order.amount,
         currency: order.currency,
-        name: "My E-commerce Store",
+        name: "SVM Store",
         description: "Order Payment",
         order_id: order.id, // Razorpay order ID
         handler: async function (response) {
-          // Called when payment is successful
           const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
             response;
+
+          // Convert your finalAmount to paise again if needed
+          const totalPrice = calculateTotalPrice(); // same logic from your handleRazorpayPayment
+          const deliveryFee = 99;
+          const platformFee = 28;
+          const finalAmount = totalPrice + deliveryFee + platformFee;
+          const amountInPaise = finalAmount * 100;
+
+          // Prepare cartItems array from your cart state
+          // items is your Redux state array; each item has .product and .quantity
+          const cartItemsArray = items.map((cartItem) => ({
+            productId: cartItem.product.id, // or cartItem.productId if that’s how your schema is
+            quantity: cartItem.quantity,
+            price: cartItem.product.price, // or however you're storing per-unit price
+          }));
 
           // 5) Verify payment on the server
           const verifyRes = await verifyRazorpayPayment({
             razorpay_order_id,
             razorpay_payment_id,
             razorpay_signature,
+            userId: user.id, // from your Auth context
+            cartItems: cartItemsArray, // pass the array of items
+            amount: amountInPaise, // pass final amount in paise
+            currency: "INR",
+            receipt: `receipt_${userId}_${Date.now()}`,
           });
 
           if (verifyRes.status === "success") {
             toast.success("Payment verified successfully!");
-            // Optionally clear cart, navigate to success page, etc.
+            // e.g. dispatch clearCart(), navigate to success page, etc.
           } else {
             toast.error("Payment verification failed.");
           }
         },
+
         prefill: {
           name: user.name || "",
           email: user.email || "",
