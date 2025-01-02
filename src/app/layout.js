@@ -9,6 +9,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Provider } from "react-redux";
 import store from "@/lib/store";
+import Script from "next/script";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" />
         <Provider store={store}>
           <AuthProvider>
             <Navbar />

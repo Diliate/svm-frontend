@@ -16,9 +16,8 @@ export const AuthProvider = ({ children }) => {
   // Load user from localStorage on initial load
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
 
-    if (storedUser && token) {
+    if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
     setLoading(false);
@@ -82,13 +81,23 @@ export const AuthProvider = ({ children }) => {
 
   // Logout function
   const logout = async () => {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/logout`
-    );
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
 
-    if (response.success) {
-      router.push("/login");
-      toast.success("Logout successfully");
+      if (response.data.success) {
+        // router.push("/login");
+        window.location.href = "/login";
+        localStorage.removeItem("user");
+        toast.success("Logout successfully");
+      }
+    } catch (error) {
+      console.log("Error Loggin out user: ", error);
     }
   };
 
