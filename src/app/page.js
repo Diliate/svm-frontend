@@ -1,6 +1,7 @@
 import Banner from "@/components/Banner";
 import Blogs from "@/components/Blogs";
 import Categories from "@/components/Categories";
+import Faq from "@/components/Faq";
 import Featured from "@/components/Featured";
 import Features from "@/components/Features";
 import Hero from "@/components/Hero";
@@ -19,6 +20,7 @@ export default function Home() {
       <ProductList headline={"Distinct Plant Products"} />
       <SaleBanner />
       <Blogs />
+      <Faq />
       <Featured />
     </div>
   );
