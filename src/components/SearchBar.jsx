@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { searchProducts } from "@/services/productService";
 import Link from "next/link";
+import { searchCategory } from "@/services/categoryServices";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,7 +32,7 @@ const SearchBar = () => {
 
       try {
         console.log("Fetching suggestions for:", debouncedTerm); // Debug log
-        const results = await searchProducts(debouncedTerm);
+        const results = await searchCategory(debouncedTerm);
         setSuggestions(results);
         setShowSuggestions(true);
       } catch (error) {

@@ -34,3 +34,13 @@ export const deleteCategory = async (id) => {
   const response = await axios.delete(`${API_BASE_URL}/categories/${id}`);
   return response.data;
 };
+
+// get searched products
+export const searchCategory = async (query) => {
+  console.log("Sending query:", query);
+  const response = await axios.get(`${API_BASE_URL}/categories/search`, {
+    params: { query },
+  });
+  console.log("Search Results:", response.data);
+  return response.data;
+};
