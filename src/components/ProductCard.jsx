@@ -13,11 +13,12 @@ const ProductCard = ({ product }) => {
       {product.inStock === false && (
         <div>
           <div className="absolute inset-0 z-10 flex items-center justify-center text-xl text-white bg-black bg-opacity-20 rounded-2xl">
-            <span className="px-2 py-1 bg-gray-500 rounded-sm">
-              Out of Stock
+            <span className="px-2 py-1 -mt-40 text-[60px] leading-[52px] font-bold text-center rounded-sm">
+              Out of <br />
+              Stock
             </span>
           </div>
-          <button className="absolute z-20 flex items-center gap-2 px-3 text-xl text-white bg-red-500 border-2 border-red-500 rounded-md top-2 right-2">
+          <button className="absolute z-20 flex items-center gap-2 px-3 text-xl text-white bg-red-500 border-2 border-red-500 rounded-md top-[62%] right-2">
             <span>Notify</span> <GoBell />
           </button>
         </div>
