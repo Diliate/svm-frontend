@@ -122,3 +122,21 @@ export const fetchFilteredProducts = async (filters) => {
     throw error;
   }
 };
+
+// get products by categiry
+export const getProductsByCategory = async (categoryId) => {
+  console.log("Fetching products for category ID:", categoryId);
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/categories/${categoryId}/products`
+    );
+    console.log("Products fetched:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in getProductsByCategory:",
+      error.response?.data || error.message
+    );
+    throw error; // Re-throw the error to handle it in the component
+  }
+};
