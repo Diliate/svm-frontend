@@ -1,5 +1,3 @@
-// pages/orders.js
-
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
@@ -16,23 +14,30 @@ export default function OrdersPage() {
   const { user } = useAuth();
   const [orders, setOrders] = useState([]);
   const [tabIndex, setTabIndex] = useState(0); // 0 = Orders, 1 = Cancelled
+  const [filter, setFilter] = useState("All"); // Default filter
   const tabRefs = useRef([]);
   const [tabWidth, setTabWidth] = useState(0);
 
   const router = useRouter(); // Initialize useRouter
 
   const tabs = ["Order", "Cancelled Order"];
+  const filters = ["All", "Week", "Month", "Year"]; // Available filters
 
   useEffect(() => {
     if (user?.id) {
-      getUserOrders(user.id)
+      // Determine the filter to send; exclude 'All'
+      const appliedFilter = filter !== "All" ? filter.toLowerCase() : undefined;
+      getUserOrders(user.id, appliedFilter)
         .then((res) => {
-          // Assuming getUserOrders returns all orders, including cancelled
+          // Assuming getUserOrders returns all orders based on filter
           setOrders(res);
         })
-        .catch((err) => console.error("Error fetching orders:", err));
+        .catch((err) => {
+          console.error("Error fetching orders:", err);
+          toast.error("Failed to fetch orders. Please try again later.");
+        });
     }
-  }, [user]);
+  }, [user, filter]); // Re-fetch orders when user or filter changes
 
   // For the animated tab indicator
   useEffect(() => {
@@ -78,10 +83,37 @@ export default function OrdersPage() {
     }
   };
 
+  /**
+   * Handle Filter Change
+   * Resets to the first tab upon filter change for better UX
+   */
+  const handleFilterChange = (selectedFilter) => {
+    setFilter(selectedFilter);
+    setTabIndex(0); // Optionally reset to "Orders" tab
+  };
+
   return (
     <section className="p-5">
       <h1 className="text-3xl font-medium md:text-4xl">Your Orders</h1>
-      <div className="relative">
+
+      {/* Filter Controls */}
+      <div className="flex items-center justify-end mt-4 space-x-2">
+        {filters.map((f) => (
+          <button
+            key={f}
+            onClick={() => handleFilterChange(f)}
+            className={`px-4 py-2 rounded ${
+              filter === f
+                ? "bg-green-600 text-white"
+                : "bg-gray-200 text-black hover:bg-gray-300"
+            }`}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
+      <div className="relative mt-4">
         <div
           className={`absolute top-0 left-0 h-12 bg-green-600 transition-transform duration-300 ease-in-out rounded-full`}
           style={{
@@ -182,7 +214,7 @@ export default function OrdersPage() {
                     </Link>
                   </div>
                   <h2 className="px-4 my-2 text-2xl font-medium">
-                    Total Rs. {order.amount / 100}
+                    Total Rs. {(order.amount / 100).toFixed(2)}
                   </h2>
                 </div>
               ))
@@ -241,7 +273,7 @@ export default function OrdersPage() {
                       </button>
                       {/* Optionally, allow re-ordering or viewing details */}
                       <Link
-                        href={`/product/${order.items[0]?.productId}`}
+                        href={`/order-confirmation/${order.orderId}`}
                         className="px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85"
                       >
                         View
@@ -249,7 +281,7 @@ export default function OrdersPage() {
                     </div>
                   </div>
                   <h2 className="px-4 my-2 text-2xl font-medium">
-                    Total Rs. {order.amount / 100}
+                    Total Rs. {(order.amount / 100).toFixed(2)}
                   </h2>
                 </div>
               ))

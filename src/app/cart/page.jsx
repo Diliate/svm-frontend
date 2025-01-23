@@ -178,6 +178,7 @@ function CheckoutPage() {
               breadth: 20,
               height: 15,
               weight: 2,
+              addressId: selectedAddressId,
             });
 
             console.log("Payment Verification Response:", verifyRes); // Debugging

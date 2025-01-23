@@ -24,16 +24,27 @@ export const getOrderDetails = async (orderId) => {
 };
 
 /**
- * Get orders for a specific user
- * @param {string} userId - The ID of the user
+ * Get orders for a specific user with optional filter
+ * @param {string|number} userId - The ID of the user
+ * @param {string} [filter] - Optional filter: 'week', 'month', 'year'
  * @returns {Promise<Array>} - An array of orders
  */
-export const getUserOrders = async (userId) => {
+export const getUserOrders = async (userId, filter) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/orders/user/${userId}`);
+    const params = {};
+    if (filter && filter.toLowerCase() !== "all") {
+      params.filter = filter.toLowerCase(); // Ensure lowercase for backend compatibility
+    }
+
+    const response = await axios.get(`${API_BASE_URL}/orders/user/${userId}`, {
+      params,
+    });
     return response.data.orders; // Array of orders
   } catch (error) {
-    console.error("Error fetching user orders:", error.message);
+    console.error(
+      "Error fetching user orders:",
+      error.response?.data || error.message
+    );
     throw error;
   }
 };
@@ -50,7 +61,36 @@ export const cancelUserOrder = async (orderId) => {
     );
     return response.data.order;
   } catch (error) {
-    console.error("Error cancelling user order:", error.message);
+    console.error(
+      "Error cancelling user order:",
+      error.response?.data || error.message
+    );
     throw error;
   }
+};
+
+/**
+ * (Optional) Create a new order record
+ * @param {Object} orderData - The order data
+ * @returns {Promise<Object>} - The newly created order
+ */
+export const createOrderRecord = async (orderData) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/orders`, orderData);
+    return response.data.order;
+  } catch (error) {
+    console.error(
+      "Error creating order record:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+};
+
+export default {
+  getOrderDetails,
+  getUserOrders,
+  cancelUserOrder,
+  createOrderRecord,
+  // Add other exports if necessary
 };
