@@ -15,6 +15,13 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Frontend Axios Configuration
 const api = axios.create({
@@ -29,6 +36,7 @@ function Page() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [type, setType] = useState("HOME");
   const [defaultAddressId, setDefaultAddressId] = useState(null);
   const [open, setOpen] = useState(false); // State to manage dialog visibility
   const [loading, setLoading] = useState(false);
@@ -58,8 +66,7 @@ function Page() {
 
   // Add a new address
   const handleAddAddress = useCallback(async () => {
-    // Input validation
-    if (!area || !city || !state || !zipCode) {
+    if (!area || !city || !state || !zipCode || !type) {
       toast.error("Please fill in all fields.");
       return;
     }
@@ -67,7 +74,7 @@ function Page() {
     setLoading(true);
     setError(null);
     try {
-      await api.post("/addresses", { area, city, state, zipCode });
+      await api.post("/addresses", { area, city, state, zipCode, type });
 
       // Optionally, fetch updated user data if necessary
       // const userResponse = await api.get("/auth/user");
@@ -79,7 +86,8 @@ function Page() {
       setCity("");
       setState("");
       setZipCode("");
-      setOpen(false); // Close the dialog
+      setType("HOME");
+      setOpen(false);
       fetchAddresses(); // Refresh addresses
     } catch (err) {
       console.error("Error adding address:", err);
@@ -88,7 +96,7 @@ function Page() {
     } finally {
       setLoading(false);
     }
-  }, [area, city, state, zipCode, fetchAddresses, api]);
+  }, [area, city, state, zipCode, type, fetchAddresses, api]);
 
   // Remove an address
   const handleRemoveAddress = useCallback(
@@ -192,6 +200,17 @@ function Page() {
                 className="w-full"
                 type="number"
               />
+
+              <Select value={type} onValueChange={setType} className="">
+                <SelectTrigger>
+                  <SelectValue placeholder="Select address type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="HOME">Home</SelectItem>
+                  <SelectItem value="OFFICE">Office</SelectItem>
+                  <SelectItem value="OTHER">Other</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <DialogFooter className="mt-4">
               <Button
@@ -230,9 +249,12 @@ function Page() {
                 <p className="text-md">
                   {address.city}, {address.state}, {address.zipCode}
                 </p>
+                <p className="px-2 py-1 mt-5 text-white bg-black rounded-full">
+                  {address.type}
+                </p>
               </div>
             </div>
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center justify-between gap-3 -mt-5">
               <Button
                 variant="secondary"
                 size="sm"

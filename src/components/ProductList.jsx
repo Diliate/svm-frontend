@@ -65,7 +65,7 @@ const ProductList = ({ headline }) => {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4.5,
+    slidesToShow: 4,
     slidesToScroll: 3,
     nextArrow: (
       <SampleNextArrow isVisible={currentSlide < products.length - 4.5} />
