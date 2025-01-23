@@ -40,7 +40,7 @@ const Banner = () => {
             fast-paced world.
           </p>
           <Link href={"/about"}>
-            <button className="px-4 py-2 text-xl text-white duration-200 bg-black rounded-md shadow-lg hover:opacity-85">
+            <button className="px-4 py-2 text-xl text-white duration-200 bg-black rounded-md shadow-lg hover:opacity-85 hover:font-semibold">
               Know More
             </button>
           </Link>

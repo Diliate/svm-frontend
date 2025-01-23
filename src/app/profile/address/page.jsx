@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { BsPlusSquare } from "react-icons/bs";
 import {
   Dialog,
@@ -16,6 +16,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 
+// Frontend Axios Configuration
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  withCredentials: true,
+});
+
 function Page() {
   const { user, updateUserInContext } = useAuth();
   const [addresses, setAddresses] = useState([]);
@@ -25,118 +31,142 @@ function Page() {
   const [zipCode, setZipCode] = useState("");
   const [defaultAddressId, setDefaultAddressId] = useState(null);
   const [open, setOpen] = useState(false); // State to manage dialog visibility
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Fetch all addresses for the user
-  const fetchAddresses = async () => {
+  const fetchAddresses = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/addresses", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setAddresses(response.data);
+      const response = await api.get("/addresses");
+      setAddresses(response.data.addresses || []);
 
       // Load default address ID from local storage
       const savedDefault = localStorage.getItem("defaultAddressId");
       if (savedDefault) {
         setDefaultAddressId(parseInt(savedDefault, 10));
       }
-    } catch (error) {
-      console.error("Error fetching addresses:", error);
+    } catch (err) {
+      console.error("Error fetching addresses:", err);
+      setError("Failed to fetch addresses.");
+      toast.error("Failed to fetch addresses.");
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [api]);
 
-  const handleAddAddress = async () => {
+  // Add a new address
+  const handleAddAddress = useCallback(async () => {
+    // Input validation
+    if (!area || !city || !state || !zipCode) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
     try {
-      const token = localStorage.getItem("token");
-      await axios.post(
-        "http://localhost:5000/api/addresses",
-        { area, city, state, zipCode },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await api.post("/addresses", { area, city, state, zipCode });
 
-      // Fetch the updated user data
-      const response = await axios.get("http://localhost:5000/api/auth/user", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      // Update user in context
-      updateUserInContext(response.data);
+      // Optionally, fetch updated user data if necessary
+      // const userResponse = await api.get("/auth/user");
+      // updateUserInContext(userResponse.data);
 
       toast.success("Address added successfully!");
+      // Reset form fields
       setArea("");
       setCity("");
       setState("");
       setZipCode("");
       setOpen(false); // Close the dialog
       fetchAddresses(); // Refresh addresses
-    } catch (error) {
-      console.error("Error adding address:", error);
+    } catch (err) {
+      console.error("Error adding address:", err);
+      setError("Failed to add address.");
       toast.error("Failed to add address.");
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [area, city, state, zipCode, fetchAddresses, api]);
 
-  const handleRemoveAddress = async (addressId) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/addresses/${addressId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+  // Remove an address
+  const handleRemoveAddress = useCallback(
+    async (addressId) => {
+      const confirmDelete = window.confirm(
+        "Are you sure you want to remove this address?"
+      );
+      if (!confirmDelete) return;
 
-      // Fetch the updated user data
-      const response = await axios.get("http://localhost:5000/api/auth/user", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      setLoading(true);
+      setError(null);
+      try {
+        await api.delete(`/addresses/${addressId}`);
 
-      // Update user in context
-      updateUserInContext(response.data);
+        // Optionally, fetch updated user data if necessary
+        // const userResponse = await api.get("/auth/user");
+        // updateUserInContext(userResponse.data);
 
-      toast.success("Address removed successfully!");
+        toast.success("Address removed successfully!");
 
-      // Clear default address if it was removed
-      if (defaultAddressId === addressId) {
-        setDefaultAddressId(null);
-        localStorage.removeItem("defaultAddressId");
+        // Clear default address if it was removed
+        if (defaultAddressId === addressId) {
+          setDefaultAddressId(null);
+          localStorage.removeItem("defaultAddressId");
+        }
+
+        fetchAddresses(); // Refresh addresses
+      } catch (err) {
+        console.error("Error removing address:", err);
+        setError("Failed to remove address.");
+        toast.error("Failed to remove address.");
+      } finally {
+        setLoading(false);
       }
+    },
+    [defaultAddressId, fetchAddresses, api]
+  );
 
-      fetchAddresses(); // Refresh addresses
-    } catch (error) {
-      console.error("Error removing address:", error);
-      toast.error("Failed to remove address.");
-    }
-  };
-
-  const handleSetDefault = (addressId) => {
+  // Set default address
+  const handleSetDefault = useCallback((addressId) => {
     setDefaultAddressId(addressId);
     localStorage.setItem("defaultAddressId", addressId);
     toast.success("Default address updated!");
-  };
+  }, []);
 
   // Fetch addresses on component mount
   useEffect(() => {
     fetchAddresses();
-  }, []);
+  }, [fetchAddresses]);
 
   return (
     <section className="p-5">
-      <div>
-        <div className="flex justify-between">
-          <h2 className="text-3xl font-medium">Your Address</h2>
-        </div>
+      <div className="flex items-center justify-between">
+        <h2 className="text-3xl font-medium">Your Addresses</h2>
+        <Button
+          variant="primary"
+          onClick={() => setOpen(true)}
+          className="flex items-center gap-2"
+        >
+          <BsPlusSquare size={20} />
+          Add Address
+        </Button>
       </div>
+
+      {loading && (
+        <div className="flex justify-center mt-5">
+          <p>Loading...</p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 gap-5 mt-5 place-items-center md:place-content-start md:grid-cols-3">
         {/* Add Address Dialog */}
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <div className="bg-[#F7F7F7] rounded-xl h-60 w-60 flex flex-col justify-center gap-10 items-center border-2 cursor-pointer">
-              <BsPlusSquare size={50} />
-              <h2 className="text-3xl font-medium">Add Address</h2>
-            </div>
-          </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Add New Address</DialogTitle>
             </DialogHeader>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 mt-4">
               <Input
                 placeholder="Area"
                 value={area}
@@ -160,44 +190,65 @@ function Page() {
                 value={zipCode}
                 onChange={(e) => setZipCode(e.target.value)}
                 className="w-full"
+                type="number"
               />
             </div>
-            <DialogFooter>
-              <Button onClick={handleAddAddress}>Save Address</Button>
+            <DialogFooter className="mt-4">
+              <Button
+                onClick={handleAddAddress}
+                disabled={loading}
+                className="w-full"
+              >
+                {loading ? "Saving..." : "Save Address"}
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
 
         {/* Render Existing Addresses */}
+        {addresses.length === 0 && !loading && (
+          <p className="text-center col-span-full">No addresses found.</p>
+        )}
+
         {addresses.map((address) => (
           <div
             key={address.id}
             className={`bg-[#F7F7F7] rounded-xl h-60 w-60 gap-10 border-2 ${
-              defaultAddressId === address.id ? "border-green-600" : ""
-            }`}
+              defaultAddressId === address.id
+                ? "border-green-600"
+                : "border-gray-300"
+            } flex flex-col justify-between p-4`}
           >
-            <h2 className="w-full pb-1 text-3xl font-medium text-center bg-white border-b-2 rounded-t-xl">
-              {defaultAddressId === address.id ? "Default Address" : "Address"}
-            </h2>
-            <div className="flex flex-col items-start justify-start p-2">
-              <h2 className="text-2xl font-medium">{address.area}</h2>
-              <p className="text-lg">
-                {address.city}, {address.state}, {address.zipCode}
-              </p>
+            <div>
+              <h3 className="mb-2 text-xl font-semibold text-center">
+                {defaultAddressId === address.id
+                  ? "Default Address"
+                  : "Address"}
+              </h3>
+              <div className="flex flex-col items-start justify-start">
+                <p className="text-lg font-medium">{address.area}</p>
+                <p className="text-md">
+                  {address.city}, {address.state}, {address.zipCode}
+                </p>
+              </div>
             </div>
-            <div className="flex items-center justify-start w-full gap-3 p-2 text-sm">
-              <button
-                className="px-5 py-1 text-white duration-200 bg-blue-600 rounded-full hover:opacity-85"
+            <div className="flex items-center justify-between gap-3">
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={() => handleSetDefault(address.id)}
+                disabled={defaultAddressId === address.id}
               >
-                Set Default
-              </button>
-              <button
-                className="px-5 py-1 text-white duration-200 bg-red-600 rounded-full hover:opacity-85"
+                {defaultAddressId === address.id ? "Default" : "Set Default"}
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
                 onClick={() => handleRemoveAddress(address.id)}
+                disabled={loading}
               >
                 Remove
-              </button>
+              </Button>
             </div>
           </div>
         ))}

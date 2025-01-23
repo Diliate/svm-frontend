@@ -4,24 +4,6 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api";
 
 // Fetch all products
-// export const fetchAllProducts = async (page = 1, limit = 6) => {
-//   try {
-//     const response = await axios.get(`${API_BASE_URL}/products`, {
-//       params: { page, limit },
-//     });
-
-//     console.log(
-//       `Fetched ${response.data.products.length} products on page ${page}, Total: ${response.data.total}`
-//     );
-
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching products:", error);
-//     throw new Error(
-//       error.response?.data?.message || "Failed to fetch products."
-//     );
-//   }
-// };
 export const fetchAllProducts = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/products`); // No params object needed
@@ -94,9 +76,9 @@ export const deleteProduct = async (id) => {
 export const fetchProductById = async (id, userId) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/products/${id}`, {
-      params: { userId }, // Pass userId as a query parameter
+      params: { userId },
     });
-    return response.data; // Return the product data including ratings and favourite status
+    return response.data;
   } catch (error) {
     console.error(
       "Error fetching product details:",

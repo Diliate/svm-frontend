@@ -119,14 +119,16 @@ function Page() {
       <Table className="mt-5 text-lg">
         <TableHeader className="bg-gray-100">
           <TableRow>
+            <TableHead>Sr. No.</TableHead>
             <TableHead>ID</TableHead>
             <TableHead>Category Name</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <TableRow key={category.id}>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>{category.id}</TableCell>
               <TableCell>
                 {editingId === category.id ? (

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 function ProfileLayout({ children }) {
   const { user } = useAuth();
   const router = useRouter();
-  const [isChecking, setIsChecking] = useState(true); // Prevent rendering until check is complete
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     if (!user) {

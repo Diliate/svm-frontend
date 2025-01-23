@@ -1,4 +1,5 @@
 // context/AuthContext.js
+
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
@@ -33,23 +34,22 @@ export const AuthProvider = ({ children }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true,
+          withCredentials: true, // Include cookies
         }
       );
 
       if (response.data.success) {
-        // If login is successful, process the response
         const { user } = response.data;
 
-        // Save user data and token to localStorage
+        // Save user data to localStorage
         localStorage.setItem("user", JSON.stringify(user));
 
         setUser(user);
         toast.success("Logged in successfully!");
-        router.push("/profile");
+        router.push("/");
       }
     } catch (error) {
-      toast.error("Error Logging User");
+      toast.error(error.response?.data?.message || "Error Logging User");
       console.log("Error Logging User: ", error);
     }
   };
@@ -69,12 +69,15 @@ export const AuthProvider = ({ children }) => {
 
       const { user } = response.data;
 
-      localStorage.setItem("user", JSON.stringify(user));
+      // localStorage.setItem("user", JSON.stringify(user));
 
       setUser(user);
-      router.push("/profile");
+      toast.success("Registered successfully");
+      router.push("/login");
     } catch (error) {
-      console.error("Signup error", error);
+      const errorMessage =
+        error.response?.data?.message || "Registration failed";
+      toast.error(errorMessage);
       throw error;
     }
   };
@@ -86,18 +89,19 @@ export const AuthProvider = ({ children }) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/logout`,
         {},
         {
-          withCredentials: true,
+          withCredentials: true, // Include cookies
         }
       );
 
       if (response.data.success) {
-        // router.push("/login");
         window.location.href = "/login";
         localStorage.removeItem("user");
-        toast.success("Logout successfully");
+        setUser(null);
+        toast.success("Logged out successfully");
       }
     } catch (error) {
-      console.log("Error Loggin out user: ", error);
+      console.log("Error Logging out user: ", error);
+      toast.error("Failed to logout");
     }
   };
 

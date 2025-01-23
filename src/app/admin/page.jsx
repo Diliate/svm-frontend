@@ -1,8 +1,10 @@
-import React from "react";
+"use client";
+
+// pages/admin/users.jsx
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -11,136 +13,131 @@ import {
 
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "@/components/ui/dialog";
 
-import { FaSearch } from "react-icons/fa";
-import { FaAngleDown } from "react-icons/fa6";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { RiDeleteBin6Line } from "react-icons/ri";
+function UsersPage() {
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-const data = [
-  {
-    id: "1",
-    name: "Victoria Perez",
-    userId: "LA-0234",
-    lorem: "Lorem Ispum",
-    date: "30 April 2024",
-  },
-  {
-    id: "2",
-    name: "Victoria Perez",
-    userId: "LA-0234",
-    lorem: "Lorem Ispum",
-    date: "30 April 2024",
-  },
-  {
-    id: "3",
-    name: "Victoria Perez",
-    userId: "LA-0234",
-    lorem: "Lorem Ispum",
-    date: "30 April 2024",
-  },
-  {
-    id: "4",
-    name: "Victoria Perez",
-    userId: "LA-0234",
-    lorem: "Lorem Ispum",
-    date: "30 April 2024",
-  },
-  {
-    id: "5",
-    name: "Victoria Perez",
-    userId: "LA-0234",
-    lorem: "Lorem Ispum",
-    date: "30 April 2024",
-  },
-  {
-    id: "6",
-    name: "Victoria Perez",
-    userId: "LA-0234",
-    lorem: "Lorem Ispum",
-    date: "30 April 2024",
-  },
-  {
-    id: "7",
-    name: "Victoria Perez",
-    userId: "LA-0234",
-    lorem: "Lorem Ispum",
-    date: "30 April 2024",
-  },
-];
+  // Fetch users from the API
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch("http://localhost:5000/api/users");
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-function Page() {
+    fetchUsers();
+  }, []);
+
+  const handleViewDetails = async (userId) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`http://localhost:5000/api/users/${userId}`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error("User not found");
+        } else {
+          throw new Error("Failed to fetch user details");
+        }
+      }
+      const userData = await response.json();
+      console.log("DATA: ", userData);
+
+      setSelectedUser(userData);
+      setIsDialogOpen(true);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <section className="p-5">
-      <div className="flex items-center gap-3 mb-5 md:gap-5">
-        <div className="flex items-center gap-2 p-2 bg-white rounded-lg">
-          <FaSearch />
-          <input
-            placeholder="Search"
-            className="border-none outline-none md:w-[340px] w-[110px]"
-          />
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center gap-2">
-              <span>Sort By</span>
-              <FaAngleDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-20">
-            <DropdownMenuSeparator />
-            <DropdownMenuRadioGroup>
-              <DropdownMenuRadioItem value="top">One</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="bottom">two</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="right">Three</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      <Table className="text-lg md:w-full w-[180px]">
+      {/* Display loading or error messages */}
+      {isLoading && <p>Loading...</p>}
+      {error && <p className="text-red-500">{error}</p>}
+
+      {/* Users Table */}
+      <Table className="text-lg md:w-full">
         <TableHeader className="bg-[#EFF4FA] text-[#8F9BB3] uppercase">
           <TableRow>
+            <TableHead>Sr. No.</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>User ID</TableHead>
-            <TableHead>Lorem Ispum</TableHead>
-            <TableHead>Order Date</TableHead>
-            <TableHead>Lorem Ispum</TableHead>
+            <TableHead>USER ID</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((user) => (
+          {users.map((user, index) => (
             <TableRow key={user.id}>
-              <TableCell className="font-medium">{user.name}</TableCell>
-              <TableCell>{user.userId}</TableCell>
-              <TableCell>{user.lorem}</TableCell>
-              <TableCell>{user.date}</TableCell>
-              <TableCell>{user.lorem}</TableCell>
+              <TableCell className="font-medium">{index + 1}</TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.id}</TableCell>
               <TableCell className="flex items-center gap-3">
-                <IoMdCheckmarkCircleOutline
-                  size={22}
-                  className="cursor-pointer"
-                  color="#046C42"
-                />{" "}
-                <RiDeleteBin6Line
-                  size={22}
-                  className="cursor-pointer"
-                  color="red"
-                />
+                <Button onClick={() => handleViewDetails(user.id)}>
+                  View Details
+                </Button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
+      {/* Dialog for User Details */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>User Details</DialogTitle>
+            <DialogClose />
+          </DialogHeader>
+          {selectedUser ? (
+            <div className="space-y-4">
+              <p>
+                <strong>Name:</strong> {selectedUser.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {selectedUser.email}
+              </p>
+              <p>
+                <strong>Mobile:</strong> {selectedUser.mobile || "N/A"}
+              </p>
+              <p>
+                <strong>Role:</strong> {selectedUser.role}
+              </p>
+              <p>
+                <strong>Created At:</strong>{" "}
+                {new Date(selectedUser.createdAt).toLocaleDateString()}
+              </p>
+            </div>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
 
-export default Page;
+export default UsersPage;

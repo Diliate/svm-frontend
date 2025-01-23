@@ -1,8 +1,9 @@
+// pages/checkout.js
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +11,7 @@ import {
   fetchCart,
   updateCartItem,
   removeFromCart,
+  clearCart,
 } from "@/lib/slices/cartSlice";
 import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
@@ -18,21 +20,61 @@ import {
   createRazorpayOrder,
   verifyRazorpayPayment,
 } from "@/services/razorpayService";
+import { trackShipment, cancelShipment } from "@/services/shiprocketService"; // If needed
+import { useRouter } from "next/navigation";
+import api from "@/services/api"; // Import the preconfigured Axios instance
 
-function Page() {
+function CheckoutPage() {
   const dispatch = useDispatch();
-  const { items, loading, error } = useSelector((state) => state.cart); // Access cart state
+  const { items, loading, error } = useSelector((state) => state.cart);
   const { user } = useAuth();
 
   const userId = user?.id;
   const [isPaying, setIsPaying] = useState(false);
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [isChecking, setIsChecking] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    // Fetch cart data on mount or when userId changes
+    if (!user) {
+      router.push("/login");
+    } else {
+      setIsChecking(false);
+    }
+  }, [user, router]);
+
+  useEffect(() => {
     if (userId) {
       dispatch(fetchCart(userId));
+      fetchAddresses();
     }
   }, [dispatch, userId]);
+
+  // Function to fetch saved addresses using the preconfigured Axios instance
+  const fetchAddresses = useCallback(async () => {
+    try {
+      const response = await api.get("/addresses");
+      setAddresses(response.data.addresses || []);
+
+      // Optionally, set the first address as default if none is selected
+      if (response.data.addresses && response.data.addresses.length > 0) {
+        setSelectedAddressId(response.data.addresses[0].id);
+        setSelectedAddress(response.data.addresses[0]);
+      }
+    } catch (err) {
+      console.error("Error fetching addresses:", err);
+      toast.error("Failed to fetch addresses.");
+    }
+  }, []);
+
+  // Handler for selecting an address
+  const handleSelectAddress = (addressId) => {
+    const address = addresses.find((addr) => addr.id === addressId);
+    setSelectedAddressId(addressId);
+    setSelectedAddress(address);
+  };
 
   const handleQuantityChange = (cartItemId, quantity) => {
     if (quantity > 0) {
@@ -64,6 +106,11 @@ function Page() {
       return;
     }
 
+    if (!selectedAddress) {
+      toast.error("Please select a shipping address.");
+      return;
+    }
+
     try {
       setIsPaying(true);
 
@@ -76,15 +123,18 @@ function Page() {
       // 2) Convert to paise
       const amountInPaise = finalAmount * 100;
 
-      // 3) Create order on your Express backend
-      const { order } = await createRazorpayOrder(
+      // 3) Generate a unique receipt ID
+      const receipt = `receipt_${userId}_${Date.now()}`;
+
+      // 4) Create order on your Express backend
+      const { order, newOrder } = await createRazorpayOrder(
         amountInPaise,
         "INR",
-        `receipt_${userId}_${Date.now()}`,
+        receipt,
         userId
       );
 
-      // 4) Initialize Razorpay checkout
+      // 5) Initialize Razorpay checkout
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // from .env.local
         amount: order.amount,
@@ -96,52 +146,71 @@ function Page() {
           const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
             response;
 
-          // Convert your finalAmount to paise again if needed
-          const totalPrice = calculateTotalPrice(); // same logic from your handleRazorpayPayment
-          const deliveryFee = 99;
-          const platformFee = 28;
-          const finalAmount = totalPrice + deliveryFee + platformFee;
-          const amountInPaise = finalAmount * 100;
+          try {
+            // 6) Prepare cartItems array from your cart state
+            const cartItemsArray = items.map((cartItem) => ({
+              productId: cartItem.product.id, // Ensure productId is correct
+              quantity: cartItem.quantity,
+              price: cartItem.product.price, // Ensure price is correct
+              productName: cartItem.product.name, // Ensure productName is provided
+            }));
 
-          // Prepare cartItems array from your cart state
-          // items is your Redux state array; each item has .product and .quantity
-          const cartItemsArray = items.map((cartItem) => ({
-            productId: cartItem.product.id, // or cartItem.productId if that’s how your schema is
-            quantity: cartItem.quantity,
-            price: cartItem.product.price, // or however you're storing per-unit price
-          }));
+            // 7) Verify payment on the server
+            const verifyRes = await verifyRazorpayPayment({
+              razorpay_order_id,
+              razorpay_payment_id,
+              razorpay_signature,
+              userId: user.id,
+              cartItems: cartItemsArray,
+              amount: amountInPaise,
+              currency: "INR",
+              receipt,
+              billing_customer_name: user.name || "Customer", // Use user's name
+              billing_last_name: user.name.split(" ").slice(1).join(" ") || "",
+              billing_address: selectedAddress.area,
+              billing_city: selectedAddress.city,
+              billing_pincode: selectedAddress.zipCode,
+              billing_state: selectedAddress.state,
+              billing_country: "India",
+              billing_email: user.email || "",
+              billing_phone: user.mobile || "",
+              length: 30, // Example fixed value or fetch from product data
+              breadth: 20,
+              height: 15,
+              weight: 2,
+            });
 
-          // 5) Verify payment on the server
-          const verifyRes = await verifyRazorpayPayment({
-            razorpay_order_id,
-            razorpay_payment_id,
-            razorpay_signature,
-            userId: user.id, // from your Auth context
-            cartItems: cartItemsArray, // pass the array of items
-            amount: amountInPaise, // pass final amount in paise
-            currency: "INR",
-            receipt: `receipt_${userId}_${Date.now()}`,
-          });
+            console.log("Payment Verification Response:", verifyRes); // Debugging
 
-          if (verifyRes.status === "success") {
-            toast.success("Payment verified successfully!");
-            // e.g. dispatch clearCart(), navigate to success page, etc.
-          } else {
-            toast.error("Payment verification failed.");
+            if (verifyRes.status === "success") {
+              toast.success("Payment verified successfully!");
+              // Redirect to order confirmation page
+              router.push(`/order-confirmation/${verifyRes.order.orderId}`);
+              // Optionally, clear the cart
+              dispatch(clearCart(userId));
+            } else if (verifyRes.status === "partial_success") {
+              toast.warn(verifyRes.message);
+              router.push(`/order-confirmation/${verifyRes.order.orderId}`);
+            } else {
+              toast.error("Payment verification failed.");
+            }
+          } catch (verifyError) {
+            console.error("Payment verification error:", verifyError);
+            // toast.error("Payment verification failed. Please contact support.");
           }
         },
 
         prefill: {
           name: user.name || "",
           email: user.email || "",
-          contact: user.mobile || "", // if you store user's phone
+          contact: user.mobile || "", // Ensure it's in the correct format
         },
         theme: {
           color: "#3399cc",
         },
       };
 
-      // 6) Open the Razorpay popup
+      // 8) Open the Razorpay popup
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
       setIsPaying(false);
@@ -153,8 +222,16 @@ function Page() {
   };
   // ---- END RAZORPAY INTEGRATION ----
 
+  if (isChecking) {
+    return (
+      <div className="flex items-center justify-center min-h-[500px]">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-[#3A5B22] rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
-    <section className="px-3 pt-24 pb-10 md:px-20">
+    <section className="px-3 pt-24 pb-24 md:px-20 min-h-[140vh] h-auto ">
       <div className="flex flex-col items-center justify-center gap-0 md:gap-10 md:flex-row">
         {/* Cart Items Section */}
         <div className="w-full h-auto md:h-screen md:w-1/2">
@@ -187,25 +264,27 @@ function Page() {
                 <div className="-ml-[55px] md:-ml-10">
                   <Image
                     src={item?.product?.imageUrls[0] || "/product.png"}
-                    alt={item.product?.name}
+                    alt={item.product?.name || "product"}
                     width={150}
                     height={150}
                   />
                 </div>
                 {/* Quantity Controls */}
-                <button className="flex items-center gap-2 px-2 md:-ml-10 -ml-5 bg-[#EBEBEB] rounded-full">
+                <div className="flex items-center gap-2 px-2 md:-ml-10 -ml-5 bg-[#EBEBEB] rounded-full">
                   <FaMinus
                     onClick={() =>
                       handleQuantityChange(item.id, item.quantity - 1)
                     }
+                    className="cursor-pointer"
                   />
                   <span className="text-lg md:text-2xl">{item.quantity}</span>
                   <FaPlus
                     onClick={() =>
                       handleQuantityChange(item.id, item.quantity + 1)
                     }
+                    className="cursor-pointer"
                   />
-                </button>
+                </div>
                 {/* Price */}
                 <span className="text-lg font-medium md:text-xl">
                   Rs. {item.product?.price * item.quantity}
@@ -224,7 +303,44 @@ function Page() {
 
         {/* Order Summary Section */}
         <div className="md:w-[40%] w-full md:h-screen h-auto">
+          {/* Shipping Address Selection */}
           <div className="bg-[#F7F7F7] p-5 mt-10">
+            <h2 className="text-2xl font-medium">Shipping Address</h2>
+            <div className="mt-3">
+              {addresses.length === 0 ? (
+                <p>No saved addresses. Please add an address first.</p>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  {addresses.map((address) => (
+                    <div
+                      key={address.id}
+                      className={`p-3 border rounded-lg ${
+                        selectedAddressId === address.id
+                          ? "border-blue-500 bg-blue-50"
+                          : "border-gray-300"
+                      } cursor-pointer`}
+                      onClick={() => handleSelectAddress(address.id)}
+                    >
+                      <p className="font-semibold">{address.area}</p>
+                      <p>
+                        {address.city}, {address.state}, {address.zipCode}
+                      </p>
+                      <input
+                        type="radio"
+                        name="selectedAddress"
+                        checked={selectedAddressId === address.id}
+                        onChange={() => handleSelectAddress(address.id)}
+                        className="mt-2"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Order Details */}
+          <div className="bg-[#F7F7F7] p-5 mt-5">
             <div className="flex flex-col gap-5">
               <h2 className="text-3xl font-medium">Order Details</h2>
               <div className="flex justify-between text-xl">
@@ -251,9 +367,10 @@ function Page() {
               {/* Payment Button */}
               <button
                 onClick={handleRazorpayPayment}
-                disabled={!user || isPaying}
+                disabled={!user || isPaying || !selectedAddress}
                 className={`py-2 mt-5 text-xl font-medium text-white duration-200 bg-black hover:opacity-85 ${
-                  (!user || isPaying) && "cursor-not-allowed opacity-70"
+                  (!user || isPaying || !selectedAddress) &&
+                  "cursor-not-allowed opacity-70"
                 }`}
               >
                 {isPaying ? "Processing..." : "Pay Now"}
@@ -284,4 +401,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default CheckoutPage;

@@ -61,19 +61,31 @@ const Navbar = () => {
     },
     {
       id: "4",
+      name: "Your Cart",
+      icon: <HiOutlineShoppingCart />,
+      path: "/cart",
+    },
+    {
+      id: "5",
+      name: "Your Wishlist",
+      icon: <FaRegHeart />,
+      path: "/wishlist",
+    },
+    {
+      id: "6",
       name: "Customer Care",
       icon: <FaHeadset />,
       path: "/profile/customer-care",
     },
     {
-      id: "5",
+      id: "7",
       name: "Terms and Conditions",
       icon: <FaFileContract />,
       path: "/t-c",
       newTab: true,
     },
     {
-      id: "6",
+      id: "8",
       name: "Return and Refund Policy",
       icon: <RiRefund2Line />,
       path: "/return-refund-policy",
@@ -118,25 +130,27 @@ const Navbar = () => {
           {/* Icons */}
           <div className="flex items-center space-x-3">
             <div className="hidden space-x-3 md:flex">
-              <Link
-                href="/wishlist"
-                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
-              >
-                <FaRegHeart size={20} />
-              </Link>
-              <Link
-                href="/cart"
-                className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
-              >
-                <HiOutlineShoppingCart size={20} />
-              </Link>
               {user ? (
-                <Link
-                  href="/profile"
-                  className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
-                >
-                  <FaRegUser size={20} />
-                </Link>
+                <>
+                  <Link
+                    href="/wishlist"
+                    className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+                  >
+                    <FaRegHeart size={20} />
+                  </Link>
+                  <Link
+                    href="/cart"
+                    className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+                  >
+                    <HiOutlineShoppingCart size={20} />
+                  </Link>
+                  <Link
+                    href="/profile"
+                    className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150"
+                  >
+                    <FaRegUser size={20} />
+                  </Link>
+                </>
               ) : (
                 <div className="mt-1">
                   <Link
@@ -181,7 +195,7 @@ const Navbar = () => {
                               href={item.path}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center"
+                              className="flex items-center -ml-5"
                             >
                               {item.icon}
                               <span className="ml-2">{item.name}</span>
@@ -189,7 +203,7 @@ const Navbar = () => {
                           ) : (
                             <Link
                               href={item.path}
-                              className="flex items-center"
+                              className="flex items-center -ml-5"
                             >
                               {item.icon}
                               <span className="ml-2">{item.name}</span>
@@ -232,7 +246,7 @@ const Navbar = () => {
               <li key={link.name}>
                 <Link
                   href={link.href}
-                  className="flex items-center px-3 py-2 font-medium text-lg hover:bg-[#004A06] hover:text-white transition rounded-full"
+                  className="flex items-center px-3  py-2 font-medium text-lg hover:bg-[#004A06] hover:text-white transition rounded-full"
                 >
                   {link.name}
                 </Link>

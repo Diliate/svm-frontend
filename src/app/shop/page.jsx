@@ -24,7 +24,7 @@ function Page() {
         const categoriesData = await fetchAllCategories();
         setCategories(categoriesData);
 
-        const productsData = await fetchAllProducts(); // Fetch all products at once
+        const productsData = await fetchAllProducts();
         setProducts(productsData.products);
         setMaxPrice(
           Math.max(...productsData.products.map((product) => product.price))
@@ -84,7 +84,7 @@ function Page() {
   };
 
   return (
-    <div className="flex h-screen px-4 pb-10 pt-14 lg:px-8">
+    <div className="flex h-[120vh] px-4 pb-10 pt-14 lg:px-8">
       <aside className="hidden w-1/4 p-4 md:block">
         <SidebarFilter
           categories={categories}

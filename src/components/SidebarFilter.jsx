@@ -12,7 +12,7 @@ const SidebarFilter = ({
 }) => {
   return (
     <section className="pt-5 mb-10">
-      <div className="hidden p-3 bg-gray-100 md:block">
+      <div className="p-3 bg-gray-100">
         <h1 className="text-3xl font-medium">Our Products</h1>
         <div className="flex flex-col gap-5">
           {/* Category Checkboxes */}
@@ -52,7 +52,7 @@ const SidebarFilter = ({
           </div>
 
           {/* Rating */}
-          <div>
+          {/* <div>
             <h2 className="text-3xl font-medium">Rating</h2>
             <div className="flex items-center gap-1">
               <input type="checkbox" />
@@ -74,7 +74,7 @@ const SidebarFilter = ({
               <input type="checkbox" />
               <div className="text-xl">★☆☆☆☆</div>
             </div>
-          </div>
+          </div> */}
 
           {/* Filter buttons */}
           <div className="flex gap-4 mt-4">

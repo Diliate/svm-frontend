@@ -81,6 +81,21 @@ export const removeFromCart = createAsyncThunk(
   }
 );
 
+// Clear Cart
+export const clearCart = createAsyncThunk(
+  "cart/clearCart",
+  async (userId, thunkAPI) => {
+    try {
+      const response = await cartService.clearCart(userId);
+      return response; // Assumes response contains confirmation or updated cart
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to clear the cart."
+      );
+    }
+  }
+);
+
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -153,6 +168,19 @@ const cartSlice = createSlice({
         state.items = state.items.filter((item) => item.id !== action.payload);
       })
       .addCase(removeFromCart.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+
+      .addCase(clearCart.pending, (state) => {
+        state.clearLoading = true;
+        state.error = null;
+      })
+      .addCase(clearCart.fulfilled, (state, action) => {
+        state.clearLoading = false;
+        state.items = [];
+      })
+      .addCase(clearCart.rejected, (state, action) => {
+        state.clearLoading = false;
         state.error = action.payload;
       });
   },

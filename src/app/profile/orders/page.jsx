@@ -1,3 +1,5 @@
+// pages/orders.js
+
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
@@ -6,6 +8,9 @@ import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
 import { FaX } from "react-icons/fa6";
+import { trackShipment, cancelShipment } from "@/services/shiprocketService"; // Import Shiprocket services
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 export default function OrdersPage() {
   const { user } = useAuth();
@@ -14,21 +19,22 @@ export default function OrdersPage() {
   const tabRefs = useRef([]);
   const [tabWidth, setTabWidth] = useState(0);
 
+  const router = useRouter(); // Initialize useRouter
+
   const tabs = ["Order", "Cancelled Order"];
 
   useEffect(() => {
     if (user?.id) {
       getUserOrders(user.id)
         .then((res) => {
-          // Filter to only include orders with 'PAID' status
-          const paidOrders = res.filter((order) => order.status === "PAID");
-          setOrders(paidOrders);
+          // Assuming getUserOrders returns all orders, including cancelled
+          setOrders(res);
         })
         .catch((err) => console.error("Error fetching orders:", err));
     }
   }, [user]);
 
-  // For the animated tab indicator (like in your code)
+  // For the animated tab indicator
   useEffect(() => {
     if (tabRefs.current[tabIndex]) {
       setTabWidth(tabRefs.current[tabIndex].offsetWidth);
@@ -36,8 +42,41 @@ export default function OrdersPage() {
   }, [tabIndex]);
 
   // Filter orders by status
-  const paidOrders = orders.filter((o) => o.status !== "CANCELLED");
+  const paidOrders = orders.filter((o) => o.status === "PAID");
   const cancelledOrders = orders.filter((o) => o.status === "CANCELLED");
+
+  /**
+   * Handle Shipment Tracking
+   * Redirects to the tracking page with shipmentId
+   */
+  const handleTrackShipment = (shipmentId) => {
+    if (shipmentId) {
+      router.push(`/profile/track/${shipmentId}`);
+    } else {
+      toast.error("No shipment ID available for tracking.");
+    }
+  };
+
+  /**
+   * Handle Shipment Cancellation
+   */
+  const handleCancelShipment = async (shipmentId) => {
+    try {
+      const cancellationResponse = await cancelShipment(shipmentId);
+      // Update order status locally or refetch orders
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.shiprocketShipmentId === shipmentId
+            ? { ...order, status: "CANCELLED" }
+            : order
+        )
+      );
+      toast.success("Shipment cancelled successfully.");
+    } catch (error) {
+      console.error("Error cancelling shipment:", error);
+      toast.error("Unable to cancel shipment. Please try again later.");
+    }
+  };
 
   return (
     <section className="p-5">
@@ -107,31 +146,36 @@ export default function OrdersPage() {
                     ) : (
                       <p>No items</p>
                     )}
-                    <span className="hidden -ml-16 md:block">
+                    <span className="hidden -ml-28 md:block">
                       {order.items[0]?.product?.name}
                     </span>
-                    <Link
-                      href={"/profile/track"}
-                      className="hidden px-5 py-1 text-white duration-200 bg-green-600 rounded-full md:block hover:opacity-85"
+                    <button
+                      onClick={() =>
+                        handleTrackShipment(order.shiprocketShipmentId)
+                      }
+                      className="hidden px-5 py-1 -ml-24 text-white duration-200 bg-green-600 rounded-full md:block hover:opacity-85"
                     >
                       Track Order
-                    </Link>
+                    </button>
                     <div className="flex flex-col items-center justify-center md:hidden">
-                      <Link
-                        href={"/profile/track"}
+                      <button
+                        onClick={() =>
+                          handleTrackShipment(order.shiprocketShipmentId)
+                        }
                         className="block px-5 py-1 mb-2 text-white duration-200 bg-green-600 rounded-full md:hidden hover:opacity-85"
                       >
                         Track Order
-                      </Link>
+                      </button>
                       <Link
-                        href={`/product/${order.items[0]?.productId}`}
+                        href={`/order-confirmation/${order.orderId}`}
                         className="px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85"
                       >
                         View
                       </Link>
                     </div>
                     <Link
-                      href={`/product/${order.items[0]?.productId}`}
+                      // href={`/shop/product/${order.items[0]?.productId}`}
+                      href={`/order-confirmation/${order.orderId}`}
                       className="hidden px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85 md:block"
                     >
                       View
@@ -186,12 +230,26 @@ export default function OrdersPage() {
                     <span className="hidden -ml-20 md:block">
                       {order.items[0]?.product?.name}
                     </span>
-                    <button className="flex items-center gap-1 px-5 py-1 text-red-600 duration-200 rounded-full hover:opacity-85">
-                      Cancelled <FaX />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() =>
+                          handleCancelShipment(order.shiprocketShipmentId)
+                        }
+                        className="flex items-center gap-1 px-5 py-1 text-red-600 duration-200 rounded-full hover:opacity-85"
+                      >
+                        Cancelled <FaX />
+                      </button>
+                      {/* Optionally, allow re-ordering or viewing details */}
+                      <Link
+                        href={`/product/${order.items[0]?.productId}`}
+                        className="px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85"
+                      >
+                        View
+                      </Link>
+                    </div>
                   </div>
                   <h2 className="px-4 my-2 text-2xl font-medium">
-                    Total Rs. {order.amount}
+                    Total Rs. {order.amount / 100}
                   </h2>
                 </div>
               ))

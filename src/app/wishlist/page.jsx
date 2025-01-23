@@ -5,11 +5,22 @@ import ProductCard from "@/components/ProductCard";
 import { fetchWishlist, clearWishlist } from "@/services/wishlistService";
 import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 function WishlistPage() {
   const { user } = useAuth();
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    } else {
+      setIsChecking(false);
+    }
+  }, [user, router]);
 
   useEffect(() => {
     const loadWishlist = async () => {
@@ -30,6 +41,14 @@ function WishlistPage() {
 
     loadWishlist();
   }, [user]);
+
+  if (isChecking) {
+    return (
+      <div className="flex items-center justify-center min-h-[500px]">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-[#3A5B22] rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   const handleWishlistUpdate = (action, product) => {
     setWishlist((prevWishlist) => {

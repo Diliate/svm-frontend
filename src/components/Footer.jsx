@@ -21,8 +21,8 @@ const Footer = () => {
           <div className="max-w-md">
             <p className="text-base text-justify sm:text-lg">
               We&apos;re currently crafting the website; it appears spectacular,
-              hip, and commendable. We&apos;re currently crafting the website;
-              it appears spectacular, hip, and commendable.
+              top, and commendable. We&apos;re currently crafting the website;
+              it appears spectacular, top, and commendable.
             </p>
           </div>
 
@@ -124,7 +124,13 @@ const Footer = () => {
             </button>
           </div>
           <p className="mt-4 text-base sm:text-lg">Our Social Media handles</p>
-          <div className="flex gap-5">
+          <Link
+            href={
+              "https://www.instagram.com/svmpharmaceuticalss?igsh=MWtmanJ1eTJ0MXY3eA=="
+            }
+            target="_blank"
+            className="flex gap-5"
+          >
             <FaSquareInstagram
               size={28}
               className="cursor-pointer hover:text-[#004A06]"
@@ -141,7 +147,7 @@ const Footer = () => {
               size={28}
               className="cursor-pointer hover:text-[#004A06]"
             />
-          </div>
+          </Link>
         </div>
       </div>
 

@@ -2,12 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
-import { IoBarbellOutline } from "react-icons/io5";
 import { GoBell } from "react-icons/go";
 
 const ProductCard = ({ product }) => {
-  console.log("PRODUCT DETAILS: ", product);
-
   return (
     <div className="relative border-2 rounded-3xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] w-[275px] hover:scale-105 duration-200 p-4">
       {product.inStock === false && (
@@ -32,30 +29,31 @@ const ProductCard = ({ product }) => {
           loading="lazy"
         />
       </div>
-      <div className="flex justify-between my-2">
-        <h1 className="text-2xl font-semibold">{product?.name}</h1>
-      </div>
+      <div className="flex flex-col justify-between h-[210px]">
+        <div className="flex justify-between my-2">
+          <h1 className="text-2xl font-semibold">{product?.name}</h1>
+        </div>
+        <p className="text-sm line-clamp-3">{product?.description}</p>
+        <div className="flex items-center justify-between mt-5">
+          <p className="text-xl font-semibold">Rs. {product?.price}</p>
+          <Link
+            href={`/shop/product/${product?.id}`}
+            className="bg-[#166534] text-white rounded-full p-3 flex items-center justify-center group relative overflow-hidden w-12 h-12 z-30"
+            aria-label={`View details for ${product?.name}`}
+          >
+            {/* Arrow Moving Out */}
+            <FaArrowRight
+              className="absolute duration-300 transform -translate-x-1/2 left-1/2 group-hover:translate-x-full"
+              size={24}
+            />
 
-      <p className="text-lg">{product?.description}</p>
-      <div className="flex items-center justify-between mt-5">
-        <p className="text-xl font-semibold">Rs. {product?.price}</p>
-        <Link
-          href={`/shop/product/${product?.id}`}
-          className="bg-[#166534] text-white rounded-full p-3 flex items-center justify-center group relative overflow-hidden w-12 h-12 z-30"
-          aria-label={`View details for ${product?.name}`}
-        >
-          {/* Arrow Moving Out */}
-          <FaArrowRight
-            className="absolute duration-300 transform -translate-x-1/2 left-1/2 group-hover:translate-x-full"
-            size={24}
-          />
-
-          {/* Arrow Coming In */}
-          <FaArrowRight
-            className="absolute left-[-50%] transform translate-x-0 duration-300 group-hover:left-1/2 group-hover:translate-x-[-60%]"
-            size={24}
-          />
-        </Link>
+            {/* Arrow Coming In */}
+            <FaArrowRight
+              className="absolute left-[-50%] transform translate-x-0 duration-300 group-hover:left-1/2 group-hover:translate-x-[-60%]"
+              size={24}
+            />
+          </Link>
+        </div>
       </div>
     </div>
   );

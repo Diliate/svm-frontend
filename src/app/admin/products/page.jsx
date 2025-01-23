@@ -37,7 +37,13 @@ function Page() {
   console.log("Categories in Page Component:", categories);
 
   const handleSaveProduct = async (formState, images) => {
-    console.log("Saving Product:", formState); // Log the save attempt
+    console.log("Is Editing:", isEditing);
+    console.log("Current Product ID:", currentProduct?.id);
+
+    if (isEditing && !currentProduct?.id) {
+      toast.error("Product ID is missing for update.");
+      return;
+    }
 
     const formData = new FormData();
     Object.keys(formState).forEach((key) =>
@@ -81,13 +87,21 @@ function Page() {
 
   return (
     <section className="p-5">
-      <Button onClick={() => setModalOpen(true)}>
-        <FaPlus /> Add Product
+      <Button
+        onClick={() => {
+          setModalOpen(true);
+          setIsEditing(false); // Ensure isEditing is false
+          setCurrentProduct(null); // Ensure currentProduct is null
+        }}
+        className="flex items-center gap-1 mb-3"
+      >
+        <FaPlus className="mt-1" /> Add Product
       </Button>
 
       <Table className="text-lg">
         <TableHeader>
           <TableRow>
+            <TableHead>Sr. No.</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Category</TableHead>
             <TableHead>Price</TableHead>
@@ -95,8 +109,9 @@ function Page() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products?.map((product) => (
+          {products?.map((product, index) => (
             <TableRow key={product.id}>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.category?.name}</TableCell>
               <TableCell>{product.price}</TableCell>
