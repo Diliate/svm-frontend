@@ -53,22 +53,22 @@ export default function Faq() {
   };
 
   return (
-    <div className="flex justify-between py-10 px-14">
+    <div className="flex flex-col justify-between gap-5 px-5 py-10 md:gap-0 md:flex-row md:px-14">
       <div>
-        <h1 className="text-5xl font-bold">
+        <h1 className="text-3xl font-bold md:text-5xl">
           Any questions? <br />
           We got answers.
         </h1>
-        <p className="py-5 w-[440px] text-lg">
+        <p className="py-5 md:w-[440px] w-auto text-lg text-justify">
           Not sure how to proceed? Check our FAQs for answers to common
           questions regarding our products and services.
         </p>
-        <button className="flex items-center gap-2 text-blue-500 hover:text-blue-600">
+        {/* <button className="flex items-center gap-2 text-blue-500 hover:text-blue-600">
           <span>View All FAQs</span> <FaArrowRightLong />
-        </button>
+        </button> */}
       </div>
-      <div className="flex gap-5">
-        <div className="w-[450px] flex flex-col gap-5">
+      <div className="flex flex-col gap-5 md:flex-row">
+        <div className="md:w-[450px] w-auto flex flex-col gap-5">
           {faqs.map((faq, index) => (
             <div key={index} className="p-4 border rounded-lg">
               <h2
@@ -95,7 +95,7 @@ export default function Faq() {
           ))}
         </div>
 
-        <div className="w-[450px] flex flex-col gap-5">
+        <div className="md:w-[450px] w-auto flex flex-col gap-5">
           {faqs2.map((faq, index) => (
             <div key={index} className="p-4 border rounded-lg">
               <h2
