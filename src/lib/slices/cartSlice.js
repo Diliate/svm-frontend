@@ -121,6 +121,7 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
       // Add to Cart
       .addCase(addToCart.pending, (state) => {
         state.addLoading = true;
@@ -145,6 +146,7 @@ const cartSlice = createSlice({
         state.addLoading = false;
         state.error = action.payload;
       })
+
       // Update Cart Item
       .addCase(updateCartItem.pending, (state) => {
         state.updateLoading = true;
@@ -163,6 +165,7 @@ const cartSlice = createSlice({
         state.updateLoading = false;
         state.error = action.payload;
       })
+
       // Remove from Cart
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload);
@@ -171,6 +174,7 @@ const cartSlice = createSlice({
         state.error = action.payload;
       })
 
+      // Clear from cart
       .addCase(clearCart.pending, (state) => {
         state.clearLoading = true;
         state.error = null;

@@ -78,3 +78,19 @@ export const removeFromCart = async (cartItemId) => {
     throw error;
   }
 };
+
+// Clear cart
+export const clearCart = async (userId) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/cart/clear`, {
+      userId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error clearing cart:",
+      error.response?.data || error.message
+    );
+    throw error;
+  }
+};

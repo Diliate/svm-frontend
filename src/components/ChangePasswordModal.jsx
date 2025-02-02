@@ -191,7 +191,7 @@ const ChangePasswordModal = () => {
         <DialogHeader>
           <DialogTitle>Change Password</DialogTitle>
           <DialogDescription>
-            Choose how you'd like to update your password.
+            Choose how you&apos;d like to update your password.
           </DialogDescription>
         </DialogHeader>
 

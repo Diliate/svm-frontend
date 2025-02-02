@@ -1,4 +1,3 @@
-// pages/checkout.js
 "use client";
 
 import Image from "next/image";
@@ -22,7 +21,7 @@ import {
 } from "@/services/razorpayService";
 import { trackShipment, cancelShipment } from "@/services/shiprocketService"; // If needed
 import { useRouter } from "next/navigation";
-import api from "@/services/api"; // Import the preconfigured Axios instance
+import api from "@/services/api";
 
 function CheckoutPage() {
   const dispatch = useDispatch();
