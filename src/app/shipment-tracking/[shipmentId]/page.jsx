@@ -8,7 +8,7 @@ import { trackShipment } from "@/services/shiprocketService";
 import toast from "react-hot-toast";
 
 function ShipmentTrackingPage() {
-  const { shipmentId } = useParams(); // Capture shipmentId from the URL
+  const { shipmentId } = useParams();
   const router = useRouter();
   const [trackingInfo, setTrackingInfo] = useState(null);
   const [loading, setLoading] = useState(true);

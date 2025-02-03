@@ -18,10 +18,10 @@ export default function OrdersPage() {
   const tabRefs = useRef([]);
   const [tabWidth, setTabWidth] = useState(0);
 
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
 
   const tabs = ["Order", "Cancelled Order"];
-  const filters = ["All", "Week", "Month", "Year"]; // Available filters
+  const filters = ["All", "Week", "Month", "Year"];
 
   useEffect(() => {
     if (user?.id) {
@@ -155,22 +155,24 @@ export default function OrdersPage() {
                       Order Details
                     </span>
                     <span className="hidden md:block">Track</span>
-                    <span>Order {order.orderId}</span>
+                    <span className="hidden md:block">View Details</span>
                   </div>
                   <div className="flex items-center justify-between px-4 py-2 text-xl border-y-2 border-zinc-500">
                     {/* Display first item image or something */}
                     {order.items.length > 0 ? (
                       <div>
-                        <Image
-                          src={
-                            order.items[0].product?.imageUrls?.[0] ||
-                            "/product.png"
-                          }
-                          alt="product"
-                          height={150}
-                          width={150}
-                          className="-ml-10"
-                        />
+                        <div className="relative w-[100px] h-[100px]">
+                          <Image
+                            src={
+                              order.items[0].product?.imageUrls?.[0] ||
+                              "/product.png"
+                            }
+                            alt="product"
+                            fill
+                            objectFit="contain"
+                            className="absolute"
+                          />
+                        </div>
                         <span className="block text-base md:hidden">
                           {order.items[0].product?.name}
                         </span>
@@ -178,23 +180,25 @@ export default function OrdersPage() {
                     ) : (
                       <p>No items</p>
                     )}
-                    <span className="hidden -ml-28 md:block">
+                    <span className="hidden md:block w-[135px]">
                       {order.items[0]?.product?.name}
                     </span>
-                    <button
-                      onClick={() =>
-                        handleTrackShipment(order.shiprocketShipmentId)
-                      }
-                      className="hidden px-5 py-1 -ml-24 text-white duration-200 bg-green-600 rounded-full md:block hover:opacity-85"
-                    >
-                      Track Order
-                    </button>
+                    <div className="">
+                      <button
+                        onClick={() =>
+                          handleTrackShipment(order.shiprocketShipmentId)
+                        }
+                        className="hidden w-[150px] h-[35px] text-white duration-200 bg-green-600 rounded-full md:block hover:opacity-85"
+                      >
+                        Track Order
+                      </button>
+                    </div>
                     <div className="flex flex-col items-center justify-center md:hidden">
                       <button
                         onClick={() =>
                           handleTrackShipment(order.shiprocketShipmentId)
                         }
-                        className="block px-5 py-1 mb-2 text-white duration-200 bg-green-600 rounded-full md:hidden hover:opacity-85"
+                        className="block px-5 py-1 mb-2 text-white duration-200 bg-green-600 border-2  rounded-full md:hidden hover:opacity-85 w-[150px]"
                       >
                         Track Order
                       </button>
@@ -206,7 +210,6 @@ export default function OrdersPage() {
                       </Link>
                     </div>
                     <Link
-                      // href={`/shop/product/${order.items[0]?.productId}`}
                       href={`/order-confirmation/${order.orderId}`}
                       className="hidden px-5 py-1 text-white duration-200 rounded-full bg-zinc-600 hover:opacity-85 md:block"
                     >

@@ -256,15 +256,18 @@ function CheckoutPage() {
             {items.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between border-b-2 border-dashed"
+                className="flex items-center justify-between py-2 border-b-2 border-dashed"
               >
                 {/* Product Image */}
-                <div className="-ml-[55px] md:-ml-10">
+                <div className=" relative w-[100px] h-[80px]">
                   <Image
                     src={item?.product?.imageUrls[0] || "/product.png"}
                     alt={item.product?.name || "product"}
-                    width={150}
-                    height={150}
+                    // width={150}
+                    // height={150}
+                    fill
+                    objectFit="contain"
+                    className="absolute"
                   />
                 </div>
                 {/* Quantity Controls */}

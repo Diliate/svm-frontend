@@ -17,6 +17,8 @@ function ShipmentTrackingPage() {
   const [error, setError] = useState(null);
   const [noActivities, setNoActivities] = useState(false);
 
+  console.log("SHIPMENT ID: ", shipmentId);
+
   useEffect(() => {
     if (shipmentId) {
       setLoading(true);
