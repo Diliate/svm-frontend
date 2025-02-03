@@ -180,8 +180,6 @@ function CheckoutPage() {
               addressId: selectedAddressId,
             });
 
-            console.log("Payment Verification Response:", verifyRes); // Debugging
-
             if (verifyRes.status === "success") {
               toast.success("Payment verified successfully!");
               // Redirect to order confirmation page

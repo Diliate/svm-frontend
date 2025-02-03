@@ -61,6 +61,7 @@ const Page = () => {
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(product?.imageUrls?.[0]);
   const rating = 4.1;
   const starCount = Math.floor(rating);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -72,8 +73,8 @@ const Page = () => {
   const [feedbackList, setFeedbackList] = useState([]);
 
   const { ref: testimonialsRef, inView: testimonialsInView } = useInView({
-    triggerOnce: true, // Load testimonials only the first time the section enters the viewport
-    threshold: 0.3, // Trigger when 20% of the section is visible
+    triggerOnce: true,
+    threshold: 0.3,
   });
 
   const settings = {
@@ -123,6 +124,7 @@ const Page = () => {
           setProduct(productData);
           setFavourite(productData.favourite); // Set favourite state based on backend response
           setFeedbackList(productData.ratings || []);
+          setSelectedImage(productData.imageUrls?.[0]);
         } catch (error) {
           console.error("Error Fetching Product Data in Product(slug)", error);
         }
@@ -138,11 +140,6 @@ const Page = () => {
       return;
     }
 
-    console.log("Adding to cart:", {
-      userId: user.id,
-      productId: product.id,
-      quantity,
-    });
     dispatch(addToCart({ userId: user.id, productId: product.id, quantity }));
     toast.success("Product Added to Cart");
   };
@@ -172,6 +169,10 @@ const Page = () => {
     setFeedbackList((prev) => [...prev, newFeedback]);
   };
 
+  const handleThumbnailClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+  };
+
   return (
     <section className="px-5 pt-20 pb-20 md:pt-32 md:px-10">
       <div className="w-full">
@@ -183,13 +184,17 @@ const Page = () => {
                 product.imageUrls.map((url, index) => (
                   <div
                     key={index}
-                    className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center"
+                    className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center relative"
                   >
                     <Image
                       src={url}
                       alt={`product-image-${index}`}
-                      height={100}
-                      width={100}
+                      // height={100}
+                      // width={100}
+                      fill
+                      objectFit="contain"
+                      className="absolute"
+                      onClick={() => handleThumbnailClick(url)}
                     />
                   </div>
                 ))
@@ -206,12 +211,15 @@ const Page = () => {
             </div>
 
             {/* Main Image */}
-            <div className="border-2 rounded-xl bg-[#F9F9EB] md:w-[300px] w-[345px] md:h-[340px] h-[250px] flex items-center justify-center">
+            <div className="border-2 rounded-xl bg-[#F9F9EB] md:w-[300px] w-[345px] md:h-[340px] h-[250px] flex items-center justify-center relative">
               <Image
-                src={product?.imageUrls?.[0] || "/not-found.png"}
+                src={selectedImage || "/not-found.png"}
                 alt={product?.name || "Product"}
-                height={300}
-                width={300}
+                // height={300}
+                // width={300}
+                fill
+                className="absolute"
+                objectFit="contain"
               />
             </div>
           </div>

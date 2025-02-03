@@ -20,12 +20,15 @@ const ProductCard = ({ product }) => {
           </button>
         </div>
       )}
-      <div className="border-2 rounded-2xl bg-[#F9F9EB]">
+      <div className="border-2 rounded-2xl bg-[#F9F9EB] relative w-[240px] h-[200px] py-2">
         <Image
           src={product?.imageUrls?.[0] || "/not-found.png"}
           alt={product?.name || "product image"}
-          height={300}
-          width={300}
+          // height={300}
+          // width={300}
+          fill
+          objectFit="contain"
+          className="absolute"
           loading="lazy"
         />
       </div>

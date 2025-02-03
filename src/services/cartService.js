@@ -30,7 +30,6 @@ export const addToCart = async (userId, productId, quantity) => {
   }
 
   try {
-    console.log("Payload sent to addToCart:", { userId, productId, quantity });
     const response = await axios.post(`${API_BASE_URL}/cart`, {
       userId,
       productId,

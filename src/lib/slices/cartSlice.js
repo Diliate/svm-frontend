@@ -32,11 +32,6 @@ export const addToCart = createAsyncThunk(
     }
 
     try {
-      console.log("Dispatching addToCart with:", {
-        userId,
-        productId,
-        quantity,
-      });
       const response = await cartService.addToCart(userId, productId, quantity);
       return response; // Use response data as needed
     } catch (error) {

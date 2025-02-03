@@ -26,7 +26,6 @@ const SearchBar = () => {
   // Debounce Effect: Updates debouncedTerm after 700ms
   useEffect(() => {
     const handler = setTimeout(() => {
-      console.log("Debounced Term:", searchTerm);
       setDebouncedTerm(searchTerm);
     }, 700);
 
@@ -43,9 +42,7 @@ const SearchBar = () => {
       }
 
       try {
-        console.log("Fetching suggestions for:", debouncedTerm); // Debug log
         const results = await searchCategory(debouncedTerm);
-        console.log("Search Suggestions:", results); // Debug log
         setSuggestions(results);
         setShowSuggestions(true);
       } catch (error) {
@@ -69,20 +66,13 @@ const SearchBar = () => {
 
       // Check if products for this category are already cached
       if (cacheRef.current[hoveredCategoryId]) {
-        console.log(
-          `Using cached products for category ID: ${hoveredCategoryId}`
-        );
         setRelatedProducts(cacheRef.current[hoveredCategoryId]);
         return;
       }
 
       setLoadingRelated(true);
       try {
-        console.log(
-          `Fetching related products for category ID: ${hoveredCategoryId}`
-        );
         const products = await getProductsByCategory(hoveredCategoryId);
-        console.log("Related Products:", products); // Debug log
         setRelatedProducts(products);
         cacheRef.current[hoveredCategoryId] = products; // Cache the results
       } catch (error) {

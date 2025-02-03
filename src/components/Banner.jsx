@@ -5,7 +5,7 @@ import React from "react";
 const Banner = () => {
   return (
     <section className="px-5 py-10 md:px-10">
-      <div className="flex flex-col justify-center gap-10 md:flex-row">
+      <div className="flex flex-col items-center justify-center gap-10 md:items-start md:flex-row">
         <Image
           src="/banner.png"
           alt="banner"

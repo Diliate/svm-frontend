@@ -23,8 +23,6 @@ function AdminLayout({ children }) {
     setIsChecking(false);
   }, [user]);
 
-  console.log("USER IN ADMIN: ", user);
-
   if (isChecking) {
     return (
       <div className="flex items-center justify-center min-h-screen">

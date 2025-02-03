@@ -7,7 +7,6 @@ const API_BASE_URL =
 export const fetchAllCategories = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/categories`);
-    console.log("CATEGORIES FETCHED IN SERVICE:", response.data); // Log the response
     return response.data;
   } catch (error) {
     console.error("Error in fetchAllCategories:", error.message); // Log errors
@@ -37,10 +36,8 @@ export const deleteCategory = async (id) => {
 
 // get searched products
 export const searchCategory = async (query) => {
-  console.log("Sending query:", query);
   const response = await axios.get(`${API_BASE_URL}/categories/search`, {
     params: { query },
   });
-  console.log("Search Results:", response.data);
   return response.data;
 };

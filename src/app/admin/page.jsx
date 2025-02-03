@@ -61,7 +61,6 @@ function UsersPage() {
         }
       }
       const userData = await response.json();
-      console.log("DATA: ", userData);
 
       setSelectedUser(userData);
       setIsDialogOpen(true);

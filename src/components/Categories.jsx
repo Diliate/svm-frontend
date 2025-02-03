@@ -5,7 +5,7 @@ const Categories = () => {
   return (
     <section className="p-5 py-10 md:px-10">
       <div className="flex items-center justify-center gap-5">
-        {/* Videa */}
+        {/* Video */}
         <div className="h-[550px] w-[450px] relative overflow-hidden hidden md:block">
           <video
             preload="none"
@@ -16,12 +16,12 @@ const Categories = () => {
           >
             <source src="/category1.mp4" type="video/mp4" />
           </video>
-          <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 left-[40%] hover:opacity-85 duration-200  -ml-5">
+          <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 -translate-x-1/2 left-1/2 hover:opacity-85 duration-200">
             c l e a n s e
           </button>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center">
           {/* top both container */}
           <div className="flex flex-col items-center justify-center gap-5 md:flex-row">
             {/* top left container */}
@@ -33,7 +33,7 @@ const Categories = () => {
                 objectFit="cover"
                 className="absolute duration-300 group-hover:scale-110"
               />
-              <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 left-[30%] md:left-[40%] hover:opacity-85 duration-200 -ml-5">
+              <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 -translate-x-1/2 left-1/2 hover:opacity-85 duration-200">
                 c l e a n s e
               </button>
             </div>
@@ -47,7 +47,7 @@ const Categories = () => {
                 objectFit="cover"
                 className="absolute duration-300 group-hover:scale-110"
               />
-              <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 left-[30%] md:left-[40%] hover:opacity-85 duration-200 -ml-5">
+              <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 -translate-x-1/2 left-1/2 hover:opacity-85 duration-200">
                 d e t o x
               </button>
             </div>
@@ -64,7 +64,7 @@ const Categories = () => {
                 objectFit="cover"
                 className="absolute duration-300 group-hover:scale-110"
               />
-              <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 left-[30%] md:left-[40%] hover:opacity-85 duration-200 -ml-5">
+              <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 -translate-x-1/2 left-1/2 hover:opacity-85 duration-200">
                 n a t u r a l
               </button>
             </div>
@@ -78,7 +78,7 @@ const Categories = () => {
                 objectFit="cover"
                 className="absolute duration-300 group-hover:scale-110"
               />
-              <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 left-[30%] md:left-[40%] hover:opacity-85 duration-200 -ml-5">
+              <button className="bg-white border-[1px] text-black uppercase font-medium rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px] text-lg px-4 py-2 absolute bottom-10 -translate-x-1/2 left-1/2 hover:opacity-85 duration-200">
                 h e r b a l
               </button>
             </div>

@@ -34,12 +34,7 @@ function Page() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
 
-  console.log("Categories in Page Component:", categories);
-
   const handleSaveProduct = async (formState, images) => {
-    console.log("Is Editing:", isEditing);
-    console.log("Current Product ID:", currentProduct?.id);
-
     if (isEditing && !currentProduct?.id) {
       toast.error("Product ID is missing for update.");
       return;
@@ -57,7 +52,6 @@ function Page() {
 
       const data = await fetchAllProducts();
       setProducts(data.products);
-      console.log("DATA IN PRODUCT PAGE: ", data?.products);
 
       setModalOpen(false);
       setCurrentProduct(null);

@@ -53,7 +53,7 @@ export default function Faq() {
   };
 
   return (
-    <div className="flex flex-col justify-between gap-5 px-5 py-10 md:gap-0 md:flex-row md:px-14">
+    <div className="flex flex-col items-center justify-between gap-5 px-5 py-10 md:items-start md:gap-0 md:flex-row md:px-14">
       <div>
         <h1 className="text-3xl font-bold md:text-5xl">
           Any questions? <br />
@@ -67,6 +67,7 @@ export default function Faq() {
           <span>View All FAQs</span> <FaArrowRightLong />
         </button> */}
       </div>
+
       <div className="flex flex-col gap-5 md:flex-row">
         <div className="md:w-[450px] w-auto flex flex-col gap-5">
           {faqs.map((faq, index) => (

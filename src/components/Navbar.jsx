@@ -243,7 +243,7 @@ const Navbar = () => {
         <div className="pb-5 bg-white shadow-md md:hidden h-fit">
           <ul className="flex flex-col px-4 py-2 space-y-2">
             {navLinks.map((link) => (
-              <li key={link.name}>
+              <li key={link.name} onClick={() => setMobileMenuOpen(false)}>
                 <Link
                   href={link.href}
                   className="flex items-center px-3  py-2 font-medium text-lg hover:bg-[#004A06] hover:text-white transition rounded-full"

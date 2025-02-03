@@ -16,7 +16,6 @@ export const useProducts = () => {
         setCategories(categoriesData);
         const productsData = await fetchAllProducts();
         setProducts(productsData.products);
-        console.log("Fetched products:", productsData.products);
       } catch (error) {
         console.error("Error fetching categories:", error.message);
       } finally {

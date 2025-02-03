@@ -50,7 +50,6 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Error Logging User");
-      console.log("Error Logging User: ", error);
     }
   };
 
@@ -89,7 +88,7 @@ export const AuthProvider = ({ children }) => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/logout`,
         {},
         {
-          withCredentials: true, // Include cookies
+          withCredentials: true,
         }
       );
 
@@ -100,7 +99,6 @@ export const AuthProvider = ({ children }) => {
         toast.success("Logged out successfully");
       }
     } catch (error) {
-      console.log("Error Logging out user: ", error);
       toast.error("Failed to logout");
     }
   };

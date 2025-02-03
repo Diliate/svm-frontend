@@ -6,11 +6,7 @@ const API_BASE_URL =
 // Fetch all products
 export const fetchAllProducts = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/products`); // No params object needed
-
-    console.log(
-      `Fetched ${response.data.products.length} products, Total: ${response.data.total}`
-    );
+    const response = await axios.get(`${API_BASE_URL}/products`);
 
     return response.data;
   } catch (error) {
@@ -107,12 +103,10 @@ export const fetchFilteredProducts = async (filters) => {
 
 // get products by categiry
 export const getProductsByCategory = async (categoryId) => {
-  console.log("Fetching products for category ID:", categoryId);
   try {
     const response = await axios.get(
       `${API_BASE_URL}/categories/${categoryId}/products`
     );
-    console.log("Products fetched:", response.data);
     return response.data;
   } catch (error) {
     console.error(
