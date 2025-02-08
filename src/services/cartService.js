@@ -2,7 +2,8 @@ import axios from "axios";
 
 // Set API_BASE_URL to the root API path
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.trim() || "http://localhost:5000/api";
+  process.env.process.env.NEXT_PUBLIC_API_BASE_URL?.trim() ||
+  "http://localhost:5000/api";
 
 // Fetch the cart for a user
 export const fetchCart = async (userId) => {

@@ -80,7 +80,7 @@ const ChangePasswordModal = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/change-password`,
+        `${process.env.process.env.NEXT_PUBLIC_API_BASE_URL}/auth/change-password`,
         {
           currentPassword,
           newPassword,
@@ -117,7 +117,7 @@ const ChangePasswordModal = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/request-reset-otp`,
+        `${process.env.process.env.NEXT_PUBLIC_API_BASE_URL}/auth/request-reset-otp`,
         { email },
         {
           headers: {
@@ -155,7 +155,7 @@ const ChangePasswordModal = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/reset-password-with-otp`,
+        `${process.env.process.env.NEXT_PUBLIC_API_BASE_URL}/auth/reset-password-with-otp`,
         {
           email,
           otp,
