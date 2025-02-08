@@ -34,7 +34,7 @@ const maskMobile = (mobile) => {
 };
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: `http://${NEXT_PUBLIC_API_BASE_URL}`,
   withCredentials: true,
 });
 
@@ -119,15 +119,18 @@ const Page = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/update", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          // Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(formData),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://${NEXT_PUBLIC_API_BASE_URL}/auth/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(formData),
+          credentials: "include",
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

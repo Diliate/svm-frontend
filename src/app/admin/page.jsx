@@ -32,7 +32,9 @@ function UsersPage() {
     const fetchUsers = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("http://localhost:5000/api/users");
+        const response = await fetch(
+          `http://${NEXT_PUBLIC_API_BASE_URL}/users`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch users");
         }
@@ -52,7 +54,9 @@ function UsersPage() {
   const handleViewDetails = async (userId) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${userId}`);
+      const response = await fetch(
+        `http://${NEXT_PUBLIC_API_BASE_URL}/users/${userId}`
+      );
       if (!response.ok) {
         if (response.status === 404) {
           throw new Error("User not found");
