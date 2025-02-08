@@ -33,7 +33,7 @@ function UsersPage() {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `http://${process.env.process.env.NEXT_PUBLIC_API_BASE_URL}/users`
+          `http://${process.env.NEXT_PUBLIC_API_BASE_URL}/users`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch users");

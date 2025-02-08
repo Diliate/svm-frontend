@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await axios.post(
-        `${process.env.process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`,
         { email, password },
         {
           headers: {
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (name, email, password, mobile) => {
     try {
       const response = await axios.post(
-        `${process.env.process.env.NEXT_PUBLIC_API_BASE_URL}/auth/register`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/register`,
         {
           name,
           email,
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const response = await axios.post(
-        `${process.env.process.env.NEXT_PUBLIC_API_BASE_URL}/auth/logout`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/logout`,
         {},
         {
           withCredentials: true,

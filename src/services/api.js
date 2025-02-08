@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 // Create an Axios instance
 const api = axios.create({
-  baseURL: process.env.process.env.NEXT_PUBLIC_API_BASE_URL, // e.g., "http://localhost:5000/api"
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // e.g., "http://localhost:5000/api"
   withCredentials: true, // Include cookies in requests
 });
 
