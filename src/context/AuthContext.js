@@ -1,13 +1,17 @@
-// context/AuthContext.js
-
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import https from "https"; // Import the https module
 
 const AuthContext = createContext();
+
+// Create an https agent to bypass SSL verification (Only for development/testing)
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false, // Disable SSL validation
+});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -35,6 +39,7 @@ export const AuthProvider = ({ children }) => {
             "Content-Type": "application/json",
           },
           withCredentials: true, // Include cookies
+          httpsAgent, // Pass the https agent to bypass SSL verification
         }
       );
 
@@ -63,6 +68,9 @@ export const AuthProvider = ({ children }) => {
           email,
           password,
           mobile,
+        },
+        {
+          httpsAgent, // Pass the https agent to bypass SSL verification
         }
       );
 
@@ -89,6 +97,7 @@ export const AuthProvider = ({ children }) => {
         {},
         {
           withCredentials: true,
+          httpsAgent, // Pass the https agent to bypass SSL verification
         }
       );
 
