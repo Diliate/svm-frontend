@@ -1,8 +1,17 @@
-// services/razorpayService.js
 import axios from "axios";
+import https from "https"; // Import https for handling SSL
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "https://localhost:5000/api";
+
+// Create an Axios instance with httpsAgent to handle SSL in development
+const axiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true, // Include cookies in requests
+  httpsAgent: new https.Agent({
+    rejectUnauthorized: process.env.NODE_ENV === "production" ? true : false, // Skip SSL verification in dev
+  }),
+});
 
 /**
  * Create a Razorpay order
@@ -18,12 +27,15 @@ export const createRazorpayOrder = async (
   userId
 ) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/razorpay/create-order`, {
-      amount,
-      currency,
-      receipt,
-      userId,
-    });
+    const response = await axiosInstance.post(
+      `${API_BASE_URL}/razorpay/create-order`,
+      {
+        amount,
+        currency,
+        receipt,
+        userId,
+      }
+    );
     return response.data; // { order, newOrder }
   } catch (error) {
     console.error("Error creating Razorpay order:", error.message);
@@ -37,7 +49,7 @@ export const createRazorpayOrder = async (
  */
 export const verifyRazorpayPayment = async (payload) => {
   try {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
       `${API_BASE_URL}/razorpay/verify-payment`,
       payload
     );

@@ -1,9 +1,18 @@
-// services/orderService.js
-
 import axios from "axios";
+import https from "https";
 
+// Set API_BASE_URL to the root API path
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "https://localhost:5000/api";
+  process.env.NEXT_PUBLIC_API_BASE_URL?.trim() || "https://localhost:5000/api";
+
+// Create an Axios instance with httpsAgent to handle SSL in development
+const axiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true, // Include cookies in requests
+  httpsAgent: new https.Agent({
+    rejectUnauthorized: process.env.NODE_ENV === "production" ? true : false, // Skip SSL verification in dev
+  }),
+});
 
 /**
  * Get details of a specific order by ID
@@ -12,7 +21,7 @@ const API_BASE_URL =
  */
 export const getOrderDetails = async (orderId) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/orders/${orderId}`); // Updated route
+    const response = await axiosInstance.get(`/orders/${orderId}`); // Updated route
     return response.data.order; // Return only the order object
   } catch (error) {
     console.error(
@@ -36,7 +45,7 @@ export const getUserOrders = async (userId, filter) => {
       params.filter = filter.toLowerCase(); // Ensure lowercase for backend compatibility
     }
 
-    const response = await axios.get(`${API_BASE_URL}/orders/user/${userId}`, {
+    const response = await axiosInstance.get(`/orders/user/${userId}`, {
       params,
     });
     return response.data.orders; // Array of orders
@@ -56,9 +65,7 @@ export const getUserOrders = async (userId, filter) => {
  */
 export const cancelUserOrder = async (orderId) => {
   try {
-    const response = await axios.patch(
-      `${API_BASE_URL}/orders/${orderId}/cancel`
-    );
+    const response = await axiosInstance.patch(`/orders/${orderId}/cancel`);
     return response.data.order;
   } catch (error) {
     console.error(
@@ -76,7 +83,7 @@ export const cancelUserOrder = async (orderId) => {
  */
 export const createOrderRecord = async (orderData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/orders`, orderData);
+    const response = await axiosInstance.post(`/orders`, orderData);
     return response.data.order;
   } catch (error) {
     console.error(

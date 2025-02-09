@@ -1,13 +1,24 @@
 import axios from "axios";
+import https from "https"; // Import https for handling SSL
 
-// Set API_BASE_URL to the root API path
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.trim() || "https://localhost:5000/api";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://localhost:5000/api";
+
+// Create an Axios instance with httpsAgent to handle SSL in development
+const axiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+  withCredentials: true, // Include cookies in requests
+  httpsAgent: new https.Agent({
+    rejectUnauthorized: process.env.NODE_ENV === "production" ? true : false, // Skip SSL verification in dev
+  }),
+});
 
 // Fetch the wishlist for a user
 export const fetchWishlist = async (userId) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/wishlist/${userId}`);
+    const response = await axiosInstance.get(
+      `${API_BASE_URL}/wishlist/${userId}`
+    );
     return response.data;
   } catch (error) {
     console.error(
@@ -21,7 +32,7 @@ export const fetchWishlist = async (userId) => {
 // Add a product to the wishlist
 export const addToWishlist = async (userId, productId) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/wishlist`, {
+    const response = await axiosInstance.post(`${API_BASE_URL}/wishlist`, {
       userId,
       productId,
     });
@@ -38,7 +49,7 @@ export const addToWishlist = async (userId, productId) => {
 // Remove a product from the wishlist
 export const removeFromWishlist = async (userId, productId) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/wishlist`, {
+    const response = await axiosInstance.delete(`${API_BASE_URL}/wishlist`, {
       data: { userId, productId },
     });
     return response.data;
@@ -54,9 +65,12 @@ export const removeFromWishlist = async (userId, productId) => {
 // Clear the wishlist
 export const clearWishlist = async (userId) => {
   try {
-    const response = await axios.delete(`${API_BASE_URL}/wishlist/clear`, {
-      data: { userId },
-    });
+    const response = await axiosInstance.delete(
+      `${API_BASE_URL}/wishlist/clear`,
+      {
+        data: { userId },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error(
