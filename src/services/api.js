@@ -8,7 +8,7 @@ const api = axios.create({
   withCredentials: true, // Include cookies in requests
   // Conditionally use an https agent to ignore SSL errors in development
   httpsAgent: new https.Agent({
-    rejectUnauthorized: process.env.NODE_ENV === "production" ? true : false, // Ignore SSL in dev only
+    rejectUnauthorized: false, // Ignore SSL in dev only
   }),
 });
 

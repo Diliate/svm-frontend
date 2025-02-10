@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: true, // Include cookies in requests
   httpsAgent: new https.Agent({
-    rejectUnauthorized: process.env.NODE_ENV === "production" ? true : false, // Skip SSL verification in dev
+    rejectUnauthorized: false, // Skip SSL verification in dev
   }),
 });
 
