@@ -15,7 +15,7 @@ function AdminLayout({ children }) {
   useEffect(() => {
     if (!user) {
       router.push("/login");
-    } else if (user.name === "admin" && user.email === "admin@gmail.com") {
+    } else if (user.name === "Admin" && user.email === "admin@gmail.com") {
       setIsAuthorized(true);
     } else {
       setIsAuthorized(false);
