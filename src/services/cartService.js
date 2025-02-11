@@ -1,23 +1,13 @@
 import axios from "axios";
-import https from "https";
 
 // Set API_BASE_URL to the root API path
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL?.trim() || "https://localhost:5000/api";
 
-// Create an Axios instance with httpsAgent to handle SSL in development
-const axiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-  withCredentials: true, // Include cookies in requests
-  httpsAgent: new https.Agent({
-    rejectUnauthorized: false, // Skip SSL verification in dev
-  }),
-});
-
 // Fetch the cart for a user
 export const fetchCart = async (userId) => {
   try {
-    const response = await axiosInstance.get(`/cart/${userId}`);
+    const response = await axios.get(`${API_BASE_URL}/cart/${userId}`);
     return response.data;
   } catch (error) {
     console.error(
@@ -40,7 +30,7 @@ export const addToCart = async (userId, productId, quantity) => {
   }
 
   try {
-    const response = await axiosInstance.post(`/cart`, {
+    const response = await axios.post(`${API_BASE_URL}/cart`, {
       userId,
       productId,
       quantity,
@@ -58,7 +48,7 @@ export const addToCart = async (userId, productId, quantity) => {
 // Update cart item quantity
 export const updateCartItem = async (cartItemId, quantity) => {
   try {
-    const response = await axiosInstance.put(`/cart/item`, {
+    const response = await axios.put(`${API_BASE_URL}/cart/item`, {
       cartItemId,
       quantity,
     });
@@ -75,7 +65,7 @@ export const updateCartItem = async (cartItemId, quantity) => {
 // Remove product from cart
 export const removeFromCart = async (cartItemId) => {
   try {
-    const response = await axiosInstance.delete(`/cart/item`, {
+    const response = await axios.delete(`${API_BASE_URL}/cart/item`, {
       data: { cartItemId },
     });
     return response.data;
@@ -91,7 +81,7 @@ export const removeFromCart = async (cartItemId) => {
 // Clear cart
 export const clearCart = async (userId) => {
   try {
-    const response = await axiosInstance.post(`/cart/clear`, {
+    const response = await axios.post(`${API_BASE_URL}/cart/clear`, {
       userId,
     });
     return response.data;

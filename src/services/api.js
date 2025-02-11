@@ -1,15 +1,11 @@
+// services/api.js
 import axios from "axios";
 import toast from "react-hot-toast";
-import https from "https";
 
 // Create an Axios instance
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // e.g., "https://localhost:5000/api"
   withCredentials: true, // Include cookies in requests
-  // Conditionally use an https agent to ignore SSL errors in development
-  httpsAgent: new https.Agent({
-    rejectUnauthorized: false, // Ignore SSL in dev only
-  }),
 });
 
 // Optional: Request Interceptor (if needed)

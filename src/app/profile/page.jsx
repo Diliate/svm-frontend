@@ -119,17 +119,29 @@ const Page = () => {
 
   const handleSave = async () => {
     try {
-      // Sending the PUT request using axios (with token already included via interceptor)
-      const response = await api.put("/auth/update", formData);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(formData),
+          credentials: "include",
+        }
+      );
 
-      if (response.status !== 200) {
-        throw new Error(response.data.message || "Failed to update user");
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update user");
       }
 
+      const data = await response.json();
       toast.success("User details updated successfully!");
 
       // Update the user in context
-      updateUserInContext(response.data.user);
+      updateUserInContext(data.user);
     } catch (error) {
       toast.error(error.message || "Failed to update user details");
       console.error("Update error:", error);
