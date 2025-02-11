@@ -34,7 +34,7 @@ const maskMobile = (mobile) => {
 };
 
 const api = axios.create({
-  baseURL: `https://${process.env.NEXT_PUBLIC_API_BASE_URL}`,
+  baseURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}`,
   withCredentials: true,
 });
 
@@ -120,7 +120,7 @@ const Page = () => {
   const handleSave = async () => {
     try {
       const response = await fetch(
-        `https://${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/update`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/update`,
         {
           method: "PUT",
           headers: {

@@ -33,7 +33,7 @@ function UsersPage() {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `https://${process.env.NEXT_PUBLIC_API_BASE_URL}/users`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/users`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch users");
@@ -55,7 +55,7 @@ function UsersPage() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${userId}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/${userId}`
       );
       if (!response.ok) {
         if (response.status === 404) {
