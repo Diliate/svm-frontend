@@ -216,15 +216,6 @@ const SearchBar = () => {
                         href={`/shop/product/${product.id}`}
                         className="flex items-center p-2 space-x-2 rounded hover:bg-gray-100"
                       >
-                        {product.imageUrls && product.imageUrls.length > 0 && (
-                          <Image
-                            src={product.imageUrls[0]}
-                            alt={product.name}
-                            width={30}
-                            height={30}
-                            className="rounded"
-                          />
-                        )}
                         <span className="text-sm">{product.name}</span>
                       </Link>
                     </li>

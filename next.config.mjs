@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost"],
+    domains: [
+      "localhost",
+      "svm-backend-iy0e.onrender.com",
+      "svmpharmaceutical.com",
+    ],
   },
 };
 
