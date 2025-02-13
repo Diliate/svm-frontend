@@ -263,11 +263,9 @@ function CheckoutPage() {
                   <Image
                     src={item?.product?.imageUrls[0] || "/product.png"}
                     alt={item.product?.name || "product"}
-                    // width={150}
-                    // height={150}
                     fill
-                    objectFit="contain"
-                    className="absolute"
+                    objectFit="cover"
+                    className="absolute rounded-[10px]"
                   />
                 </div>
                 {/* Quantity Controls */}

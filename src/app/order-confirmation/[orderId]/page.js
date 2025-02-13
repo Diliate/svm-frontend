@@ -189,7 +189,8 @@ function OrderConfirmationPage() {
                 src={item.product?.imageUrls?.[0] || "/product.png"}
                 alt={item.product?.name || "Product Image"}
                 fill
-                style={{ objectFit: "contain" }}
+                objectFit="cover"
+                className="absolute rounded-[10px]"
               />
             </div>
             <div>

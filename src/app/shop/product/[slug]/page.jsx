@@ -189,11 +189,9 @@ const Page = () => {
                     <Image
                       src={url}
                       alt={`product-image-${index}`}
-                      // height={100}
-                      // width={100}
                       fill
-                      objectFit="contain"
-                      className="absolute"
+                      objectFit="cover"
+                      className="absolute rounded-[10px]"
                       onClick={() => handleThumbnailClick(url)}
                     />
                   </div>
