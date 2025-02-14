@@ -4,10 +4,24 @@ const Featured = () => {
   return (
     <section>
       <div className="flex flex-col items-center justify-center gap-10 px-5 py-10 md:flex-row md:px-10 md:items-start">
-        <video className="w-[340px]" preload="none" autoPlay loop muted>
+        <video
+          className="w-[340px]"
+          preload="none"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
           <source src="/featured1.mp4" type="video/mp4" />
         </video>
-        <video className="w-[340px] " preload="none" autoPlay loop muted>
+        <video
+          className="w-[340px] "
+          preload="none"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
           <source src="/featured2.mp4" type="video/mp4" />
         </video>
         <video
@@ -16,6 +30,7 @@ const Featured = () => {
           autoPlay
           loop
           muted
+          playsInline
         >
           <source src="/featured3.mp4" type="video/mp4" />
         </video>
@@ -25,6 +40,7 @@ const Featured = () => {
           autoPlay
           loop
           muted
+          playsInline
         >
           <source src="/featured4.mp4" type="video/mp4" />
         </video>

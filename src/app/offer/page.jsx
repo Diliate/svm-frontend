@@ -89,6 +89,7 @@ const Page = () => {
           autoPlay
           loop
           muted
+          playsInline
           className="absolute top-0 object-contain w-auto h-full transform -translate-x-1/2 md:w-full md:object-cover left-1/2"
         >
           <source src="/latest.mp4" type="video/mp4" />

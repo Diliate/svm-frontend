@@ -12,6 +12,7 @@ const Categories = () => {
             autoPlay
             loop
             muted
+            playsInline
             className="absolute top-0 object-cover w-full h-full transform -translate-x-1/2 left-1/2"
           >
             <source src="/category1.mp4" type="video/mp4" />

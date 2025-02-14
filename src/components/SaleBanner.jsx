@@ -4,7 +4,7 @@ import React from "react";
 const SaleBanner = () => {
   return (
     <section className="relative hidden w-full overflow-hidden md:block">
-      <video className="w-full" preload="none" autoPlay loop muted>
+      <video className="w-full" preload="none" autoPlay loop muted playsInline>
         <source src="/sale-banner.mp4" type="video/mp4" />
       </video>
       <div className="absolute transform left-44 bottom-14">

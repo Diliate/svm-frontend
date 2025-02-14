@@ -184,7 +184,7 @@ const Page = () => {
                 product.imageUrls.map((url, index) => (
                   <div
                     key={index}
-                    className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center relative"
+                    className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center relative overflow-hidden"
                   >
                     <Image
                       src={url}
@@ -209,15 +209,13 @@ const Page = () => {
             </div>
 
             {/* Main Image */}
-            <div className="border-2 rounded-xl bg-[#F9F9EB] md:w-[300px] w-[345px] md:h-[340px] h-[250px] flex items-center justify-center relative">
+            <div className="border-2 rounded-xl bg-[#F9F9EB] md:w-[300px] w-[345px] md:h-[340px] h-[250px] flex items-center justify-center relative overflow-hidden">
               <Image
                 src={selectedImage || "/not-found.png"}
                 alt={product?.name || "Product"}
-                // height={300}
-                // width={300}
                 fill
                 className="absolute"
-                objectFit="contain"
+                objectFit="cover"
               />
             </div>
           </div>

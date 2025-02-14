@@ -29,6 +29,7 @@ const Page = () => {
               preload="none"
               autoPlay
               loop
+              playsInline
               muted
               className="object-cover w-full h-full"
             >
