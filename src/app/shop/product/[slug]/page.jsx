@@ -28,7 +28,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { addToWishlist, removeFromWishlist } from "@/services/wishlistService";
 import RatingModal from "@/components/RatingModal";
 import { useInView } from "react-intersection-observer";
-import ReactImageMagnify from "react-image-magnify";
+import ReactImageZoom from "react-image-zoom";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
@@ -232,30 +232,14 @@ const Page = () => {
 
             {/* Main Image */}
             <div className="justify-center hidden lg:block">
-              <div className="border-2 rounded-xl bg-[#F9F9EB] w-[345px] h-[250px] md:w-[300px] md:h-[340px] flex items-center justify-center relative">
-                {selectedImage && (
-                  <ReactImageMagnify
-                    {...{
-                      smallImage: {
-                        alt: product?.name || "Product",
-                        width: 295,
-                        height: 330,
-                        src: selectedImage,
-                      },
-                      largeImage: {
-                        src: selectedImage,
-                        width: 1200,
-                        height: 1800,
-                      },
-                      enlargedImageContainerDimensions: {
-                        width: "250%",
-                        height: "170%",
-                      },
-                      enlargedImagePosition: "portal",
-                      lensStyle: { backgroundColor: "rgba(0,0,0,.2)" },
-                    }}
-                  />
-                )}
+              <div className="border-2 rounded-xl bg-[#F9F9EB] w-[345px] h-[250px] md:w-[300px] md:h-[340px] flex items-center justify-center relative overflow-hidden">
+                {/* Main Image */}
+                <InnerImageZoom
+                  src={selectedImage}
+                  zoomSrc={selectedImage}
+                  zoomType="hover"
+                  zoomPreload={true}
+                />
               </div>
             </div>
 
