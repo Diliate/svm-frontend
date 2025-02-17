@@ -93,7 +93,7 @@ function Page() {
                 Welcome to SVM
               </h2>
 
-              <p className="mt-4 leading-relaxed text-white/90">
+              <p className="hidden mt-4 leading-relaxed text-white/90 md:block">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.
               </p>
@@ -123,7 +123,7 @@ function Page() {
 
                 <h1 className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl"></h1>
 
-                <p className="mt-4 leading-relaxed text-gray-500">
+                <p className="hidden mt-4 leading-relaxed text-gray-500 md:block">
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                   Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.
                 </p>
@@ -131,7 +131,10 @@ function Page() {
 
               <section className="flex flex-col items-center justify-center pt-5 pb-10">
                 <div className="flex flex-col items-center justify-center gap-5">
-                  <form onSubmit={handleRegister} className="w-full mt-5">
+                  <form
+                    onSubmit={handleRegister}
+                    className="w-full mt-0 lg:mt-5"
+                  >
                     <div className="flex flex-col">
                       <label className="mb-2 text-xl font-medium">Name</label>
                       <input

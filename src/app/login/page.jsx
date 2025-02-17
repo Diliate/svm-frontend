@@ -30,7 +30,7 @@ function Page() {
     <>
       <section className="bg-white">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-          <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
+          <aside className="relative block h-16 pt-40 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
             <img
               alt=""
               src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
@@ -38,12 +38,12 @@ function Page() {
             />
           </aside>
 
-          <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+          <main className="flex items-center justify-center px-5 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
             <div className="max-w-xl lg:max-w-3xl">
-              <section className="flex flex-col items-center justify-center p-5 md:px-10 pt-28">
+              <section className="flex flex-col items-center justify-center p-5 md:px-10">
                 <div className="flex flex-col items-center justify-center gap-5">
                   <h1 className="text-5xl font-medium">Welcome back!</h1>
-                  <form onSubmit={handleLogin} className="w-full mt-5">
+                  <form onSubmit={handleLogin} className="w-full mt-3 lg:mt-5">
                     <div className="flex flex-col">
                       <label className="mb-2 text-xl font-medium">
                         Email Address
@@ -79,7 +79,7 @@ function Page() {
                     </button>
                   </form>
 
-                  <div className="flex items-center justify-center mt-10 text-xl">
+                  <div className="flex items-center justify-center mt-5 text-xl lg:mt-10">
                     <h2>
                       Don&rsquo;t have an account?{" "}
                       <Link href={"/signup"} className="font-medium underline">

@@ -26,6 +26,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { addToWishlist, removeFromWishlist } from "@/services/wishlistService";
 import RatingModal from "@/components/RatingModal";
 import { useInView } from "react-intersection-observer";
+import ReactImageMagnify from "react-image-magnify";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
@@ -184,7 +185,12 @@ const Page = () => {
                 product.imageUrls.map((url, index) => (
                   <div
                     key={index}
-                    className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center relative overflow-hidden"
+                    className={`border-2 ${
+                      selectedImage === url
+                        ? "border-black border-[3px]"
+                        : "border-gray-300"
+                    } bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center relative overflow-hidden`}
+                    onClick={() => handleThumbnailClick(url)}
                   >
                     <Image
                       src={url}
@@ -192,7 +198,6 @@ const Page = () => {
                       fill
                       objectFit="cover"
                       className="absolute rounded-[10px]"
-                      onClick={() => handleThumbnailClick(url)}
                     />
                   </div>
                 ))
@@ -209,13 +214,41 @@ const Page = () => {
             </div>
 
             {/* Main Image */}
-            <div className="border-2 rounded-xl bg-[#F9F9EB] md:w-[300px] w-[345px] md:h-[340px] h-[250px] flex items-center justify-center relative overflow-hidden">
+            <div className="justify-center hidden lg:block">
+              <div className="border-2 rounded-xl bg-[#F9F9EB] w-[345px] h-[250px] md:w-[300px] md:h-[340px] flex items-center justify-center relative">
+                {selectedImage && (
+                  <ReactImageMagnify
+                    {...{
+                      smallImage: {
+                        alt: product?.name || "Product",
+                        width: 295,
+                        height: 330,
+                        src: selectedImage,
+                      },
+                      largeImage: {
+                        src: selectedImage,
+                        width: 1200,
+                        height: 1800,
+                      },
+                      enlargedImageContainerDimensions: {
+                        width: "250%",
+                        height: "170%",
+                      },
+                      enlargedImagePosition: "portal",
+                      lensStyle: { backgroundColor: "rgba(0,0,0,.2)" },
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* mobile devices */}
+            <div className="lg:hidden border-2 rounded-xl bg-[#F9F9EB] w-[345px] h-[250px] md:w-[300px] md:h-[340px] flex items-center justify-center relative overflow-hidden">
               <Image
                 src={selectedImage || "/not-found.png"}
-                alt={product?.name || "Product"}
                 fill
-                className="absolute"
                 objectFit="cover"
+                className="absolute"
               />
             </div>
           </div>
@@ -293,11 +326,6 @@ const Page = () => {
               >
                 Add to Cart
               </button>
-              {/* <Link href={"/payment"}> */}
-              <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-green-800 rounded-full hover:opacity-85">
-                Buy Now
-              </button>
-              {/* </Link> */}
             </div>
           </div>
         </div>

@@ -100,13 +100,7 @@ const Navbar = () => {
           {/* Logo and Primary Navigation */}
           <div className="flex items-center">
             <Link href="/" className="cursor-pointer">
-              <Image
-                src="/svm-logo.png"
-                alt="Logo"
-                width={75}
-                height={75}
-                className="w-auto h-auto"
-              />
+              <Image src="/svm-logo.png" alt="Logo" width={85} height={85} />
             </Link>
             <ul className="hidden ml-6 space-x-4 md:flex">
               {navLinks.map((link) => (
@@ -156,12 +150,14 @@ const Navbar = () => {
                   <Link
                     href={"/login"}
                     className="p-2 rounded-full bg-[#004A06]  transition duration-150 text-white hover:opacity-85 mr-2"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     Login
                   </Link>
                   <Link
                     href={"/signup"}
                     className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150  hover:opacity-85 border-2"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     Sign Up
                   </Link>
@@ -258,12 +254,14 @@ const Navbar = () => {
               <Link
                 href={"/login"}
                 className="p-2 rounded-full bg-[#004A06]  transition duration-150 text-white hover:opacity-85 mr-2"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Login
               </Link>
               <Link
                 href={"/signup"}
                 className="p-2 rounded-full hover:bg-[#004A06] hover:text-white transition duration-150  hover:opacity-85 border-2"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Sign Up
               </Link>
