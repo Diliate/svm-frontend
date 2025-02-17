@@ -293,11 +293,6 @@ const Page = () => {
               >
                 Add to Cart
               </button>
-              {/* <Link href={"/payment"}> */}
-              <button className="px-4 py-1 text-lg font-medium text-white duration-200 bg-green-800 rounded-full hover:opacity-85">
-                Buy Now
-              </button>
-              {/* </Link> */}
             </div>
           </div>
         </div>
