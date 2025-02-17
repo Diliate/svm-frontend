@@ -1,10 +1,12 @@
 "use client";
 
+import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
+import InnerImageZoom from "react-inner-image-zoom";
 import Features from "@/components/Features";
 import TestimonialCard from "@/components/TestimonialCard";
 import ProductList from "@/components/ProductList";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   FaMinus,
   FaPlus,
@@ -173,6 +175,21 @@ const Page = () => {
   const handleThumbnailClick = (imageUrl) => {
     setSelectedImage(imageUrl);
   };
+
+  // const zoomProps = useMemo(() => {
+  //   return selectedImage
+  //     ? {
+  //         width: 300,
+  //         height: 340,
+  //         zoomWidth: 800,
+  //         img: selectedImage,
+  //         zoomStyle: "z-index: 999",
+  //         className: "relative",
+  //         // imgClass: "opacity-0 absolute",
+  //         style: { display: "none" },
+  //       }
+  //     : null;
+  // }, [selectedImage]);
 
   return (
     <section className="px-5 pt-20 pb-20 md:pt-32 md:px-10">
