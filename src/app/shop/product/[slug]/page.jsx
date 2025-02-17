@@ -1,12 +1,10 @@
 "use client";
 
-import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
-import InnerImageZoom from "react-inner-image-zoom";
 import Features from "@/components/Features";
 import TestimonialCard from "@/components/TestimonialCard";
 import ProductList from "@/components/ProductList";
 import Image from "next/image";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaMinus,
   FaPlus,
@@ -17,7 +15,6 @@ import {
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { fetchProductById } from "@/services/productService";
 import { useDispatch } from "react-redux";
@@ -28,7 +25,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { addToWishlist, removeFromWishlist } from "@/services/wishlistService";
 import RatingModal from "@/components/RatingModal";
 import { useInView } from "react-intersection-observer";
-import ReactImageZoom from "react-image-zoom";
+import InnerImageZoom from "react-inner-image-zoom";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
