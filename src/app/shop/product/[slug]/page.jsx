@@ -25,7 +25,6 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { addToWishlist, removeFromWishlist } from "@/services/wishlistService";
 import RatingModal from "@/components/RatingModal";
 import { useInView } from "react-intersection-observer";
-import InnerImageZoom from "react-inner-image-zoom";
 
 function SampleNextArrow(props) {
   const { onClick, isVisible } = props;
