@@ -28,7 +28,6 @@ const ProductCard = ({ product }) => {
           objectFit="cover"
           className="absolute"
           loading="lazy"
-          unoptimized
         />
       </div>
       <div className="flex flex-col justify-between h-[210px]">

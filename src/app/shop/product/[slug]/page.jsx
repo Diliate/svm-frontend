@@ -211,7 +211,6 @@ const Page = () => {
                       objectFit="cover"
                       fill
                       className="absolute object-cover"
-                      unoptimized
                     />
                   </div>
                 ))
@@ -222,7 +221,6 @@ const Page = () => {
                     alt="Fallback product"
                     height={100}
                     width={100}
-                    unoptimized
                   />
                 </div>
               )}
@@ -238,7 +236,6 @@ const Page = () => {
                   objectFit="cover"
                   fill
                   className="absolute"
-                  unoptimized
                 />
               </div>
             </div>
@@ -250,7 +247,6 @@ const Page = () => {
                 fill
                 objectFit="cover"
                 className="absolute"
-                unoptimized
               />
             </div>
           </div>
