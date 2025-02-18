@@ -9,8 +9,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { fetchFeaturedProducts } from "@/services/productService";
 import { useInView } from "react-intersection-observer";
 
-function SampleNextArrow(props) {
-  const { onClick, isVisible } = props;
+function SampleNextArrow({ onClick, isVisible }) {
   return (
     isVisible && (
       <button
@@ -23,8 +22,7 @@ function SampleNextArrow(props) {
   );
 }
 
-function SamplePrevArrow(props) {
-  const { onClick, isVisible } = props;
+function SamplePrevArrow({ onClick, isVisible }) {
   return (
     isVisible && (
       <button
@@ -40,9 +38,10 @@ function SamplePrevArrow(props) {
 const ProductList = ({ headline }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [products, setProducts] = useState([]);
+  const [slidesToShow, setSlidesToShow] = useState(4); // Default slidesToShow
   const { ref, inView } = useInView({
-    triggerOnce: true, // Fetch products only the first time the component comes into view
-    threshold: 1, // Trigger when 100% of the component is visible
+    triggerOnce: true,
+    threshold: 0.3,
   });
 
   // Fetch products only when the component enters the viewport
@@ -61,43 +60,39 @@ const ProductList = ({ headline }) => {
     }
   }, [inView, products.length]);
 
+  // Update slidesToShow based on screen width
+  useEffect(() => {
+    const updateSlidesToShow = () => {
+      const width = window.innerWidth;
+      if (width < 480) {
+        setSlidesToShow(1);
+      } else if (width < 600) {
+        setSlidesToShow(2);
+      } else if (width < 1024) {
+        setSlidesToShow(3);
+      } else {
+        setSlidesToShow(4);
+      }
+    };
+
+    updateSlidesToShow();
+    window.addEventListener("resize", updateSlidesToShow);
+    return () => window.removeEventListener("resize", updateSlidesToShow);
+  }, []);
+
   const settings = {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 3,
+    slidesToShow,
+    slidesToScroll: slidesToShow,
     nextArrow: (
-      <SampleNextArrow isVisible={currentSlide < products.length - 4.5} />
+      <SampleNextArrow
+        isVisible={currentSlide < products.length - slidesToShow}
+      />
     ),
     prevArrow: <SamplePrevArrow isVisible={currentSlide > 0} />,
     beforeChange: (current, next) => setCurrentSlide(next),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 5,
-          infinite: true,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1.1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
   };
 
   return (

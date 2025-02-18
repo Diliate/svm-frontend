@@ -28,13 +28,22 @@ const Footer = () => {
 
           <div className="flex flex-col gap-2 text-base font-medium sm:text-lg">
             <span className="flex items-center gap-1">
-              <FaPhone /> +91 987654321
+              <FaPhone />{" "}
+              <Link href={"tel:+919266876559"} target="_blank">
+                +91 9266876559
+              </Link>
             </span>
             <span className="flex items-center gap-1">
               <FaLocationDot /> New Delhi, India
             </span>
             <span className="flex items-center gap-1">
-              <IoMail /> svm@gmail.com
+              <IoMail />{" "}
+              <Link
+                href={"mailto:SUPPORT@SVMPHARMACEUTICALS.COM"}
+                target="_blank"
+              >
+                SUPPORT@SVMPHARMACEUTICALS.COM
+              </Link>
             </span>
           </div>
         </div>
@@ -126,7 +135,7 @@ const Footer = () => {
           <p className="mt-4 text-base sm:text-lg">Our Social Media handles</p>
           <Link
             href={
-              "https://www.instagram.com/svmpharmaceuticalss?igsh=MWtmanJ1eTJ0MXY3eA=="
+              "https://www.instagram.com/svm_pharmaceuticals/?igsh=eGliajg1MTZrcHpw#"
             }
             target="_blank"
             className="flex gap-5"
@@ -136,14 +145,6 @@ const Footer = () => {
               className="cursor-pointer hover:text-[#004A06]"
             />
             <FaFacebookSquare
-              size={28}
-              className="cursor-pointer hover:text-[#004A06]"
-            />
-            <FaSquareXTwitter
-              size={28}
-              className="cursor-pointer hover:text-[#004A06]"
-            />
-            <FaPinterestSquare
               size={28}
               className="cursor-pointer hover:text-[#004A06]"
             />
