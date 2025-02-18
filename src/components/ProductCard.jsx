@@ -21,10 +21,12 @@ const ProductCard = ({ product }) => {
         </div>
       )}
       <div className="border-2 rounded-2xl bg-[#F9F9EB] relative w-[240px] h-[200px] py-2 overflow-hidden">
-        <img
+        <Image
           src={product?.imageUrls?.[0] || "/not-found.png"}
           alt={product?.name || "product image"}
-          className="absolute object-cover"
+          fill
+          objectFit="cover"
+          className="absolute"
           loading="lazy"
         />
       </div>
