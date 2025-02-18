@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 function ProfileLayout({ children }) {
   const { user } = useAuth();
@@ -11,7 +12,10 @@ function ProfileLayout({ children }) {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    if (!user) {
+    const token = Cookies.get("token");
+
+    if (!user && !token) {
+      localStorage.removeItem("user");
       router.push("/login");
     } else {
       setIsChecking(false);

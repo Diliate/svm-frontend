@@ -22,6 +22,7 @@ import {
 import { trackShipment, cancelShipment } from "@/services/shiprocketService"; // If needed
 import { useRouter } from "next/navigation";
 import api from "@/services/api";
+import Cookies from "js-cookie";
 
 function CheckoutPage() {
   const dispatch = useDispatch();
@@ -34,15 +35,19 @@ function CheckoutPage() {
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isChecking, setIsChecking] = useState(true);
+  const [token, setToken] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    setToken(Cookies.get("token"));
+
+    if (!user && !token) {
+      localStorage.removeItem("user");
       router.push("/login");
     } else {
       setIsChecking(false);
     }
-  }, [user, router]);
+  }, [user, router, token]);
 
   useEffect(() => {
     if (userId) {
@@ -95,7 +100,7 @@ function CheckoutPage() {
 
   // ---- RAZORPAY INTEGRATION ----
   const handleRazorpayPayment = async () => {
-    if (!user) {
+    if (!user && !token) {
       toast.error("Please login to continue.");
       return;
     }

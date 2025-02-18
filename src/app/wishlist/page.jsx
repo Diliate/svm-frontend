@@ -6,6 +6,7 @@ import { fetchWishlist, clearWishlist } from "@/services/wishlistService";
 import { useAuth } from "@/context/AuthContext";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 function WishlistPage() {
   const { user } = useAuth();
@@ -15,12 +16,15 @@ function WishlistPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    const token = Cookies.get("token");
+
+    if (!user && !token) {
+      localStorage.removeItem("token");
       router.push("/login");
     } else {
       setIsChecking(false);
     }
-  }, [user, router]);
+  }, [user, router, token]);
 
   useEffect(() => {
     const loadWishlist = async () => {

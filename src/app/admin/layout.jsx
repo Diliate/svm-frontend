@@ -5,6 +5,7 @@ import AdminSidebar from "@/components/AdminSidebar";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 function AdminLayout({ children }) {
   const { user } = useAuth();
@@ -13,7 +14,10 @@ function AdminLayout({ children }) {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    if (!user) {
+    const token = Cookies.get("token");
+
+    if (!user && !token) {
+      localStorage.removeItem("user");
       router.push("/login");
     } else if (user.name === "Admin" && user.email === "admin@gmail.com") {
       setIsAuthorized(true);
@@ -21,7 +25,7 @@ function AdminLayout({ children }) {
       setIsAuthorized(false);
     }
     setIsChecking(false);
-  }, [user]);
+  }, [user, token]);
 
   if (isChecking) {
     return (

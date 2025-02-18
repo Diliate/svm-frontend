@@ -206,7 +206,7 @@ const Page = () => {
                     } bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center relative overflow-hidden`}
                     onClick={() => handleThumbnailClick(url)}
                   >
-                    <Image
+                    <img
                       src={url}
                       alt={`product-image-${index}`}
                       fill
@@ -217,7 +217,7 @@ const Page = () => {
                 ))
               ) : (
                 <div className="border-2 bg-[#F9F9EB] rounded-xl h-[80px] w-[80px] cursor-pointer flex items-center justify-center">
-                  <Image
+                  <img
                     src="/not-found.png"
                     alt="Fallback product"
                     height={100}
@@ -231,18 +231,19 @@ const Page = () => {
             <div className="justify-center hidden lg:block">
               <div className="border-2 rounded-xl bg-[#F9F9EB] w-[345px] h-[250px] md:w-[300px] md:h-[340px] flex items-center justify-center relative overflow-hidden">
                 {/* Main Image */}
-                <InnerImageZoom
-                  src={selectedImage}
-                  zoomSrc={selectedImage}
-                  zoomType="hover"
-                  zoomPreload={true}
+                <img
+                  src={selectedImage || "/not-foubd.png"}
+                  alt={product?.name}
+                  fill
+                  objectFit="cover"
+                  className="absolute object-cover"
                 />
               </div>
             </div>
 
             {/* mobile devices */}
             <div className="lg:hidden border-2 rounded-xl bg-[#F9F9EB] w-[345px] h-[250px] md:w-[300px] md:h-[340px] flex items-center justify-center relative overflow-hidden">
-              <Image
+              <img
                 src={selectedImage || "/not-found.png"}
                 fill
                 objectFit="cover"
