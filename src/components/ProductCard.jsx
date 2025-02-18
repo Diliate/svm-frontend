@@ -24,9 +24,7 @@ const ProductCard = ({ product }) => {
         <img
           src={product?.imageUrls?.[0] || "/not-found.png"}
           alt={product?.name || "product image"}
-          fill
-          objectFit="cover"
-          className="absolute"
+          className="absolute object-cover"
           loading="lazy"
         />
       </div>
