@@ -209,7 +209,8 @@ const Page = () => {
                       src={url}
                       alt={`product-image-${index}`}
                       objectFit="cover"
-                      fill
+                      width={100}
+                      height={100}
                       className="absolute object-cover"
                     />
                   </div>
@@ -234,7 +235,8 @@ const Page = () => {
                   src={selectedImage || "/not-found.png"}
                   alt={product?.name}
                   objectFit="cover"
-                  fill
+                  width={100}
+                  height={100}
                   className="absolute"
                 />
               </div>
@@ -244,7 +246,8 @@ const Page = () => {
             <div className="lg:hidden border-2 rounded-xl bg-[#F9F9EB] w-[345px] h-[250px] md:w-[300px] md:h-[340px] flex items-center justify-center relative overflow-hidden">
               <Image
                 src={selectedImage || "/not-found.png"}
-                fill
+                width={100}
+                height={100}
                 objectFit="cover"
                 className="absolute"
               />
