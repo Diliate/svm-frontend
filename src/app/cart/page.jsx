@@ -41,7 +41,7 @@ function CheckoutPage() {
   useEffect(() => {
     setToken(Cookies.get("token"));
 
-    if (!user && !token) {
+    if (!user || !token) {
       localStorage.removeItem("user");
       router.push("/login");
     } else {
@@ -100,7 +100,7 @@ function CheckoutPage() {
 
   // ---- RAZORPAY INTEGRATION ----
   const handleRazorpayPayment = async () => {
-    if (!user && !token) {
+    if (!user || !token) {
       toast.error("Please login to continue.");
       return;
     }

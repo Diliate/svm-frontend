@@ -18,7 +18,7 @@ function WishlistPage() {
   useEffect(() => {
     const token = Cookies.get("token");
 
-    if (!user && !token) {
+    if (!user || !token) {
       localStorage.removeItem("token");
       router.push("/login");
     } else {

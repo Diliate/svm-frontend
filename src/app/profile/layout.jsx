@@ -14,7 +14,7 @@ function ProfileLayout({ children }) {
   useEffect(() => {
     const token = Cookies.get("token");
 
-    if (!user && !token) {
+    if (!user || !token) {
       localStorage.removeItem("user");
       router.push("/login");
     } else {

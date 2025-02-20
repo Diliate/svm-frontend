@@ -16,7 +16,7 @@ function AdminLayout({ children }) {
   useEffect(() => {
     const token = Cookies.get("token");
 
-    if (!user && !token) {
+    if (!user || !token) {
       localStorage.removeItem("user");
       router.push("/login");
     } else if (user.name === "Admin" && user.email === "admin@gmail.com") {
