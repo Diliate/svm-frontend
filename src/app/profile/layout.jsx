@@ -10,9 +10,10 @@ function ProfileLayout({ children }) {
   const { user } = useAuth();
   const router = useRouter();
   const [isChecking, setIsChecking] = useState(true);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    setToken(Cookies.get("token"));
 
     if (!user || !token) {
       localStorage.removeItem("user");
@@ -20,7 +21,7 @@ function ProfileLayout({ children }) {
     } else {
       setIsChecking(false);
     }
-  }, [user, router]);
+  }, [user, router, token]);
 
   if (isChecking) {
     return (

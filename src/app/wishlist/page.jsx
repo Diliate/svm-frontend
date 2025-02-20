@@ -13,13 +13,14 @@ function WishlistPage() {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isChecking, setIsChecking] = useState(true);
+  const [token, setToken] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    setToken(Cookies.get("token"));
 
     if (!user || !token) {
-      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       router.push("/login");
     } else {
       setIsChecking(false);
