@@ -230,25 +230,12 @@ const Page = () => {
             <div className="justify-center hidden lg:block">
               <div className="border-2 rounded-xl bg-[#F9F9EB] w-[345px] h-[250px] md:w-[300px] md:h-[340px] flex items-center justify-center relative overflow-hidden">
                 {/* Main Image */}
-                {/* <Image
+                <Image
                   src={selectedImage || "/not-found.png"}
                   alt={product?.name}
                   objectFit="cover"
                   fill
                   className="absolute"
-                /> */}
-                <Image
-                  src={selectedImage}
-                  alt={product?.name}
-                  fill
-                  style={{ objectFit: "cover" }}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority={true}
-                  quality={75}
-                  onError={(e) => {
-                    console.error("Image load error:", e);
-                    e.currentTarget.src = "/not-found.png";
-                  }}
                 />
               </div>
             </div>
