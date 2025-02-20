@@ -14,20 +14,6 @@ function AdminLayout({ children }) {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    // const token = Cookies.get("token");
-
-    if (!user || !token) {
-      localStorage.removeItem("user");
-      router.push("/login");
-    } else if (user.name === "Admin" && user.email === "admin@gmail.com") {
-      setIsAuthorized(true);
-    } else {
-      setIsAuthorized(false);
-    }
-    setIsChecking(false);
-  }, [user, token]);
-
-  useEffect(() => {
     setToken(Cookies.get("token"));
 
     if (!user || !token) {
