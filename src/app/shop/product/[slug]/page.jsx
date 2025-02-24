@@ -210,7 +210,7 @@ const Page = () => {
                       alt={`product-image-${index}`}
                       objectFit="cover"
                       fill
-                      className="absolute object-cover"
+                      className="absolute"
                     />
                   </div>
                 ))

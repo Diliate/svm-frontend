@@ -22,7 +22,6 @@ import {
 import { trackShipment, cancelShipment } from "@/services/shiprocketService"; // If needed
 import { useRouter } from "next/navigation";
 import api from "@/services/api";
-import Cookies from "js-cookie";
 
 function CheckoutPage() {
   const dispatch = useDispatch();
@@ -35,19 +34,15 @@ function CheckoutPage() {
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isChecking, setIsChecking] = useState(true);
-  const [token, setToken] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    setToken(Cookies.get("token"));
-
-    if (!user || !token) {
-      localStorage.removeItem("user");
+    if (!user) {
       router.push("/login");
     } else {
       setIsChecking(false);
     }
-  }, [user, router, token]);
+  }, [user, router]);
 
   useEffect(() => {
     if (userId) {

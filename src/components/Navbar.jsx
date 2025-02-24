@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -29,18 +29,12 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import { RiRefund2Line } from "react-icons/ri";
 import SearchBar from "./SearchBar";
-import Cookies from "js-cookie";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [position, setPosition] = useState("bottom");
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
-  const [token, setToken] = useState(null);
-
-  useEffect(() => {
-    setToken(Cookies.get("token"));
-  }, []);
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
@@ -130,7 +124,7 @@ const Navbar = () => {
           {/* Icons */}
           <div className="flex items-center space-x-3">
             <div className="hidden space-x-3 md:flex">
-              {token ? (
+              {user ? (
                 <>
                   <Link
                     href="/wishlist"
@@ -172,7 +166,7 @@ const Navbar = () => {
             </div>
 
             {/* Profile Dropdown for Mobile */}
-            {token && (
+            {user && (
               <div className="block md:hidden">
                 <DropdownMenu
                   open={profileDropdownOpen}
@@ -255,7 +249,7 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          {!token && (
+          {!user && (
             <div className="flex flex-col w-full gap-4 px-4 mt-1 text-center">
               <Link
                 href={"/login"}

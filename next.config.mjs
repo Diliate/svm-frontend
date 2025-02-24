@@ -5,6 +5,7 @@ const nextConfig = {
       "localhost",
       "svm-backend-iy0e.onrender.com",
       "svmpharmaceutical.com",
+      "res.cloudinary.com",
     ],
   },
 };

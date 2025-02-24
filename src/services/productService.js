@@ -61,6 +61,47 @@ export const saveProduct = async (productData, isEditing, id) => {
     throw error; // Re-throw the error to be caught in the calling code
   }
 };
+// export const saveProduct = async (productData, isEditing, id) => {
+//   try {
+//     const endpoint = isEditing
+//       ? `${API_BASE_URL}/products/${id}`
+//       : `${API_BASE_URL}/products`;
+//     const method = isEditing ? "put" : "post";
+
+//     const formData = new FormData();
+
+//     // Append text fields to FormData
+//     for (const key in productData) {
+//       if (key !== "images") {
+//         formData.append(key, productData[key]);
+//       }
+//     }
+
+//     // Append images (assuming productData.images is an array of File objects)
+//     if (productData.images && productData.images.length > 0) {
+//       productData.images.forEach((image) => {
+//         formData.append("images", image);
+//       });
+//     }
+
+//     const response = await axios({
+//       method,
+//       url: endpoint,
+//       data: formData,
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//       },
+//     });
+
+//     return response.data;
+//   } catch (error) {
+//     console.error(
+//       "Error saving product:",
+//       error.response?.data || error.message
+//     );
+//     throw error;
+//   }
+// };
 
 // Delete a product
 export const deleteProduct = async (id) => {
