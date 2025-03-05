@@ -63,7 +63,7 @@ const Page = () => {
             <p className="text-base md:text-[21px] text-justify text-gray-600">
               SVM was founded in 2000 with a simple vision: to bring the healing
               power of nature to everyone. Our journey began when our founder,
-              David, discovered the incredible benefits of herbs and natural
+              Shivom, discovered the incredible benefits of herbs and natural
               remedies while growing up surrounded by nature. With a deep
               respect for the environment and a passion for holistic wellness,
               he set out to create a brand that offers pure, natural, and
